@@ -1,68 +1,55 @@
+using Docmanager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 
 namespace Converter.Docmanager
 {
     public interface IDocmanager
     {
 
-        public void CreateUnit()
-        {
+        public int CreateUnit(string name, string si, double[] value);
+       
 
-        }
+        public int EditUnit( string? newName, string? si, double[]? value);
 
-        public void EditUnit()
-        {
 
-        }
 
-        public void DeleteUnit()
-        {
+        public int DeleteUnit(string name);
 
-        }
 
-        public void ListUnits()
-        {
+        public string[] ListUnits();
 
-        }
 
-        public void GetUnit()
-        {
+        public IDocmanager GetUnit();
 
-        }
 
-        public void EditGroup()
-        {
 
-        }
+        public void EditGroup(string? newName,string baseUnit, string[]? units);
 
-        public void DeleteGroup()
-        {
 
-        }
 
-        public void AddUnit()
-        {
+        public void DeleteGroup(string name);
 
-        }
 
-        public void RemoveUnit()
-        {
 
-        }
+        public void AddUnit(string unitName);
 
-        public void ListGroups()
-        {
 
-        }
 
-        public void ReadGroup()
-        {
+        public void RemoveUnit(string name);
 
-        }
+
+
+        public string[] ListGroups();
+
+
+
+        public IDocmanager ReadGroup();
+        
 
     }
 

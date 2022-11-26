@@ -10,31 +10,17 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using Docmanager;
 
 namespace Converter.Docmanager
 {
-    public class Factory : IDocmanager
+    public class Factory 
     {
 
-        public Factory()
-        {
+     
+       
 
-        }
-
-        ~Factory()
-        {
-
-        }
-
-        public void CreateGroupParser()
-        {
-
-        }
-
-        public void CreateUnitParser()
-        {
-
-        }
+       
 
     }//end Factory
 

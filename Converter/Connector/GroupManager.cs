@@ -15,6 +15,8 @@ using System.IO;
 
 using Connector;
 using Docmanager;
+using Converter.Connector;
+
 namespace Connector {
 	internal class GroupManager : IConnector {
 
@@ -27,6 +29,7 @@ namespace Connector {
 		}
 
 		public void CreateGroup(){
+
 
 		}
 
