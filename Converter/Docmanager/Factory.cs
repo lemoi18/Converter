@@ -17,10 +17,23 @@ namespace Converter.Docmanager
     public class Factory 
     {
 
-     
-       
+        public static IDocmanager Create(string name)
+        {
 
-       
+
+            IPSU psu = null;
+
+            if (name.ToUpper() == "PS2000")
+                psu = new Ps2000();
+            else if (name == "Ps3000")
+                psu = new Ps3000();
+            else if (name == "Test")
+                psu = new TestPsu();
+            return psu;
+        }
+
+
+
 
     }//end Factory
 

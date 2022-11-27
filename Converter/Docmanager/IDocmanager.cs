@@ -2,6 +2,7 @@ using Docmanager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Schema;
@@ -24,11 +25,11 @@ namespace Converter.Docmanager
         public string[] ListUnits();
 
 
-        public IDocmanager GetUnit();
+        public Unitd GetUnit();
 
 
 
-        public void EditGroup(string? newName,string baseUnit, string[]? units);
+        public int EditGroup(string? newName, string baseUnit);
 
 
 
@@ -44,11 +45,11 @@ namespace Converter.Docmanager
 
 
 
-        public string[] ListGroups();
+        public List<Group> ListGroups();
 
+        
 
-
-        public IDocmanager ReadGroup();
+        public Group ReadGroup(string name);
         
 
     }

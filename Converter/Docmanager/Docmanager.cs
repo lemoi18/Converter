@@ -15,16 +15,14 @@ using System.IO;
 
 using Docmanager;
 using Converter.Docmanager;
+using System.Runtime.CompilerServices;
 
 namespace Docmanager {
-	internal class Parser : IDocmanager {
+	internal class Docmanager : IDocmanager {
 
 
-        string _name;
-        string _baseUnit;
-        string[] _units;
+
         
-
 
         public void EditGroup(string? newName, string baseUnit, string[]? units)
         {
@@ -42,16 +40,6 @@ namespace Docmanager {
         }
 
         public void RemoveUnit(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        string[] IDocmanager.ListGroups()
-        {
-            throw new NotImplementedException();
-        }
-
-        IDocmanager IDocmanager.ReadGroup()
         {
             throw new NotImplementedException();
         }
@@ -77,6 +65,26 @@ namespace Docmanager {
         }
 
         public IDocmanager GetUnit()
+        {
+            throw new NotImplementedException();
+        }
+
+        Unitd IDocmanager.GetUnit()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int EditGroup(string? newName, string baseUnit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Group> ListGroups()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Group ReadGroup(string name)
         {
             throw new NotImplementedException();
         }
