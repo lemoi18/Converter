@@ -1,17 +1,30 @@
-﻿Console.WriteLine("What is your name?");
+﻿
 
 
-static int Main(string[] args)
-{
-    string kuk;
-    kuk = Console.ReadLine();
-    string[] arguments = Environment.GetCommandLineArgs();
-    Console.WriteLine("GetCommandLineArgs: {0}", string.Join(", ", arguments));
-    Console.WriteLine("What is your name?");
-    var name = Console.ReadLine();
-    var currentDate = DateTime.Now;
-    Console.WriteLine($"{Environment.NewLine}Hello, {name}, on {currentDate:d} at {currentDate:t}!");
-    Console.Write($"{Environment.NewLine}Press any key to exit...");
-    Console.ReadKey(true);
-    return 0;
-}
+using Connector;
+using Converter.Connector;
+using Converter.Docmanager;
+
+
+Console.WriteLine("hahaha");
+
+IC converter;
+IDocmanager docmanager;
+double A = 0;
+double B = 2;
+double C = 2 ;
+double D = 0;
+string name = "Meter";
+string SI = "m";
+docmanager = DocFactory.CreatePSU("Test");
+converter = ConnectorFactory.CreateConnectorFactory("Test");
+docmanager.GetUnit("meter");
+Console.WriteLine(A);
+Console.WriteLine(B);
+Console.WriteLine(C);
+Console.WriteLine(D);
+Console.WriteLine(SI);
+Console.WriteLine(name);
+
+converter.Convert(32.2, "mm", "m");
+

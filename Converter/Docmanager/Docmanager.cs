@@ -64,15 +64,12 @@ namespace Docmanager {
             throw new NotImplementedException();
         }
 
-        public IDocmanager GetUnit()
+        public object GetUnit()
         {
             throw new NotImplementedException();
         }
 
-        Unitd IDocmanager.GetUnit()
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public int EditGroup(string? newName, string baseUnit)
         {
@@ -85,6 +82,18 @@ namespace Docmanager {
         }
 
         public Group ReadGroup(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Unit GetUnit(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+    
+
+        IDocmanager.Unit IDocmanager.GetUnit(string name)
         {
             throw new NotImplementedException();
         }

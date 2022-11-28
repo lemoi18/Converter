@@ -19,7 +19,7 @@ namespace Docmanager {
 
 		public string _name;
 		public string _baseUnit;
-		public List<Unitd> Units;
+		public List<Unit> Units;
 		
 
 	}//end Group

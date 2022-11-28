@@ -14,8 +14,10 @@ using System.IO;
 
 
 using Docmanager;
+using Converter.Docmanager;
+
 namespace Docmanager {
-	public class Unitd {
+	public class Unit : IDocmanager {
 
 		public string _name;
 		public string _SI;
@@ -23,8 +25,71 @@ namespace Docmanager {
 		public double _B;
 		public double _C;
 		public double _D;
-		
 
+		public void AddUnit(string unitName)
+		{
+			throw new NotImplementedException();
+		}
+
+		public int CreateUnit(string name, string si, double[] value)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void DeleteGroup(string name)
+		{
+			throw new NotImplementedException();
+		}
+
+		public int DeleteUnit(string name)
+		{
+			throw new NotImplementedException();
+		}
+
+		public int EditGroup(string? newName, string baseUnit)
+		{
+			throw new NotImplementedException();
+		}
+
+		public int EditUnit(string? newName, string? si, double[]? value)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Unit GetUnit()
+		{
+			throw new NotImplementedException();
+		}
+
+		public Unit GetUnit(string name)
+		{
+			throw new NotImplementedException();
+		}
+
+		public List<Group> ListGroups()
+		{
+			throw new NotImplementedException();
+		}
+
+		public string[] ListUnits()
+		{
+			throw new NotImplementedException();
+		}
+
+		public Group ReadGroup(string name)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void RemoveUnit(string name)
+		{
+			throw new NotImplementedException();
+		}
+
+		IDocmanager.Unit IDocmanager.GetUnit(string name)
+		{
+			throw new NotImplementedException();
+		}
 	}//end Unit
 
 }//end namespace Docmanager

@@ -17,23 +17,22 @@ using Connector;
 using Converter.Connector;
 
 namespace Connector {
-	public class Factory : IConnector {
+	public static class ConnectorFactory {
 
-		public Factory(){
+		
+		public static IC CreateConnectorFactory(string name)
+		{
+            IC connector = null;
 
-		}
+            if (name.ToUpper() == "Connector")
+                connector = new Connector();
+            else if (name.ToUpper() == "TEST")
+                connector = new Stub();
+            return connector;
+        }
+		
 
-		~Factory(){
-
-		}
-
-		public void CreateGroupManager(){
-
-		}
-
-		public void CreateUnitManager(){
-
-		}
+		
 
 	}//end Factory
 

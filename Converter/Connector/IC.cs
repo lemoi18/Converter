@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Converter.Connector
 {
-    internal interface IConnector
+    public interface IC
     {
+        public void Convert(double value, string unitFrom, string unitTo);
+
+        
     }
 }

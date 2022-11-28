@@ -18,45 +18,25 @@ using Docmanager;
 using Converter.Connector;
 
 namespace Connector {
-	internal class GroupManager : IConnector {
+	internal class Connector : IC {
 
-		public GroupManager(){
+		
 
+		public void Convert(double value, string unitFrom, string unitTo)
+		{
+
+
+
+
+
+
+
+
+			throw new NotImplementedException();
 		}
-
-		~GroupManager(){
-
-		}
-
-		public void CreateGroup(){
+	}
 
 
-		}
-
-		public void EditGroup(){
-
-		}
-
-		public void DeleteGroup(){
-
-		}
-
-		public void AddUnit(){
-
-		}
-
-		public void RemoveUnit(){
-
-		}
-
-		public void ListGroups(){
-
-		}
-
-		public void ReadGroup(){
-
-		}
 
 	}//end GroupManager
 
-}//end namespace Connector

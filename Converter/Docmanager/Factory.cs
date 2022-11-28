@@ -14,27 +14,27 @@ using Docmanager;
 
 namespace Converter.Docmanager
 {
-    public class Factory 
-    {
+    
+    
 
-        public static IDocmanager Create(string name)
+        public static class DocFactory
         {
 
-
-            IPSU psu = null;
-
-            if (name.ToUpper() == "PS2000")
-                psu = new Ps2000();
-            else if (name == "Ps3000")
-                psu = new Ps3000();
-            else if (name == "Test")
-                psu = new TestPsu();
-            return psu;
-        }
+            public static IDocmanager CreatePSU(string name)
+            {
 
 
+                IDocmanager psu = null;
+
+                if (name.ToUpper() == "unit")
+                    psu = new Unit();
+                else if (name.ToUpper() == "TEST")
+                    psu = new DocStub();
+                return psu;
+            }
 
 
-    }//end Factory
+
+        }//end Factory
 
 }//end namespace Docmanager

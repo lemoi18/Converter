@@ -15,10 +15,11 @@ using System.IO;
 
 using Connector;
 using Webmanager;
+using Converter.Requests;
+
 namespace Webmanager {
 	internal class Requests : IRequests {
 
-		public Not in use(Factory) m_Not in use(Factory);
 
 		public Requests(){
 
