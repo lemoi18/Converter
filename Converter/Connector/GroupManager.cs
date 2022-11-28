@@ -16,22 +16,23 @@ using System.IO;
 using Connector;
 using Docmanager;
 using Converter.Connector;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Connector {
 	internal class Connector : IC {
-
-		
-
-		public void Convert(double value, string unitFrom, string unitTo)
+		public Tuple<double, string, string> BaseToConvert(double value, string unitFrom, string unitTo)
 		{
+			throw new NotImplementedException();
+		}
 
 
+		public Tuple<double, string, string> ConvertToBase(double value, string unitFrom, string unitTo)
+		{
+			throw new NotImplementedException();
+		}
 
-
-
-
-
-
+		public string WriteToConsole(Tuple<double, string, string> tuple)
+		{
 			throw new NotImplementedException();
 		}
 	}

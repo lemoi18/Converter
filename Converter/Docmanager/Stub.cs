@@ -77,6 +77,11 @@ namespace Converter.Docmanager
         IDocmanager.Unit IDocmanager.GetUnit(string name)
         {
             IDocmanager.Unit values = new IDocmanager.Unit();
+            values._A = 0;
+            values._B = 1;
+            values._C = 2;
+            values._name = name;
+            values._SI = name;
             
             return values;
         }
