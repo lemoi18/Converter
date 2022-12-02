@@ -10,14 +10,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-
-
-
-using Connector;
 using Converter.Connector;
 
-namespace Connector {
-	public static class ConnectorFactory {
+namespace Connector
+{
+    public static class ConnectorFactory {
 
 		
 		public static IC CreateConnectorFactory(string name)
@@ -34,6 +31,8 @@ namespace Connector {
 
 		
 
-	}//end Factory
+	}
+
+	
 
 }//end namespace Connector

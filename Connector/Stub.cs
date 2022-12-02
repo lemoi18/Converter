@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Converter.Connector
+namespace Connector
 {
     internal class Stub : IC
     {
@@ -22,7 +22,7 @@ namespace Converter.Connector
 
             try
             {
-                res = (a - (c * y)) / ((d * y)- b);
+                res = (a - c * y) / (d * y - b);
             }
             catch (Exception)
             {
@@ -31,6 +31,35 @@ namespace Converter.Connector
             }
 
             return Tuple.Create(res, uom, annotation);
+        }
+
+        public Tuple<double, string, string> ConverterWrapper(double value, string unitFrom, string unitTo)
+
+        {
+            bool Isbase = true;
+            Tuple<double, string, string> My_Tuple2 = new Tuple<double, string, string>(value, unitFrom, unitTo);
+
+            My_Tuple2 = ConvertToBase(My_Tuple2.Item1, My_Tuple2.Item2, My_Tuple2.Item3);
+
+
+            if (My_Tuple2.Item2.ToLower() == unitTo)
+            {
+                Tuple<double, string, string> Edited = new Tuple<double, string, string>(My_Tuple2.Item1, "m", "Meter");
+
+                Console.WriteLine(WriteToConsole(Edited));
+                return Edited;
+
+            }
+            else
+            {
+                My_Tuple2 = BaseToConvert(My_Tuple2.Item1, My_Tuple2.Item2, My_Tuple2.Item3);
+                Console.WriteLine(WriteToConsole(My_Tuple2));
+                return My_Tuple2;
+
+            }
+
+
+
         }
 
         public Tuple<double, string, string> ConvertToBase(double value, string unitFrom, string unitTo)
@@ -46,7 +75,7 @@ namespace Converter.Connector
 
             try
             {
-                res = (a + (b * x)) / (c + (d * x));
+                res = (a + b * x) / (c + d * x);
             }
             catch (Exception)
             {
@@ -60,12 +89,12 @@ namespace Converter.Connector
         public string WriteToConsole(Tuple<double, string, string> tuple)
         {
 
-           
+
 
             // string creation using string.Format method
             string str = string.Format("{0}  {1}" +
                          " {2}", tuple.Item1.ToString(), tuple.Item2, tuple.Item3);
-            
+
 
 
 

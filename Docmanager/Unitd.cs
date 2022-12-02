@@ -11,13 +11,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-
-
-using Docmanager;
-using Converter.Docmanager;
-
-namespace Docmanager {
-	public class Unit : IDocmanager {
+namespace Docmanager
+{
+    public class Unit : IDocmanager {
 
 		public string _name;
 		public string _SI;

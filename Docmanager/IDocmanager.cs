@@ -1,4 +1,3 @@
-using Docmanager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Schema;
 
-namespace Converter.Docmanager
+namespace Docmanager
 {
     public interface IDocmanager
     {
@@ -22,9 +21,9 @@ namespace Converter.Docmanager
         }
 
         public int CreateUnit(string name, string si, double[] value);
-       
 
-        public int EditUnit( string? newName, string? si, double[]? value);
+
+        public int EditUnit(string? newName, string? si, double[]? value);
 
 
 
@@ -56,10 +55,10 @@ namespace Converter.Docmanager
 
         public List<Group> ListGroups();
 
-        
+
 
         public Group ReadGroup(string name);
-        
+
 
     }
 

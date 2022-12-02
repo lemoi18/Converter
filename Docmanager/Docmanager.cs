@@ -10,15 +10,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-
-
-
-using Docmanager;
-using Converter.Docmanager;
 using System.Runtime.CompilerServices;
 
-namespace Docmanager {
-	internal class Docmanager : IDocmanager {
+namespace Docmanager
+{
+    internal class Docmanager : IDocmanager {
 
 
 

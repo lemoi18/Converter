@@ -1,5 +1,4 @@
-﻿using Docmanager;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
@@ -7,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Converter.Docmanager
+namespace Docmanager
 {
     internal class DocStub : IDocmanager
     {
@@ -22,7 +21,7 @@ namespace Converter.Docmanager
             public double _C;
             public double _D;
         }
-       
+
         public void AddUnit(string unitName)
         {
             throw new NotImplementedException();
@@ -82,7 +81,7 @@ namespace Converter.Docmanager
             values._C = 2;
             values._name = name;
             values._SI = name;
-            
+
             return values;
         }
     }
