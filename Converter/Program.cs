@@ -3,10 +3,14 @@
 
 using Connector;
 using System;
+using Docmanager;
 
 
+IDocmanager docmanager;
+docmanager = DocFactory.CreateDocmanager("Test");
 
 
+Console.WriteLine(docmanager = docmanager.GetUnit("meter"));
 IC converter;
 // Test is only mm to cm
 converter = ConnectorFactory.CreateConnectorFactory("Test");

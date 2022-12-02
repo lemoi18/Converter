@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Connector\Connector.csproj" />
+    <ProjectReference Include="..\Docmanager\Docmanager.csproj" />
   </ItemGroup>
 
 </Project>

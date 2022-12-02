@@ -6,18 +6,10 @@
 //  Original author: Skole
 ///////////////////////////////////////////////////////////
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-
-
-
-using Connector;
-using Webmanager;
 using Converter.Requests;
 
-namespace Webmanager {
+namespace Webmanager
+{
 	internal class Requests : IRequests {
 
 

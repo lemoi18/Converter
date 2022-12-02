@@ -22,6 +22,20 @@ namespace Docmanager
 		public double _C;
 		public double _D;
 
+		public Unit()
+		{
+		}
+
+		public Unit(string name, string sI, double a, double b, double c, double d)
+		{
+			_name = name;
+			_SI = sI;
+			_A = a;
+			_B = b;
+			_C = c;
+			_D = d;
+		}
+
 		public void AddUnit(string unitName)
 		{
 			throw new NotImplementedException();
@@ -82,10 +96,7 @@ namespace Docmanager
 			throw new NotImplementedException();
 		}
 
-		IDocmanager.Unit IDocmanager.GetUnit(string name)
-		{
-			throw new NotImplementedException();
-		}
+		
 	}//end Unit
 
 }//end namespace Docmanager

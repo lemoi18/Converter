@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using Converter.Docmanager;
+using Docmanager;
 
 namespace Docmanager
 {
@@ -20,7 +20,7 @@ namespace Docmanager
     public static class DocFactory
     {
 
-        public static IDocmanager CreatePSU(string name)
+        public static IDocmanager CreateDocmanager(string name)
         {
 
 

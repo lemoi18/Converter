@@ -10,15 +10,7 @@ namespace Docmanager
 {
     public interface IDocmanager
     {
-        struct Unit
-        {
-            public string _name;
-            public string _SI;
-            public double _A;
-            public double _B;
-            public double _C;
-            public double _D;
-        }
+       
 
         public int CreateUnit(string name, string si, double[] value);
 

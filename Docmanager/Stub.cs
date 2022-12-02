@@ -10,17 +10,13 @@ namespace Docmanager
 {
     internal class DocStub : IDocmanager
     {
+        public string _name;
+        public string _SI;
+        public double _A;
+        public double _B;
+        public double _C;
+        public double _D;
 
-
-        struct Unit
-        {
-            public string _name;
-            public string _SI;
-            public double _A;
-            public double _B;
-            public double _C;
-            public double _D;
-        }
 
         public void AddUnit(string unitName)
         {
@@ -52,6 +48,10 @@ namespace Docmanager
             throw new NotImplementedException();
         }
 
+        public Unit GetUnit(string name)
+        {
+            return new Unit(name, "m", 0.0, 100.0, 1.0, 0.0);
+        }
 
         public List<Group> ListGroups()
         {
@@ -73,17 +73,7 @@ namespace Docmanager
             throw new NotImplementedException();
         }
 
-        IDocmanager.Unit IDocmanager.GetUnit(string name)
-        {
-            IDocmanager.Unit values = new IDocmanager.Unit();
-            values._A = 0;
-            values._B = 1;
-            values._C = 2;
-            values._name = name;
-            values._SI = name;
-
-            return values;
-        }
+       
     }
 
 }
