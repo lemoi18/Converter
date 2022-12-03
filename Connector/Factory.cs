@@ -21,7 +21,7 @@ namespace Connector
             IC connector = null;
 
             if (name.ToUpper() == "Connector")
-                connector = new Connector();
+                connector = new Conn();
             else if (name.ToUpper() == "TEST")
                 connector = new Stub();
             return connector;

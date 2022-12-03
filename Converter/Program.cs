@@ -21,12 +21,4 @@ converter.ConverterWrapper(10, "cm", "m");
 //Console.WriteLine(converter.ConverterWrapper(t.Item1, t.Item2, t.Item3));
 
 
-const string filepath = @"C:\Users\Skole\source\repos\Exam\Converter\Docmanager\POSC.json";
-
-string jsonString = File.ReadAllText(filepath);
-
-JObject jObject = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonString) as JObject;
-
-
-Console.WriteLine(jObject["UnitOfMeasure"].ToString());
 
