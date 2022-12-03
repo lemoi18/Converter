@@ -22,7 +22,7 @@ namespace Docmanager
         public class UnitClass
         {
             public string Name { get; set; }
-            public string[]? QuantityType { get; set; }
+            public List<string> QuantityType { get; set; }
             public string SameUnit { get; set; }
             public string CatalogName { get; set; }
             public string CatalogSymbol { get; set; }

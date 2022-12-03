@@ -28,13 +28,14 @@ IEnumerable<UnitClass> temp =
     select new UnitClass
     {
         Name = unit["Name"].Value<string>(),
-        //QuantityType = unit["QuantityType"].Value<string[]>()
+        QuantityType = unit["QuantityType"].ToObject<List<String>>(),
+        //DimensionalClass =
     };
 
 //Console.WriteLine(jObject["UnitOfMeasure"]);
 
 foreach (var unit in temp)
 {
-    Console.WriteLine("{0}\n", unit.Name);
+    Console.WriteLine("{0}\n", unit.QuantityType[0]);
 }
 
