@@ -87,9 +87,10 @@ namespace Docmanager
             throw new NotImplementedException();
         }
 
-    
-
-       
+        string[] IDocmanager.GetUnit(string name)
+        {
+            throw new NotImplementedException();
+        }
     }//end GroupParser
 
 }//end namespace Docmanager

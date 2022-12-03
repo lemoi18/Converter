@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Text.Json.Nodes;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Docmanager
 {
@@ -17,6 +20,7 @@ namespace Docmanager
         public double _C;
         public double _D;
 
+       
 
         public void AddUnit(string unitName)
         {
@@ -48,9 +52,38 @@ namespace Docmanager
             throw new NotImplementedException();
         }
 
-        public Unit GetUnit(string name)
+        public string[] GetUnit(string name)
         {
-            return new Unit(name, "m", 0.0, 100.0, 1.0, 0.0);
+
+            if (name.ToLower() == "cm")
+                return new string[]
+                {
+                        "cm",
+                        "Centimeter",
+                        (0.0).ToString(),
+                        (0.01).ToString(),
+                        (1).ToString(),
+                        (0).ToString()
+                };
+            else if (name.ToLower() == "m")
+                {
+
+
+
+
+                return new string[]
+                {
+                        "m",
+                        "Meter",
+                        (0.0).ToString(),
+                        (1.0).ToString(),
+                        (0.0).ToString(),
+                        (1.0).ToString()
+                };               
+                 }
+
+            else return new string[] {name};
+            
         }
 
         public List<Group> ListGroups()
@@ -73,7 +106,7 @@ namespace Docmanager
             throw new NotImplementedException();
         }
 
-       
+        
     }
 
 }

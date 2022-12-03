@@ -6,34 +6,39 @@
 //  Original author: Skole
 ///////////////////////////////////////////////////////////
 
-using Converter.Requests;
-
-namespace Webmanager
+namespace Webmanager.Webmanager
 {
-	internal class Requests : IRequests {
+	internal class Requests : IRequests
+	{
 
 
-		public Requests(){
-
-		}
-
-		~Requests(){
+		public Requests()
+		{
 
 		}
 
-		public void Post(){
+		~Requests()
+		{
 
 		}
 
-		public void Put(){
+		public void Post()
+		{
 
 		}
 
-		public void Delete(){
+		public void Put()
+		{
 
 		}
 
-		public void Get(){
+		public void Delete()
+		{
+
+		}
+
+		public void Get()
+		{
 
 		}
 

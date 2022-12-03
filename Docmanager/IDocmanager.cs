@@ -10,7 +10,8 @@ namespace Docmanager
 {
     public interface IDocmanager
     {
-       
+      
+
 
         public int CreateUnit(string name, string si, double[] value);
 
@@ -25,7 +26,7 @@ namespace Docmanager
         public string[] ListUnits();
 
 
-        public Unit GetUnit(string name);
+        public string[] GetUnit(string name);
 
 
 

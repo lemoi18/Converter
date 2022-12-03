@@ -1,24 +1,37 @@
-﻿using System;
+﻿
+
+using Docmanager;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace Connector
 {
+    
     internal class Stub : IC
     {
         public Tuple<double, string, string> BaseToConvert(double value, string unitFrom, string unitTo)
         {
+
+            IDocmanager docmanager;
+            docmanager = DocFactory.CreateDocmanager("Test");
+
+
+            string[] strings = docmanager.GetUnit("cm");
+
             double y = value;
             double a = 0;
             double b = 0.01;
             double c = 1;
             double d = 0;
             double res = 0;
-            string uom = "cm";
-            string annotation = "Centimeter";
+            string uom = strings[0];
+            string annotation = strings[1];
 
             try
             {
@@ -44,7 +57,7 @@ namespace Connector
 
             if (My_Tuple2.Item2.ToLower() == unitTo)
             {
-                Tuple<double, string, string> Edited = new Tuple<double, string, string>(My_Tuple2.Item1, "m", "Meter");
+                Tuple<double, string, string> Edited = new Tuple<double, string, string>(My_Tuple2.Item1, My_Tuple2.Item2, My_Tuple2.Item3);
 
                 Console.WriteLine(WriteToConsole(Edited));
                 return Edited;
@@ -64,14 +77,20 @@ namespace Connector
 
         public Tuple<double, string, string> ConvertToBase(double value, string unitFrom, string unitTo)
         {
+
+            IDocmanager docmanager;
+            docmanager = DocFactory.CreateDocmanager("Test");
+            string[] From = docmanager.GetUnit("cm");
+            string[] To = docmanager.GetUnit("m");
+
             double x = value;
-            double a = 0;
-            double b = 0.001;
-            double c = 1;
-            double d = 0;
+            double a = double.Parse(From[2]);
+            double b = double.Parse(From[3]);
+            double c = double.Parse(From[4]);
+            double d = double.Parse(From[5]);
             double res = 0;
-            string uom = "m";
-            string annotation = "Meter";
+            string uom = To[0];
+            string annotation = To[1];
 
             try
             {

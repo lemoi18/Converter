@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Converter.Requests
+namespace Webmanager.Webmanager
 {
     internal interface IRequests
     {

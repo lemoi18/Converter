@@ -15,26 +15,16 @@ namespace Docmanager
 {
     public class Unit : IDocmanager {
 
-		public string _name;
-		public string _SI;
-		public double _A;
-		public double _B;
-		public double _C;
-		public double _D;
+		public string? _name;
+		public string? _SI;
+		public double? _A;
+		public double? _B;
+		public double? _C;
+		public double? _D;
 
-		public Unit()
-		{
-		}
+		
 
-		public Unit(string name, string sI, double a, double b, double c, double d)
-		{
-			_name = name;
-			_SI = sI;
-			_A = a;
-			_B = b;
-			_C = c;
-			_D = d;
-		}
+		
 
 		public void AddUnit(string unitName)
 		{
@@ -66,12 +56,7 @@ namespace Docmanager
 			throw new NotImplementedException();
 		}
 
-		public Unit GetUnit()
-		{
-			throw new NotImplementedException();
-		}
-
-		public Unit GetUnit(string name)
+		public string[] GetUnit(string name)
 		{
 			throw new NotImplementedException();
 		}
