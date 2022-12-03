@@ -10,87 +10,41 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using Docmanager;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json.Linq;
+
 
 namespace Docmanager
 {
-    internal class Docmanager : IDocmanager {
-
-
-
-        
-
-        public void EditGroup(string? newName, string baseUnit, string[]? units)
+    internal class Docmanager
+    {
+        public class UnitClass
         {
-            throw new NotImplementedException();
+            public string Name { get; set; }
+            public string[]? QuantityType { get; set; }
+            public string SameUnit { get; set; }
+            public string CatalogName { get; set; }
+            public string CatalogSymbol { get; set; }
         }
 
-        public void DeleteGroup(string name)
-        {
-            throw new NotImplementedException();
-        }
+        const string filepath = @"C:\\Users\\Yea\\IKT300\\Engineering units - mappe eksamen\\Converter\\POSC.json";
 
-        public void AddUnit(string unitName)
-        {
-            throw new NotImplementedException();
-        }
+        string jsonString = File.ReadAllText(filepath);
 
-        public void RemoveUnit(string name)
-        {
-            throw new NotImplementedException();
-        }
+        JObject jObject = Newtonsoft.Json.JsonConvert.DeserializeObject(File.ReadAllText(filepath)) as JObject;
 
-        public int CreateUnit(string name, string si, double[] value)
-        {
-            throw new NotImplementedException();
-        }
 
-        public int EditUnit(string? newName, string? si, double[]? value)
-        {
-            throw new NotImplementedException();
-        }
+        // Put changes into file
+        //File.WriteAllText(filepath, jObject.ToString());
+        //var temp = from unit in jObject["UnitOfMeasure"]
+        //where unit["Name"].ToString(Newtonsoft.Json.Formatting.None) == "\"per Kelvin"\"
+        //select unit;
 
-        public int DeleteUnit(string name)
-        {
-            throw new NotImplementedException();
-        }
+        //Console.WriteLine(jObject["UnitOfMeasure"]);
 
-        public string[] ListUnits()
-        {
-            throw new NotImplementedException();
-        }
 
-        public object GetUnit()
-        {
-            throw new NotImplementedException();
-        }
-
-       
-
-        public int EditGroup(string? newName, string baseUnit)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Group> ListGroups()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Group ReadGroup(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Unit GetUnit(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        string[] IDocmanager.GetUnit(string name)
-        {
-            throw new NotImplementedException();
-        }
+        //Console.WriteLine();
     }//end GroupParser
 
 }//end namespace Docmanager
