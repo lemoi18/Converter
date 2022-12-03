@@ -10,48 +10,7 @@ namespace Docmanager
 {
     public interface IDocmanager
     {
-      
-
-
-        public int CreateUnit(string name, string si, double[] value);
-
-
-        public int EditUnit(string? newName, string? si, double[]? value);
-
-
-
-        public int DeleteUnit(string name);
-
-
-        public string[] ListUnits();
-
-
-        public string[] GetUnit(string name);
-
-
-
-        public int EditGroup(string? newName, string baseUnit);
-
-
-
-        public void DeleteGroup(string name);
-
-
-
-        public void AddUnit(string unitName);
-
-
-
-        public void RemoveUnit(string name);
-
-
-
-        public List<Group> ListGroups();
-
-
-
-        public Group ReadGroup(string name);
-
+        public string ReadAnnotation(string unitName);
 
     }
 

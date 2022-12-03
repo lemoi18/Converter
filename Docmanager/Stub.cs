@@ -96,6 +96,11 @@ namespace Docmanager
             throw new NotImplementedException();
         }
 
+        public string ReadAnnotation(string unitName)
+        {
+            throw new NotImplementedException();
+        }
+
         public Group ReadGroup(string name)
         {
             throw new NotImplementedException();

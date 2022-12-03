@@ -26,10 +26,10 @@ namespace Docmanager
 
             IDocmanager psu = null;
 
-            if (name.ToUpper() == "unit")
+            if (name.ToUpper() == "UNIT")
                 psu = new Unit();
             else if (name.ToUpper() == "TEST")
-                psu = new DocStub();
+                psu = new Docmanager();
             return psu;
         }
 

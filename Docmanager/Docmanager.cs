@@ -15,10 +15,17 @@ using System.Runtime.CompilerServices;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 
+
 namespace Docmanager
 {
-    internal class Docmanager
+    internal class Docmanager : IDocmanager
     {
+        public string ReadAnnotation(string unitName)
+        {
+            Console.WriteLine("test");
+            return "test";
+        }
+
         public class BaseUnit
         {
             public string BasicAuthority { get; set; }
@@ -67,23 +74,10 @@ namespace Docmanager
             public string Deprecated { get; set; }
             public ConversionToBaseUnit ConversionToBaseUnit { get; set; }
         }
-        const string filepath = @"C:\\Users\\Yea\\IKT300\\Engineering units - mappe eksamen\\Converter\\POSC.json";
-
-        string jsonString = File.ReadAllText(filepath);
-
-        JObject jObject = Newtonsoft.Json.JsonConvert.DeserializeObject(File.ReadAllText(filepath)) as JObject;
 
 
-        // Put changes into file
-        //File.WriteAllText(filepath, jObject.ToString());
-        //var temp = from unit in jObject["UnitOfMeasure"]
-        //where unit["Name"].ToString(Newtonsoft.Json.Formatting.None) == "\"per Kelvin"\"
-        //select unit;
-
-        //Console.WriteLine(jObject["UnitOfMeasure"]);
 
 
-        //Console.WriteLine();
     }//end GroupParser
 
 }//end namespace Docmanager
