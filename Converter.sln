@@ -10,18 +10,27 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Console", "Converter\Consol
 		{FFB6F203-6B9D-4DA0-9E7A-66AB86B8BB66} = {FFB6F203-6B9D-4DA0-9E7A-66AB86B8BB66}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connector", "Connector\Connector.csproj", "{FFB6F203-6B9D-4DA0-9E7A-66AB86B8BB66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Connector", "Connector\Connector.csproj", "{FFB6F203-6B9D-4DA0-9E7A-66AB86B8BB66}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5C8F5411-E903-462D-B7BC-AF1DC2BE066E} = {5C8F5411-E903-462D-B7BC-AF1DC2BE066E}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Docmanager", "Docmanager\Docmanager.csproj", "{5C8F5411-E903-462D-B7BC-AF1DC2BE066E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Docmanager", "Docmanager\Docmanager.csproj", "{5C8F5411-E903-462D-B7BC-AF1DC2BE066E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webmanager", "Webmanager\Webmanager.csproj", "{484DD0AD-4C49-44F5-B0F6-21EE90CEA695}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webmanager", "Webmanager\Webmanager.csproj", "{484DD0AD-4C49-44F5-B0F6-21EE90CEA695}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5C8F5411-E903-462D-B7BC-AF1DC2BE066E} = {5C8F5411-E903-462D-B7BC-AF1DC2BE066E}
 		{FFB6F203-6B9D-4DA0-9E7A-66AB86B8BB66} = {FFB6F203-6B9D-4DA0-9E7A-66AB86B8BB66}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desktop Application", "Desktop Application\Desktop Application.csproj", "{76AB7630-7EA8-48E2-9588-D4FA6000C26D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5C8F5411-E903-462D-B7BC-AF1DC2BE066E} = {5C8F5411-E903-462D-B7BC-AF1DC2BE066E}
+		{A9CE11A8-F413-4235-B5D3-B8F9C7480971} = {A9CE11A8-F413-4235-B5D3-B8F9C7480971}
+		{FFB6F203-6B9D-4DA0-9E7A-66AB86B8BB66} = {FFB6F203-6B9D-4DA0-9E7A-66AB86B8BB66}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RequestLib", "RequestLib\RequestLib.csproj", "{A9CE11A8-F413-4235-B5D3-B8F9C7480971}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +54,14 @@ Global
 		{484DD0AD-4C49-44F5-B0F6-21EE90CEA695}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{484DD0AD-4C49-44F5-B0F6-21EE90CEA695}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{484DD0AD-4C49-44F5-B0F6-21EE90CEA695}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76AB7630-7EA8-48E2-9588-D4FA6000C26D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76AB7630-7EA8-48E2-9588-D4FA6000C26D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76AB7630-7EA8-48E2-9588-D4FA6000C26D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76AB7630-7EA8-48E2-9588-D4FA6000C26D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9CE11A8-F413-4235-B5D3-B8F9C7480971}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9CE11A8-F413-4235-B5D3-B8F9C7480971}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9CE11A8-F413-4235-B5D3-B8F9C7480971}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9CE11A8-F413-4235-B5D3-B8F9C7480971}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
