@@ -14,28 +14,19 @@ const string filepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\
 
 string jsonString = File.ReadAllText(filepath);
 
-JObject jObject = JsonConvert.DeserializeObject(jsonString) as JObject;
+var jObject = JsonConvert.DeserializeObject<List<UnitClass>>(jsonString);
 
 // Put changes into file
 //File.WriteAllText(filepath, jObject.ToString());
+
 //var temp = from unit in jObject["UnitOfMeasure"]
 //where unit["Name"].ToString(Newtonsoft.Json.Formatting.None) == "\"per Kelvin"\"
 //select unit;
 
-IEnumerable<UnitClass> temp =
-    from unit in jObject["UnitOfMeasure"]
-    where unit["Name"].Value<string>() == "per Kelvin"
-    select new UnitClass
-    {
-        Name = unit["Name"].Value<string>(),
-        QuantityType = unit["QuantityType"].ToObject<List<String>>(),
-        //DimensionalClass =
-    };
 
 //Console.WriteLine(jObject["UnitOfMeasure"]);
 
-foreach (var unit in temp)
-{
-    Console.WriteLine("{0}\n", unit.QuantityType[0]);
-}
+
+Console.WriteLine("{0}\n", jObject[1].QuantityType[1]);
+
 

@@ -13,19 +13,48 @@ using System.IO;
 using Docmanager;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json.Linq;
-
+using Newtonsoft.Json;
 
 namespace Docmanager
 {
     internal class Docmanager
     {
+        //https://stackoverflow.com/questions/18994685/how-to-handle-both-a-single-item-and-an-array-for-the-same-property-using-json-n
+        class SingleOrArrayConverter<T> : JsonConverter
+        {
+            public override bool CanConvert(Type objectType)
+            {
+                return (objectType == typeof(List<T>));
+            }
+
+            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+            {
+                JToken token = JToken.Load(reader);
+                if (token.Type == JTokenType.Array)
+                {
+                    return token.ToObject<List<T>>();
+                }
+                return new List<T> { token.ToObject<T>() };
+            }
+
+            public override bool CanWrite
+            {
+                get { return false; }
+            }
+
+            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+            {
+                throw new NotImplementedException();
+            }
+        }
         public class UnitClass
         {
             public string Name { get; set; }
+            [JsonConverter(typeof(SingleOrArrayConverter<string>))]
             public List<string> QuantityType { get; set; }
-            public string SameUnit { get; set; }
-            public string CatalogName { get; set; }
-            public string CatalogSymbol { get; set; }
+            //public string SameUnit { get; set; }
+            //public string CatalogName { get; set; }
+            //public string CatalogSymbol { get; set; }
         }
 
         const string filepath = @"C:\\Users\\Yea\\IKT300\\Engineering units - mappe eksamen\\Converter\\POSC.json";
