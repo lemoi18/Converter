@@ -8,25 +8,32 @@ using System.Reflection;
 using System.ComponentModel;
 
 
-UnitClass t = new UnitClass();
+Root t = new Root();
 
 const string filepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\POSC.json";
 
 string jsonString = File.ReadAllText(filepath);
 
-var jObject = JsonConvert.DeserializeObject<List<UnitClass>>(jsonString);
+var jsonDeserialized = JsonConvert.DeserializeObject<List<Root>>(jsonString);
 
 // Put changes into file
 //File.WriteAllText(filepath, jObject.ToString());
 
 var matches = 
-    from unit in jObject
-    //where unit.Name == "per Kelvin"
+    from unit in jsonDeserialized
+        //where unit.Name == "per Kelvin"
     select unit;
 
 foreach (var match in matches) 
 {
-    Console.WriteLine(match.Name);
+    try
+    {
+        Console.WriteLine(match.ConversionToBaseUnit.Factor);
+    }
+    catch (NullReferenceException)
+    {
+        Console.WriteLine("test");
+    }
 }
 
 

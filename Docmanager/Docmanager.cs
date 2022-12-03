@@ -19,52 +19,54 @@ namespace Docmanager
 {
     internal class Docmanager
     {
-        //https://stackoverflow.com/questions/18994685/how-to-handle-both-a-single-item-and-an-array-for-the-same-property-using-json-n
-        class SingleOrArrayConverter<T> : JsonConverter
+        public class BaseUnit
         {
-            public override bool CanConvert(Type objectType)
-            {
-                return (objectType == typeof(List<T>));
-            }
-
-            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-            {
-                JToken token = JToken.Load(reader);
-                if (token.Type == JTokenType.Array)
-                {
-                    return token.ToObject<List<T>>();
-                }
-                return new List<T> { token.ToObject<T>() };
-            }
-
-            public override bool CanWrite
-            {
-                get { return false; }
-            }
-
-            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-            {
-                throw new NotImplementedException();
-            }
+            public string BasicAuthority { get; set; }
+            public string Description { get; set; }
         }
-        public class UnitClass
+
+        public class CatalogSymbol
+        {
+            public string isExplicit { get; set; }
+            public string text { get; set; }
+        }
+
+        public class ConversionToBaseUnit
+        {
+            public string baseUnit { get; set; }
+            public string Factor { get; set; }
+            public Fraction Fraction { get; set; }
+            public Formula Formula { get; set; }
+        }
+
+        public class Formula
+        {
+            public string A { get; set; }
+            public string B { get; set; }
+            public string C { get; set; }
+            public string D { get; set; }
+        }
+
+        public class Fraction
+        {
+            public string Numerator { get; set; }
+            public string Denominator { get; set; }
+        }
+
+        public class Root
         {
             public string id { get; set; }
             public string annotation { get; set; }
             public string Name { get; set; }
-            [JsonConverter(typeof(SingleOrArrayConverter<string>))]
-            public List<string> QuantityType { get; set; }
+            public object QuantityType { get; set; }
             public string DimensionalClass { get; set; }
-            //public SameUnit SameUnit { get; set; }
-            
+            public object SameUnit { get; set; }
+            public string CatalogName { get; set; }
+            public CatalogSymbol CatalogSymbol { get; set; }
+            public BaseUnit BaseUnit { get; set; }
+            public string Deprecated { get; set; }
+            public ConversionToBaseUnit ConversionToBaseUnit { get; set; }
         }
-
-        public class SameUnit
-        {
-            public string uom { get; set; }
-            public string namingSystem { get; set; }
-        }
-
         const string filepath = @"C:\\Users\\Yea\\IKT300\\Engineering units - mappe eksamen\\Converter\\POSC.json";
 
         string jsonString = File.ReadAllText(filepath);
