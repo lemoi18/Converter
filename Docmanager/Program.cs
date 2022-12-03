@@ -19,14 +19,15 @@ var jObject = JsonConvert.DeserializeObject<List<UnitClass>>(jsonString);
 // Put changes into file
 //File.WriteAllText(filepath, jObject.ToString());
 
-//var temp = from unit in jObject["UnitOfMeasure"]
-//where unit["Name"].ToString(Newtonsoft.Json.Formatting.None) == "\"per Kelvin"\"
-//select unit;
+var matches = 
+    from unit in jObject
+    //where unit.Name == "per Kelvin"
+    select unit;
 
+foreach (var match in matches) 
+{
+    Console.WriteLine(match.Name);
+}
 
-//Console.WriteLine(jObject["UnitOfMeasure"]);
-
-
-Console.WriteLine("{0}\n", jObject[1].QuantityType[1]);
 
 

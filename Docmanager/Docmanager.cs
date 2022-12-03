@@ -49,12 +49,20 @@ namespace Docmanager
         }
         public class UnitClass
         {
+            public string id { get; set; }
+            public string annotation { get; set; }
             public string Name { get; set; }
             [JsonConverter(typeof(SingleOrArrayConverter<string>))]
             public List<string> QuantityType { get; set; }
-            //public string SameUnit { get; set; }
-            //public string CatalogName { get; set; }
-            //public string CatalogSymbol { get; set; }
+            public string DimensionalClass { get; set; }
+            //public SameUnit SameUnit { get; set; }
+            
+        }
+
+        public class SameUnit
+        {
+            public string uom { get; set; }
+            public string namingSystem { get; set; }
         }
 
         const string filepath = @"C:\\Users\\Yea\\IKT300\\Engineering units - mappe eksamen\\Converter\\POSC.json";
