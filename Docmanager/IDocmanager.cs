@@ -11,7 +11,10 @@ namespace Docmanager
     public interface IDocmanager
     {
         public string ReadAnnotation(string unitName);
-        public int ReadConversion(string unitName, ref double A, ref double B, ref double C, ref double D);
+        public void ReadConversion(string unitName, ref double A, ref double B, ref double C, ref double D);
+        public void CreateUOM(string id, string annotation, string name, string qualitytype, string dimensionalclass, string baseunit);
+        public void EditUOM(string old_id, string id, string annotation, string name, string qualitytype, string dimensionalclass, string baseunit);
+        public void DeleteUOM(string id);
 
     }
 

@@ -41,7 +41,7 @@ namespace Docmanager
             return "";
         }
 
-        public int ReadConversion(string unitName, ref double A, ref double B, ref double C, ref double D) 
+        public void ReadConversion(string unitName, ref double A, ref double B, ref double C, ref double D) 
         {
             A = 0; B = 0; C = 0; D = 0;
 
@@ -116,9 +116,73 @@ namespace Docmanager
                     C = double.Parse(match.ConversionToBaseUnit.Fraction.Denominator);
                 }
             } catch (NullReferenceException) { }
+        }
+        public void CreateUOM(string id, string annotation, string name, string quantityType, string dimensionalclass, string baseunit)
+        {
+            String newjson =
+                "{" +
+                    "\"id\": \"" + id + "\"," +
+                    "\"annotation\": \"" + annotation + "\"," +
+                    "\"Name\": \"" + name + "\"," +
+                    "\"QuantityType\": \"" + quantityType + "\"," +
+                    "\"DimensionalClass\": \"" + dimensionalclass + "\"," +
+                    "\"SameUnit\": {" +
+                      "\"uom\": \"" + Temp + "\"," +
+                      "\"namingSystem\": \"" + Temp + "\"" +
+                    "}," +
+                    "\"CatalogName\": \"" + Temp + "\"," +
+                    "\"CatalogSymbol\": {" +
+                      "\"isExplicit\": \"" + Temp + "\"," +
+                      "\"text\": \"" + Temp + "\"" +
+                    "}," +
+                    "\"ConversionToBaseUnit\": {" +
+                      "\"baseUnit\": \"" + baseunit + "\"," +
+                      "\"Formula\": {" +
+                        "\"A\": \"" + Temp + "\"," +
+                        "\"B\": \"" + Temp + "\"," +
+                        "\"C\": \"" + Temp + "\"," +
+                        "\"D\": \"" + Temp + "\"" +
+                      "}" +
+                    "}" +
+                "}";
 
+            Root newjsonDeserialized = JsonConvert.DeserializeObject<Root>(newjson);
+            jsonDeserialized.Add(newjsonDeserialized);
 
-            return 0;
+            string output = JsonConvert.SerializeObject(jsonDeserialized, Formatting.Indented);
+
+            File.WriteAllText(filepath, output);
+        }
+        public void EditUOM(string old_id, string id, string annotation, string name, string qualitytype, string dimensionalclass, string baseunit)
+        {
+            Root match =
+                (from unit in jsonDeserialized
+                 where unit.id == old_id
+                 select unit).First();
+
+            match.id = id;
+            match.annotation = annotation;
+            match.Name = name;
+            match.QuantityType = qualitytype;
+            match.DimensionalClass = dimensionalclass;
+            match.ConversionToBaseUnit.baseUnit = baseunit;
+
+            string output = JsonConvert.SerializeObject(jsonDeserialized, Formatting.Indented);
+
+            File.WriteAllText(filepath, output);
+        }
+        public void DeleteUOM(string id)
+        {
+            Root match =
+                (from unit in jsonDeserialized
+                 where unit.id == id
+                 select unit).First();
+
+            jsonDeserialized.Remove(match);
+
+            string output = JsonConvert.SerializeObject(jsonDeserialized, Formatting.Indented);
+
+            File.WriteAllText(filepath, output);
         }
         public class BaseUnit
         {
