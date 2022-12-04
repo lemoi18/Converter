@@ -13,7 +13,7 @@ using System.IO;
 
 namespace Docmanager
 {
-    public class Unit : IDocmanager {
+    public class Unit{
 
 		public string? _name;
 		public string? _SI;

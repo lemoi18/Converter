@@ -14,14 +14,21 @@ using Docmanager;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 
 namespace Docmanager
 {
     internal class Docmanager : IDocmanager
     {
+        //Fetch and derealize json file
+        const string filepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\POSC.json";
+        List<Root> jsonDeserialized = JsonConvert.DeserializeObject<List<Root>>(File.ReadAllText(filepath));
+
+
         public string ReadAnnotation(string unitName)
         {
+            Console.WriteLine(jsonDeserialized[0].Name);
             Console.WriteLine("test");
             return "test";
         }

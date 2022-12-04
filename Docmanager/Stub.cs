@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace Docmanager
 {
-    internal class DocStub : IDocmanager
+    internal class DocStub
     {
         public string _name;
         public string _SI;

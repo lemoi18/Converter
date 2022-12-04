@@ -21,20 +21,20 @@ var jsonDeserialized = JsonConvert.DeserializeObject<List<Root>>(jsonString);
 //File.WriteAllText(filepath, jObject.ToString());
 
 //var matches = 
-    //from unit in jsonDeserialized
-    //where unit.Name == "per Kelvin"
-    //select unit;
+//from unit in jsonDeserialized
+//where unit.Name == "per Kelvin"
+//select unit;
 
 //foreach (var match in matches) 
 //{
-    //try
-    //{
-        //Console.WriteLine(match.Name);
-    //}
-    //catch (NullReferenceException)
-    //{
-        //Console.WriteLine("test");
-    //}
+//try
+//{
+//Console.WriteLine(match.Name);
+//}
+//catch (NullReferenceException)
+//{
+//Console.WriteLine("test");
+//}
 //}
 
 docmanager.ReadAnnotation("test");
