@@ -11,11 +11,6 @@ IDocmanager docmanager;
 docmanager = DocFactory.CreateDocmanager("Test");
 
 
-const string filepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\POSC.json";
-
-string jsonString = File.ReadAllText(filepath);
-
-var jsonDeserialized = JsonConvert.DeserializeObject<List<Root>>(jsonString);
 
 // Put changes into file
 //File.WriteAllText(filepath, jObject.ToString());
@@ -36,5 +31,11 @@ var jsonDeserialized = JsonConvert.DeserializeObject<List<Root>>(jsonString);
 //Console.WriteLine("test");
 //}
 //}
+double A = 404;
+double B = 404;
+double C = 404;
+double D = 404;
 
-docmanager.ReadAnnotation("test");
+docmanager.ReadConversion("degrees F square feet hours/Btu", ref A, ref B, ref C, ref D);
+
+Console.WriteLine("A: {0}\nB: {1}\nC: {2}\nD: {3}", A, B, C, D);

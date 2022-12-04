@@ -22,17 +22,104 @@ namespace Docmanager
     internal class Docmanager : IDocmanager
     {
         //Fetch and derealize json file
-        const string filepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\POSC.json";
+        const string filepath = @"E:\Dataing\IKT300\Engineering units - mappe eksamen\Docmanager\POSC.json";
         List<Root> jsonDeserialized = JsonConvert.DeserializeObject<List<Root>>(File.ReadAllText(filepath));
-
 
         public string ReadAnnotation(string unitName)
         {
-            Console.WriteLine(jsonDeserialized[0].Name);
-            Console.WriteLine("test");
-            return "test";
+            Root match =
+                (from unit in jsonDeserialized
+                 where unit.Name == unitName
+                 select unit).First();
+
+            try
+            {
+                return match.annotation;
+            }
+            catch (NullReferenceException) {return "";}
+            
+            return "";
         }
 
+        public int ReadConversion(string unitName, ref double A, ref double B, ref double C, ref double D) 
+        {
+            A = 0; B = 0; C = 0; D = 0;
+
+            Root match =
+                (from unit in jsonDeserialized
+                 where unit.Name == unitName
+                 select unit).First();
+
+            try
+            {
+                if (match.ConversionToBaseUnit.baseUnit != null)
+                {
+                    C = 1;
+                }
+            } catch (NullReferenceException) { }
+
+            try 
+            {
+                if (match.ConversionToBaseUnit.Formula.A != null)
+                {
+                    A = double.Parse(match.ConversionToBaseUnit.Formula.A);
+                }
+            } catch (NullReferenceException) { }
+
+            try 
+            {
+                if (match.ConversionToBaseUnit.Formula.B != null)
+                {
+                    B = double.Parse(match.ConversionToBaseUnit.Formula.B);
+                }
+            }
+            catch (NullReferenceException) { }
+
+            try 
+            {
+                if (match.ConversionToBaseUnit.Formula.C != null)
+                {
+                    C = double.Parse(match.ConversionToBaseUnit.Formula.C);
+                }
+            }
+            catch (NullReferenceException) { }
+
+            try 
+            {
+                if (match.ConversionToBaseUnit.Formula.D != null)
+                {
+                    D = double.Parse(match.ConversionToBaseUnit.Formula.D);
+                }
+            }
+            catch (NullReferenceException) { }
+
+            try 
+            {
+                if (match.ConversionToBaseUnit.Factor != null)
+                {
+                    B = double.Parse(match.ConversionToBaseUnit.Factor);
+                }
+            } catch (NullReferenceException) { }
+
+            try 
+            {
+                if (match.ConversionToBaseUnit.Fraction.Numerator != null)
+                {
+                    B = double.Parse(match.ConversionToBaseUnit.Fraction.Numerator);
+                }
+            } catch (NullReferenceException) { }
+            
+            try
+            {
+                if (match.ConversionToBaseUnit.Fraction.Denominator != null)
+                {
+                    C = double.Parse(match.ConversionToBaseUnit.Fraction.Denominator);
+                }
+            } catch (NullReferenceException) { }
+
+
+            return 0;
+        }
         public class BaseUnit
         {
             public string BasicAuthority { get; set; }
