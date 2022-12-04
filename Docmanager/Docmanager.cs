@@ -119,35 +119,43 @@ namespace Docmanager
         }
         public void CreateUOM(string id, string annotation, string name, string quantityType, string dimensionalclass, string baseunit)
         {
-            String newjson =
+            String newUnitString =
                 "{" +
-                    "\"id\": \"" + id + "\"," +
-                    "\"annotation\": \"" + annotation + "\"," +
-                    "\"Name\": \"" + name + "\"," +
-                    "\"QuantityType\": \"" + quantityType + "\"," +
-                    "\"DimensionalClass\": \"" + dimensionalclass + "\"," +
+                    "\"id\": null," +
+                    "\"annotation\": null," +
+                    "\"Name\": null," +
+                    "\"QuantityType\": null," +
+                    "\"DimensionalClass\": null," +
                     "\"SameUnit\": {" +
-                      "\"uom\": \"" + Temp + "\"," +
-                      "\"namingSystem\": \"" + Temp + "\"" +
+                      "\"uom\": null," +
+                      "\"namingSystem\": null" +
                     "}," +
-                    "\"CatalogName\": \"" + Temp + "\"," +
+                    "\"CatalogName\": null," +
                     "\"CatalogSymbol\": {" +
-                      "\"isExplicit\": \"" + Temp + "\"," +
-                      "\"text\": \"" + Temp + "\"" +
+                      "\"isExplicit\": null," +
+                      "\"text\": null" +
                     "}," +
                     "\"ConversionToBaseUnit\": {" +
-                      "\"baseUnit\": \"" + baseunit + "\"," +
+                      "\"baseUnit\": null," +
                       "\"Formula\": {" +
-                        "\"A\": \"" + Temp + "\"," +
-                        "\"B\": \"" + Temp + "\"," +
-                        "\"C\": \"" + Temp + "\"," +
-                        "\"D\": \"" + Temp + "\"" +
+                        "\"A\": null," +
+                        "\"B\": null," +
+                        "\"C\": null," +
+                        "\"D\": null" +
                       "}" +
                     "}" +
                 "}";
 
-            Root newjsonDeserialized = JsonConvert.DeserializeObject<Root>(newjson);
-            jsonDeserialized.Add(newjsonDeserialized);
+            Root newUnitDeserialized = JsonConvert.DeserializeObject<Root>(newUnitString);
+
+            newUnitDeserialized.id = id;
+            newUnitDeserialized.annotation = annotation;
+            newUnitDeserialized.Name = name;
+            newUnitDeserialized.QuantityType = quantityType;
+            newUnitDeserialized.DimensionalClass = dimensionalclass;
+            newUnitDeserialized.ConversionToBaseUnit.baseUnit = baseunit;
+
+            jsonDeserialized.Add(newUnitDeserialized);
 
             string output = JsonConvert.SerializeObject(jsonDeserialized, Formatting.Indented);
 
