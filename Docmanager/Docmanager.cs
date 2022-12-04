@@ -15,6 +15,8 @@ using System.Runtime.CompilerServices;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using static Docmanager.Docmanager;
+using System.Xml.Linq;
 
 
 namespace Docmanager
@@ -23,11 +25,11 @@ namespace Docmanager
     {
         //Fetch and derealize json file
         const string filepath = @"E:\Dataing\IKT300\Engineering units - mappe eksamen\Docmanager\POSC.json";
-        List<Root> jsonDeserialized = JsonConvert.DeserializeObject<List<Root>>(File.ReadAllText(filepath));
+        List<UOM> jsonDeserialized = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(filepath));
 
         public string ReadAnnotation(string unitName)
         {
-            Root match =
+            UOM match =
                 (from unit in jsonDeserialized
                  where unit.Name == unitName
                  select unit).First();
@@ -36,16 +38,16 @@ namespace Docmanager
             {
                 return match.annotation;
             }
-            catch (NullReferenceException) {return "";}
-            
+            catch (NullReferenceException) { return ""; }
+
             return "";
         }
 
-        public void ReadConversion(string unitName, ref double A, ref double B, ref double C, ref double D) 
+        public void ReadConversion(string unitName, ref double A, ref double B, ref double C, ref double D)
         {
             A = 0; B = 0; C = 0; D = 0;
 
-            Root match =
+            UOM match =
                 (from unit in jsonDeserialized
                  where unit.Name == unitName
                  select unit).First();
@@ -56,17 +58,19 @@ namespace Docmanager
                 {
                     C = 1;
                 }
-            } catch (NullReferenceException) { }
+            }
+            catch (NullReferenceException) { }
 
-            try 
+            try
             {
                 if (match.ConversionToBaseUnit.Formula.A != null)
                 {
                     A = double.Parse(match.ConversionToBaseUnit.Formula.A);
                 }
-            } catch (NullReferenceException) { }
+            }
+            catch (NullReferenceException) { }
 
-            try 
+            try
             {
                 if (match.ConversionToBaseUnit.Formula.B != null)
                 {
@@ -75,7 +79,7 @@ namespace Docmanager
             }
             catch (NullReferenceException) { }
 
-            try 
+            try
             {
                 if (match.ConversionToBaseUnit.Formula.C != null)
                 {
@@ -84,7 +88,7 @@ namespace Docmanager
             }
             catch (NullReferenceException) { }
 
-            try 
+            try
             {
                 if (match.ConversionToBaseUnit.Formula.D != null)
                 {
@@ -93,29 +97,32 @@ namespace Docmanager
             }
             catch (NullReferenceException) { }
 
-            try 
+            try
             {
                 if (match.ConversionToBaseUnit.Factor != null)
                 {
                     B = double.Parse(match.ConversionToBaseUnit.Factor);
                 }
-            } catch (NullReferenceException) { }
+            }
+            catch (NullReferenceException) { }
 
-            try 
+            try
             {
                 if (match.ConversionToBaseUnit.Fraction.Numerator != null)
                 {
                     B = double.Parse(match.ConversionToBaseUnit.Fraction.Numerator);
                 }
-            } catch (NullReferenceException) { }
-            
+            }
+            catch (NullReferenceException) { }
+
             try
             {
                 if (match.ConversionToBaseUnit.Fraction.Denominator != null)
                 {
                     C = double.Parse(match.ConversionToBaseUnit.Fraction.Denominator);
                 }
-            } catch (NullReferenceException) { }
+            }
+            catch (NullReferenceException) { }
         }
         public void CreateUOM(string id, string annotation, string name, string quantityType, string dimensionalclass, string baseunit)
         {
@@ -146,7 +153,7 @@ namespace Docmanager
                     "}" +
                 "}";
 
-            Root newUnitDeserialized = JsonConvert.DeserializeObject<Root>(newUnitString);
+            UOM newUnitDeserialized = JsonConvert.DeserializeObject<UOM>(newUnitString);
 
             newUnitDeserialized.id = id;
             newUnitDeserialized.annotation = annotation;
@@ -163,7 +170,7 @@ namespace Docmanager
         }
         public void EditUOM(string old_id, string id, string annotation, string name, string qualitytype, string dimensionalclass, string baseunit)
         {
-            Root match =
+            UOM match =
                 (from unit in jsonDeserialized
                  where unit.id == old_id
                  select unit).First();
@@ -181,7 +188,7 @@ namespace Docmanager
         }
         public void DeleteUOM(string id)
         {
-            Root match =
+            UOM match =
                 (from unit in jsonDeserialized
                  where unit.id == id
                  select unit).First();
@@ -192,6 +199,25 @@ namespace Docmanager
 
             File.WriteAllText(filepath, output);
         }
+
+        public void RemoveQualityType(string unitName, string quantityTypeName)
+        {
+            UOM match =
+                (from unit in jsonDeserialized
+                 where unit.Name == unitName
+                 select unit).First();
+
+            String newQuantityType = match.QuantityType.ToString();
+            newQuantityType = newQuantityType.Replace("\"" + quantityTypeName + "\",", string.Empty);
+
+            Console.WriteLine(newQuantityType);
+
+            string output = JsonConvert.SerializeObject(jsonDeserialized, Formatting.Indented);
+
+            File.WriteAllText(filepath, output);
+        }
+
+
         public class BaseUnit
         {
             public string BasicAuthority { get; set; }
@@ -226,7 +252,7 @@ namespace Docmanager
             public string Denominator { get; set; }
         }
 
-        public class Root
+        public class UOM
         {
             public string id { get; set; }
             public string annotation { get; set; }
@@ -236,7 +262,7 @@ namespace Docmanager
             public object SameUnit { get; set; }
             public string CatalogName { get; set; }
             public CatalogSymbol CatalogSymbol { get; set; }
-            public BaseUnit BaseUnit { get; set; }
+            //public BaseUnit BaseUnit { get; set; }
             public string Deprecated { get; set; }
             public ConversionToBaseUnit ConversionToBaseUnit { get; set; }
         }

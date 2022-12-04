@@ -15,6 +15,7 @@ namespace Docmanager
         public void CreateUOM(string id, string annotation, string name, string qualitytype, string dimensionalclass, string baseunit);
         public void EditUOM(string old_id, string id, string annotation, string name, string qualitytype, string dimensionalclass, string baseunit);
         public void DeleteUOM(string id);
+        public void RemoveQualityType(string unitName, string quantityTypeName);
 
     }
 

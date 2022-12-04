@@ -12,7 +12,5 @@ IDocmanager docmanager;
 docmanager = DocFactory.CreateDocmanager("Test");
 
 
-docmanager.CreateUOM("test", "test", "test", "test", "test", "test");
-
-
-Console.WriteLine("test");
+//docmanager.CreateUOM("test", "test", "test", "test", "test", "test");
+docmanager.RemoveQualityType("euclid", "shear strain");
