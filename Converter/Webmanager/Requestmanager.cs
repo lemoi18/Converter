@@ -88,7 +88,7 @@ namespace RequestManager
 
         public string AddQualityclass(string name, string uom)
         {
-            throw new NotImplementedException();
+            return "200 ok: " + name + ": " + uom;
         }
 
         public string CreateUOM(string id, string annotation, string name, string qualitytype, string dimensionalclass, string baseunit)
@@ -108,7 +108,7 @@ namespace RequestManager
 
         public string EditUOM(string oldName, string keyToChange, dynamic newValue)
         {
-            throw new NotImplementedException();
+            return "200 ok: " + oldName + ": " + keyToChange + ": " + newValue;
         }
 
         public string DeleteUOM(string id)
@@ -124,6 +124,10 @@ namespace RequestManager
         public string RemoveQualityclass(string unit, string name)
         {
             throw new NotImplementedException();
+        }
+        public List<string> GetUnitAttributes(string name)
+        { 
+            throw new NotImplementedException(); 
         }
     }
 }

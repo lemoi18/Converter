@@ -233,8 +233,91 @@ namespace PageDataManager
            "    </div>" +
             "  </body>" +
             "</html>";
-        public static string pageData_AQC;
-        public static string pageData_EUOM;
+        public static string pageData_AQC=
+            "<!DOCTYPE>" +
+            "<html>" +
+            "  <head>" +
+            "    <title>Converter of UOM</title>" +
+            "  </head>" +
+            "  <body>" +
+            "<div class=\"dropdown\">\r\n  <button class=\"dropbtn\">Meny Options</button>\r\n  <div class=\"dropdown-content\">\r\n    <a href=\"{1}Page/CO/\">Convert/</a>\r\n    <a href=\"{1}Page/LUD/\">List Unit Dimensions/</a>\r\n    <a href=\"{1}Page/UD/\">Unit Dimention Page</a>\r\n  </div>\r\n</div>" +
+            "<div class=\"dropdown\">\r\n  <button class=\"dropbtn\">Meny Options</button>\r\n  <div class=\"dropdown-content\">\r\n    <a href=\"{1}Page/LA/\">List Alias/</a>\r\n    <a href=\"{1}Page/LQC/\">List Quality class/</a>\r\n    <a href=\"{1}Page/QC/\">Quality class Page</a>\r\n  </div>\r\n</div>" +
+            "<div class=\"dropdown\">\r\n  <button class=\"dropbtn\">Meny Options</button>\r\n  <div class=\"dropdown-content\">\r\n    <a href=\"{1}Page/CUOM/\">Create UOM/</a>\r\n    <a href=\"{1}Page/CQC/\">Create Quality class/</a>\r\n    <a href=\"{1}Page/AQC/\">Add Quality class Page</a>\r\n  </div>\r\n</div>" +
+            "<div class=\"dropdown\">\r\n  <button class=\"dropbtn\">Meny Options</button>\r\n  <div class=\"dropdown-content\">\r\n    <a href=\"{1}Page/EUOM/\">Edit UOM/</a>\r\n    <a href=\"{1}Page/EQC/\">Edit Quality class/</a>\r\n    <a href=\"{1}Page/RQC/\">Remove Quality class Page</a>\r\n  </div>\r\n</div>" +
+            "<div class=\"dropdown\">\r\n  <button class=\"dropbtn\">Meny Options</button>\r\n  <div class=\"dropdown-content\">\r\n    <a href=\"{1}Page/DUOM/\">Delete UOM/</a>\r\n    <a href=\"{1}Page/DQC/\">Delete Quality class Page/</a>\r\n   </div>\r\n</div>" +
+            //string name, string uom
+
+            "<div id=\"4\">" +
+            "   <form id=\"5\" method=\"post\" action=\"{1}AQC\">" +
+            "       <label>AQC :</label><br>" +
+            "       <input type=\"text\" id=\"name\" name=\"name\" value=\"Quality class Name\"><br>" +
+             "       <input type=\"text\" id=\"unit\" name=\"unit\" value=\"Unit To be added to\"><br>" +
+            "      <input type=\"submit\" name=\"AQC\" value=\"Add Quality class\">" +
+            "    </ form > " +
+            "</div>" +
+             "   <div class=\"parent\", style=\"text-align-last: center\" >" +
+           "      <div class=\"Output\">Output: \n</div>" +
+           "      <div class=\"child two\"><p>{2}</p></div>" +
+           "    </div>" +
+            "  </body>" +
+            "</html>";
+        
+        public static string pageData_EUOM =
+          "<!DOCTYPE>" +
+            "<html>" +
+            "  <head>" +
+            "    <title>Converter of UOM</title>" +
+            "  </head>" +
+            "  <body>" +
+            "<div class=\"dropdown\">\r\n  <button class=\"dropbtn\">Meny Options</button>\r\n  <div class=\"dropdown-content\">\r\n    <a href=\"{1}Page/CO/\">Convert/</a>\r\n    <a href=\"{1}Page/LUD/\">List Unit Dimensions/</a>\r\n    <a href=\"{1}Page/UD/\">Unit Dimention Page</a>\r\n  </div>\r\n</div>" +
+            "<div class=\"dropdown\">\r\n  <button class=\"dropbtn\">Meny Options</button>\r\n  <div class=\"dropdown-content\">\r\n    <a href=\"{1}Page/LA/\">List Alias/</a>\r\n    <a href=\"{1}Page/LQC/\">List Quality class/</a>\r\n    <a href=\"{1}Page/QC/\">Quality class Page</a>\r\n  </div>\r\n</div>" +
+            "<div class=\"dropdown\">\r\n  <button class=\"dropbtn\">Meny Options</button>\r\n  <div class=\"dropdown-content\">\r\n    <a href=\"{1}Page/CUOM/\">Create UOM/</a>\r\n    <a href=\"{1}Page/CQC/\">Create Quality class/</a>\r\n    <a href=\"{1}Page/AQC/\">Add Quality class Page</a>\r\n  </div>\r\n</div>" +
+            "<div class=\"dropdown\">\r\n  <button class=\"dropbtn\">Meny Options</button>\r\n  <div class=\"dropdown-content\">\r\n    <a href=\"{1}Page/EUOM/\">Edit UOM/</a>\r\n    <a href=\"{1}Page/EQC/\">Edit Quality class/</a>\r\n    <a href=\"{1}Page/RQC/\">Remove Quality class Page</a>\r\n  </div>\r\n</div>" +
+            "<div class=\"dropdown\">\r\n  <button class=\"dropbtn\">Meny Options</button>\r\n  <div class=\"dropdown-content\">\r\n    <a href=\"{1}Page/DUOM/\">Delete UOM/</a>\r\n    <a href=\"{1}Page/DQC/\">Delete Quality class Page/</a>\r\n   </div>\r\n</div>" +
+         //string oldName, string keyToChange, dynamic newValue
+
+            "<div id=\"4\">" +
+            "   <form id=\"5\" method=\"post\" action=\"{1}EUOM1\">" +
+            "       <label>EUOM :</label><br>" +
+            "       <input type=\"text\" id=\"name\" name=\"name\" value=\"Unit Name\"><br>" +
+            "      <input type=\"submit\" name=\"EUOM\" value=\"Get Unit Attribute\">" +
+            "    </ form > " +
+            "</div>" +
+             "   <div class=\"parent\", style=\"text-align-last: center\" >" +
+           "      <div class=\"Output\">Output: \n</div>" +
+           "      <div class=\"child two\"><p>{2}</p></div>" +
+           "    </div>" +
+            "  </body>" +
+            "</html>";
+       public static string pageData_EUOM_new =
+            "<!DOCTYPE>" +
+            "<html>" +
+            "  <head>" +
+            "    <title>Converter of UOM</title>" +
+            "  </head>" +
+            "  <body>" +
+            "<div class=\"dropdown\">\r\n  <button class=\"dropbtn\">Meny Options</button>\r\n  <div class=\"dropdown-content\">\r\n    <a href=\"{1}Page/CO/\">Convert/</a>\r\n    <a href=\"{1}Page/LUD/\">List Unit Dimensions/</a>\r\n    <a href=\"{1}Page/UD/\">Unit Dimention Page</a>\r\n  </div>\r\n</div>" +
+            "<div class=\"dropdown\">\r\n  <button class=\"dropbtn\">Meny Options</button>\r\n  <div class=\"dropdown-content\">\r\n    <a href=\"{1}Page/LA/\">List Alias/</a>\r\n    <a href=\"{1}Page/LQC/\">List Quality class/</a>\r\n    <a href=\"{1}Page/QC/\">Quality class Page</a>\r\n  </div>\r\n</div>" +
+            "<div class=\"dropdown\">\r\n  <button class=\"dropbtn\">Meny Options</button>\r\n  <div class=\"dropdown-content\">\r\n    <a href=\"{1}Page/CUOM/\">Create UOM/</a>\r\n    <a href=\"{1}Page/CQC/\">Create Quality class/</a>\r\n    <a href=\"{1}Page/AQC/\">Add Quality class Page</a>\r\n  </div>\r\n</div>" +
+            "<div class=\"dropdown\">\r\n  <button class=\"dropbtn\">Meny Options</button>\r\n  <div class=\"dropdown-content\">\r\n    <a href=\"{1}Page/EUOM/\">Edit UOM/</a>\r\n    <a href=\"{1}Page/EQC/\">Edit Quality class/</a>\r\n    <a href=\"{1}Page/RQC/\">Remove Quality class Page</a>\r\n  </div>\r\n</div>" +
+            "<div class=\"dropdown\">\r\n  <button class=\"dropbtn\">Meny Options</button>\r\n  <div class=\"dropdown-content\">\r\n    <a href=\"{1}Page/DUOM/\">Delete UOM/</a>\r\n    <a href=\"{1}Page/DQC/\">Delete Quality class Page/</a>\r\n   </div>\r\n</div>" +
+                     //string oldName, string keyToChange, dynamic newValue
+
+
+            "<div id=\"4\">" +
+            "   <form id=\"5\" method=\"post\" action=\"{1}EUOM2\">" +
+            "       <label>EUOM :</label><br>" +
+            "       <input type=\"text\" id=\"keyToChange\" name=\"keyToChange\" value=\"Field to Change\"><br>" +
+            "       <input type=\"text\" id=\"newValue\" name=\"newValue\" value=\"New Value\"><br>" +
+            "      <input type=\"submit\" name=\"EUOM\" value=\"Edit UOM\">" +
+            "    </ form > " +
+            "</div>" +
+             "   <div class=\"parent\", style=\"text-align-last: center\" >" +
+           "      <div class=\"Output\">Output: \n</div>" +
+           "      <div class=\"child two\"><p>{2}</p></div>" +
+           "    </div>" +
+            "  </body>" +
+            "</html>";
         public static string pageData_EQC;
         public static string pageData_RQC;
         public static string pageData_DUOM;
@@ -259,49 +342,6 @@ namespace PageDataManager
             "  </body>" +
             "</html>";
 
-        public static string page_example =
-                "<!DOCTYPE>" +
-            "<html>" +
-            "  <head>" +
-            "    <title>Converter of UOM</title>" +
-            "  </head>" +
-            "  <body>" +
-            "<div class=\"dropdown\">\r\n  <button class=\"dropbtn\">Dropdown</button>\r\n  <div class=\"dropdown-content\">\r\n    <a href=\"{1}CO/\">Convert</a>\r\n    <a href=\"{1}LUD/\">List Unit Dimensions</a>\r\n    <a href=\"{1}UD/\">Unit Dimention Page</a>\r\n  </div>\r\n</div>" +
-            "<div id=\"1\">" +
-            "    <form method=\"post\" action=\"{1}Convert/\">" +
-            "       <label for=\"value\">Value:</label><br>" +
-            "       <input type=\"text\" id=\"value\" name=\"value\" value=\"0\"><br>" +
-             "       <label for=\"inputuom\">InputUOM:</label><br>" +
-            "       <input type=\"text\" id=\"inputuom\" name=\"inputuom\" value=\"meter\"><br>" +
-            "       <label for=\"outputuom\">OutputUOM:</label><br>" +
-            "       <input type=\"text\" id=\"outputuom\" name=\"outputuom\" value=\"mile\"><br>" +
-            "      <input type=\"submit\" value=\"Convert\">" +
-             "    </form>" +
-            "</div>" +
-             "<div id=\"3\">" +
-             "   <form id=\"2\" method=\"get\" action=\"{1}List/Units\">" +
-             "       <label>U:</label><br>" +
-            "      <input type=\"submit\" name=\"LU\" value=\"List Quality Types\">" +
-            "    </ form > " +
-            "</div>" +
-            "<div id=\"2\">" +
-            "   <form id=\"1\" method=\"get\" action=\"{1}List/Dimensions\">" +
-            "       <label>LUD:</label><br>" +
-            "      <input type=\"submit\" name=\"LUD\" value=\"List Unit Dimentions\">" +
-            "    </ form > " +
-            "</div>" +
-            "<div id=\"4\">" +
-            "   <form id=\"3\" method=\"post\" action=\"{1}Dimension/\">" +
-            "       <label>UD:</label><br>" +
-            "       <input type=\"text\" id=\"UD\" name=\"UD\" value=\"UnitDimention\"><br>" +
-            "      <input type=\"submit\" name=\"UD\" value=\"Unit Dimention\">" +
-            "    </ form > " +
-            "</div>" +
-            "   <div class=\"parent\", style=\"text-align-last: center\" >" +
-            "      <div class=\"Output\">Output: \n</div>" +
-            "      <div class=\"child two\">{2}</div>" +
-            "    </div>" +
-            "  </body>" +
-            "</html>";
+       
     }
 }

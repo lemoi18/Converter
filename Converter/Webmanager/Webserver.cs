@@ -30,7 +30,7 @@ namespace WebServer
         public static int requestCount = 0;
         public static string[] Response = Array.Empty<string>();
         public static string pageData = PageDataManager.PageData.pageData_Con;
-        
+        public static string global_value = "";
 
         public static async Task HandleIncomingConnections(string url)
         {
@@ -166,15 +166,13 @@ namespace WebServer
                 {
 
                     string OutputString = new string(reader.ReadToEnd());
-                    Console.WriteLine(OutputString);
                     OutputString = OutputString.Replace("+", " ");
                     string[] Seperator = { "&", "=" };
                     string[] TempSlice = OutputString.Split(Seperator, StringSplitOptions.RemoveEmptyEntries);
-                    string[] PostValues = new string[3];
-                    Console.WriteLine(TempSlice[0] + ": " + TempSlice[1] + ": " + TempSlice[2] + ": " + TempSlice[3] + ": " + TempSlice[4] + ": " + TempSlice[5] + ": ");
+                    string[] PostValues = new string[2];
                     for (int i = 0; i < TempSlice.Length; i += 1)
                     {
-                        Console.WriteLine(PostValues[i]);
+                        Console.WriteLine(TempSlice[i]);
                         if (TempSlice[i] == "name")
                         {
                             PostValues[0] = TempSlice[i + 1];
@@ -184,12 +182,64 @@ namespace WebServer
                             PostValues[1] = TempSlice[i + 1];
 
                         }
-
-                        Console.WriteLine("Lenght of message: " + PostValues.Length);
-                        
+                    }
+                        Console.WriteLine("Lenght of message: " + PostValues.Length);                     
                         string Information = requests.CreateQualityclass(PostValues[0], PostValues[1]);
                         return Information;
+                    
+                }
+            }
+            if (urlList[1] == "EUOM")
+            {
+                using (System.IO.StreamReader reader = new StreamReader(ctx.Request.InputStream, ctx.Request.ContentEncoding))
+                {
+
+                    string OutputString = new string(reader.ReadToEnd());
+                    OutputString = OutputString.Replace("+", " ");
+                    string[] Seperator = { "&", "=" };
+                    string[] TempSlice = OutputString.Split(Seperator, StringSplitOptions.RemoveEmptyEntries);
+                    string[] PostValues = new string[2];
+                    for (int i = 0; i < TempSlice.Length; i += 1)
+                    {
+                        Console.WriteLine(TempSlice[i]);
+                        if (TempSlice[i] == "name")
+                        {
+                            PostValues[0] = TempSlice[i + 1];
+                        }
                     }
+                    Console.WriteLine("Lenght of message: " + PostValues.Length);
+                    string Information = requests.CreateQualityclass(PostValues[0], PostValues[1]);
+                    return Information;
+
+                }
+            }
+            if (urlList[1] == "AQC")
+            {
+                using (System.IO.StreamReader reader = new StreamReader(ctx.Request.InputStream, ctx.Request.ContentEncoding))
+                {
+
+                    string OutputString = new string(reader.ReadToEnd());
+                    OutputString = OutputString.Replace("+", " ");
+                    string[] Seperator = { "&", "=" };
+                    string[] TempSlice = OutputString.Split(Seperator, StringSplitOptions.RemoveEmptyEntries);
+                    string[] PostValues = new string[2];
+                    for (int i = 0; i < TempSlice.Length; i += 1)
+                    {
+                        Console.WriteLine(TempSlice[i]);
+                        if (TempSlice[i] == "name")
+                        {
+                            PostValues[0] = TempSlice[i + 1];
+                        }
+                        if (TempSlice[i] == "unit")
+                        {
+                            PostValues[1] = TempSlice[i + 1];
+
+                        }
+                    }
+                    Console.WriteLine("Lenght of message: " + PostValues.Length);
+                    string Information = requests.AddQualityclass(PostValues[0], PostValues[1]);
+                    return Information;
+
                 }
             }
             if (urlList[1] == "CUOM")

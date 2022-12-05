@@ -23,7 +23,7 @@ namespace Converter.Webmanager
         public string DeleteUOM(string id);
         public string DeleteQualityclass(string baseunit, string name);
         public string RemoveQualityclass(string unit, string name);
-
+        public List<string> GetUnitAttributes(string name);
 
 
     }
