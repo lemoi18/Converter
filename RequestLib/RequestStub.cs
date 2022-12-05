@@ -35,15 +35,16 @@
             throw new NotImplementedException();
         }
 
-        public void EditQualityclass(string baseunit, string name, string newname)
+        public void EditQualityclass( string name, string newname)
         {
-            throw new NotImplementedException();
+            Console.WriteLine(name);
         }
 
-        public void EditUOM(string old_id, string id, string annotation, string name, string qualitytype, string dimensionalclass, string baseunit)
+        public void EditUOM(string oldName, string keyToChange, dynamic newValue)
         {
-            throw new NotImplementedException();
+            Console.WriteLine(newValue);
         }
+
 
         public List<string[]> GetQualityclass(string description)
         {
@@ -74,6 +75,11 @@
             string[] strings2 = { "M", "Mass", "Kilogram", "kg" };
             string[] strings3 = { "T", "Time", "Second", "s" };
             return new List<string[]> { strings, strings2, strings3 };
+        }
+
+        public string[] ListKeys(string unitName)
+        {
+            return new string[] { "annotation", "Name", "QuantityType" };
         }
 
         public void RemoveQualityclass(string unit, string name)

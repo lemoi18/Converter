@@ -50,6 +50,9 @@
             this.label6 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.EditWhat = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // UnitFrom
@@ -189,11 +192,12 @@
             this.EditComboBox.Name = "EditComboBox";
             this.EditComboBox.Size = new System.Drawing.Size(201, 23);
             this.EditComboBox.TabIndex = 16;
+            this.EditComboBox.SelectedIndexChanged += new System.EventHandler(this.EditComboBox_SelectedIndexChanged);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(1101, 72);
+            this.label4.Location = new System.Drawing.Point(1101, 44);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(27, 15);
             this.label4.TabIndex = 17;
@@ -201,10 +205,11 @@
             // 
             // EditTextbox
             // 
-            this.EditTextbox.Location = new System.Drawing.Point(867, 139);
+            this.EditTextbox.Location = new System.Drawing.Point(1212, 70);
             this.EditTextbox.Name = "EditTextbox";
             this.EditTextbox.Size = new System.Drawing.Size(146, 23);
             this.EditTextbox.TabIndex = 18;
+            this.EditTextbox.TextChanged += new System.EventHandler(this.EditTextbox_TextChanged);
             // 
             // EditButton
             // 
@@ -214,11 +219,12 @@
             this.EditButton.TabIndex = 19;
             this.EditButton.Text = "Confirm";
             this.EditButton.UseVisualStyleBackColor = true;
+            this.EditButton.Click += new System.EventHandler(this.EditButton_Click);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(904, 113);
+            this.label5.Location = new System.Drawing.Point(1251, 44);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(66, 15);
             this.label5.TabIndex = 20;
@@ -240,6 +246,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(201, 23);
             this.textBox2.TabIndex = 22;
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label7
             // 
@@ -250,11 +257,45 @@
             this.label7.TabIndex = 23;
             this.label7.Text = "Edit value";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(1063, 249);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(60, 15);
+            this.label8.TabIndex = 24;
+            this.label8.Text = "Add UOM";
+            // 
+            // EditWhat
+            // 
+            this.EditWhat.FormattingEnabled = true;
+            this.EditWhat.Items.AddRange(new object[] {
+            "UOM",
+            "QuantityType"});
+            this.EditWhat.Location = new System.Drawing.Point(1069, 70);
+            this.EditWhat.Name = "EditWhat";
+            this.EditWhat.Size = new System.Drawing.Size(121, 23);
+            this.EditWhat.TabIndex = 25;
+            this.EditWhat.SelectedIndexChanged += new System.EventHandler(this.EditWhat_SelectedIndexChanged);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1364, 70);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(37, 23);
+            this.button1.TabIndex = 26;
+            this.button1.Text = "Ok";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1437, 646);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.EditWhat);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label6);
@@ -278,7 +319,7 @@
             this.Controls.Add(this.Value);
             this.Controls.Add(this.UnitFrom);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "POSC CONVERTER";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -308,5 +349,8 @@
         private Label label6;
         private TextBox textBox2;
         private Label label7;
+        private Label label8;
+        private ComboBox EditWhat;
+        private Button button1;
     }
 }

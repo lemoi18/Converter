@@ -122,6 +122,54 @@ namespace Desktop_Application
         {
 
         }
+
+        private void EditComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void EditTextbox_TextChanged(object sender, EventArgs e)
+        {
+            
+           
+        }
+
+        private void EditButton_Click(object sender, EventArgs e)
+        {
+
+
+            if(EditWhat.Text == "UOM")
+            {
+                
+                request.EditUOM(EditTextbox.Text, EditComboBox.Text, textBox2.Text);
+            }
+
+            if (EditWhat.Text == "QuantityType")
+            {
+                request.EditQualityclass(EditTextbox.Text, textBox2.Text);
+                
+            }
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void EditWhat_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            foreach (var student in request.ListKeys(EditTextbox.Text))
+            {
+                string str2 = string.Format("{0}", student);
+                EditComboBox.Items.Add(str2);
+            }
+        }
     }
 
 }
