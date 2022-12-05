@@ -8,11 +8,11 @@ using Newtonsoft.Json.Linq;
 
 IC converter;
 // Test is only mm to cm
-converter = ConnectorFactory.CreateConnectorFactory("Test");
+converter = ConnectorFactory.CreateConnectorFactory("CONNECTOR");
 
 
 
-converter.ConverterWrapper(10, "meter per seconds", "meter per minute");
+converter.ConverterWrapper(1, "yards", "per centimetre");
 //converter.ConverterWrapper(100, "mm", "m");
 //converter.ConverterWrapper(1000, "mm", "cm");
 

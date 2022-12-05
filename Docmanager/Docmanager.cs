@@ -24,7 +24,7 @@ namespace Docmanager
     internal class Docmanager : IDocmanager
     {
         //Fetch and derealize json file
-        const string filepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\POSC.json";
+        const string filepath = @"C:\Users\Skole\source\repos\Exam\Converter\Docmanager\POSC.json";
         List<UOM> jsonDeserialized = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(filepath));
 
         public bool nameExists(string unitName)
@@ -424,6 +424,7 @@ namespace Docmanager
             public object BaseUnit { get; set; }
             public string Deprecated { get; set; }
             public ConversionToBaseUnit ConversionToBaseUnit { get; set; }
+            
         }
 
 
