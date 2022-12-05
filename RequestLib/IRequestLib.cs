@@ -2,7 +2,7 @@
 {
     public interface IRequests
     {
-        public IRequests CreateRequest() { return new RequestStub(); }
+        
         public string[] GetUnitdimension(string description);
         public List<string[]> ListUnitdimentions();
         public List<string[]> GetQualityclass(string description);
@@ -12,8 +12,11 @@
         public void AddQualityclass(string name, string uom);
         public void CreateUOM(string id, string annotation, string name, string qualitytype, string dimensionalclass, string baseunit);
         public void CreateQualityclass(string name, string baseunit);
-        public void EditQualityclass(string baseunit, string name, string newname);
-        public void EditUOM(string old_id, string id, string annotation, string name, string qualitytype, string dimensionalclass, string baseunit);
+        public void EditQualityclass(string name, string newname);
+        public void EditUOM(string oldName, string keyToChange, dynamic newValue);
+
+        public string[] ListKeys(string unitName);
+
         public void DeleteUOM(string id);
         public void DeleteQualityclass(string baseunit, string name);
         public void RemoveQualityclass(string unit, string name);

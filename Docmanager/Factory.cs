@@ -6,12 +6,6 @@
 //  Original author: Skole
 ///////////////////////////////////////////////////////////
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using Docmanager;
-
 namespace Docmanager
 {
 
@@ -27,7 +21,7 @@ namespace Docmanager
             IDocmanager psu = null;
 
             //if (name.ToUpper() == "UNIT")
-                //psu = new Unit();
+            //psu = new Unit();
             if (name.ToUpper() == "TEST")
                 psu = new Docmanager();
             return psu;

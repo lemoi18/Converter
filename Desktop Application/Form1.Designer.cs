@@ -40,8 +40,19 @@
             this.label1 = new System.Windows.Forms.Label();
             this.ConfimList = new System.Windows.Forms.Button();
             this.OutputList = new System.Windows.Forms.ListBox();
-            this.SpecificCheckBox = new System.Windows.Forms.CheckBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.EditComboBox = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.EditTextbox = new System.Windows.Forms.TextBox();
+            this.EditButton = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.EditWhat = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // UnitFrom
@@ -158,31 +169,143 @@
             this.OutputList.TabIndex = 12;
             this.OutputList.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged_1);
             // 
-            // SpecificCheckBox
-            // 
-            this.SpecificCheckBox.AutoSize = true;
-            this.SpecificCheckBox.Location = new System.Drawing.Point(428, 104);
-            this.SpecificCheckBox.Name = "SpecificCheckBox";
-            this.SpecificCheckBox.Size = new System.Drawing.Size(67, 19);
-            this.SpecificCheckBox.TabIndex = 13;
-            this.SpecificCheckBox.Text = "Specific";
-            this.SpecificCheckBox.UseVisualStyleBackColor = true;
-            this.SpecificCheckBox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(547, 102);
+            this.textBox1.Location = new System.Drawing.Point(500, 108);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 23);
             this.textBox1.TabIndex = 14;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(521, 88);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(48, 15);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "Specify ";
+            // 
+            // EditComboBox
+            // 
+            this.EditComboBox.FormattingEnabled = true;
+            this.EditComboBox.Location = new System.Drawing.Point(1054, 139);
+            this.EditComboBox.Name = "EditComboBox";
+            this.EditComboBox.Size = new System.Drawing.Size(201, 23);
+            this.EditComboBox.TabIndex = 16;
+            this.EditComboBox.SelectedIndexChanged += new System.EventHandler(this.EditComboBox_SelectedIndexChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(1101, 44);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(27, 15);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "Edit";
+            // 
+            // EditTextbox
+            // 
+            this.EditTextbox.Location = new System.Drawing.Point(1212, 70);
+            this.EditTextbox.Name = "EditTextbox";
+            this.EditTextbox.Size = new System.Drawing.Size(146, 23);
+            this.EditTextbox.TabIndex = 18;
+            this.EditTextbox.TextChanged += new System.EventHandler(this.EditTextbox_TextChanged);
+            // 
+            // EditButton
+            // 
+            this.EditButton.Location = new System.Drawing.Point(1292, 138);
+            this.EditButton.Name = "EditButton";
+            this.EditButton.Size = new System.Drawing.Size(75, 23);
+            this.EditButton.TabIndex = 19;
+            this.EditButton.Text = "Confirm";
+            this.EditButton.UseVisualStyleBackColor = true;
+            this.EditButton.Click += new System.EventHandler(this.EditButton_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(1251, 44);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(66, 15);
+            this.label5.TabIndex = 20;
+            this.label5.Text = "Unit to Edit";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(1101, 113);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(91, 15);
+            this.label6.TabIndex = 21;
+            this.label6.Text = "Attribute to edit";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(1054, 189);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(201, 23);
+            this.textBox2.TabIndex = 22;
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(1125, 169);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(58, 15);
+            this.label7.TabIndex = 23;
+            this.label7.Text = "Edit value";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(1063, 249);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(60, 15);
+            this.label8.TabIndex = 24;
+            this.label8.Text = "Add UOM";
+            // 
+            // EditWhat
+            // 
+            this.EditWhat.FormattingEnabled = true;
+            this.EditWhat.Items.AddRange(new object[] {
+            "UOM",
+            "QuantityType"});
+            this.EditWhat.Location = new System.Drawing.Point(1069, 70);
+            this.EditWhat.Name = "EditWhat";
+            this.EditWhat.Size = new System.Drawing.Size(121, 23);
+            this.EditWhat.TabIndex = 25;
+            this.EditWhat.SelectedIndexChanged += new System.EventHandler(this.EditWhat_SelectedIndexChanged);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1364, 70);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(37, 23);
+            this.button1.TabIndex = 26;
+            this.button1.Text = "Ok";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1247, 646);
+            this.ClientSize = new System.Drawing.Size(1437, 646);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.EditWhat);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.EditButton);
+            this.Controls.Add(this.EditTextbox);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.EditComboBox);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.SpecificCheckBox);
             this.Controls.Add(this.OutputList);
             this.Controls.Add(this.ConfimList);
             this.Controls.Add(this.label1);
@@ -196,7 +319,7 @@
             this.Controls.Add(this.Value);
             this.Controls.Add(this.UnitFrom);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "POSC CONVERTER";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -216,7 +339,18 @@
         private Label label1;
         private Button ConfimList;
         private ListBox OutputList;
-        private CheckBox SpecificCheckBox;
         private TextBox textBox1;
+        private Label label2;
+        private ComboBox EditComboBox;
+        private Label label4;
+        private TextBox EditTextbox;
+        private Button EditButton;
+        private Label label5;
+        private Label label6;
+        private TextBox textBox2;
+        private Label label7;
+        private Label label8;
+        private ComboBox EditWhat;
+        private Button button1;
     }
 }

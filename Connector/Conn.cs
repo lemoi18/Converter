@@ -1,9 +1,4 @@
 ﻿using Docmanager;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Connector
 {
@@ -52,7 +47,7 @@ namespace Connector
 
             Tuple<double, string, string> My_Tuple1 = new Tuple<double, string, string>(value, unitFrom, unitTo);
 
-            if (docmanager.IsBase(unitFrom)== "true")
+            if (docmanager.IsBase(unitFrom))
             {
                 My_Tuple2 = BaseToConvert(My_Tuple1.Item1, unitTo);
                 Console.WriteLine(WriteToConsole(My_Tuple2));
@@ -103,8 +98,8 @@ namespace Connector
             docmanager.ReadConversion(unitFrom, ref A, ref B, ref C, ref D);
 
 
-           
-    
+
+
             string base_annotation = docmanager.ReadIsBase(unitFrom);
             string Base = docmanager.NameOfBaseUnit(base_annotation);
 

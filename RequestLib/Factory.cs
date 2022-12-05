@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-
-namespace RequestLib
+﻿namespace RequestLib
 {
     public static class RequestFactory
     {
@@ -18,7 +10,7 @@ namespace RequestLib
 
             if (name.ToUpper() == "TEST")
                 requests = new RequestStub();
-            
+
             return requests;
         }
 
