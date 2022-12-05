@@ -36,7 +36,7 @@ namespace Docmanager
             return true;
         }
 
-        public List<string> ReadKeys(string unitName)
+        public List<string> ReadProperties(string unitName)
         {
             try
             {
@@ -48,12 +48,36 @@ namespace Docmanager
                 try
                 {
                     List<string> output = new List<string>();
+
                     string matchString = JsonConvert.SerializeObject(match, Formatting.Indented);
                     JObject matchJObject = (JObject)JsonConvert.DeserializeObject(matchString);
 
-                    foreach (var item in matchJObject)
+                    foreach (var prop in matchJObject)
                     {
-                        output.Add(item.Key.ToString());
+                        switch (prop.Value.Type.ToString())
+                        {
+                            case "String":
+                                output.Add(prop.Key);
+                                break;
+                            case "Object":
+                                //var temp = prop.Key;
+                                //string matchString2 = JsonConvert.SerializeObject(match.//, Formatting.Indented);
+                                //JObject matchJObject2 = (JObject)JsonConvert.DeserializeObject(matchString2);
+                                //foreach (var prop2 in matchJObject2)
+                                //{
+                                //    //output.Add(prop2.Key);
+                                //    Console.WriteLine(prop2.Key);
+                                //}
+                                output.Add("A");
+                                output.Add("B");
+                                output.Add("C");
+                                output.Add("D");
+                                output.Add("IsBaseUnit");
+
+                                break;
+                            default:
+                                break;
+                        }
                     }
 
                     return output;
@@ -457,7 +481,33 @@ namespace Docmanager
             return "0";
         }
 
-        public string RemoveQualityType(string unitName, string quantityTypeName)
+        public string AddQuantityType(string unitName, string quantityTypeName)
+        {
+            try
+            {
+                UOM match =
+                    (from unit in jsonDeserialized
+                     where unit.Name == unitName
+                     select unit).First();
+
+                string QuantityTypeString = match.QuantityType.ToString();
+                JArray QuantityTypeJArray = (JArray)JsonConvert.DeserializeObject(QuantityTypeString);
+                QuantityTypeJArray.Add(quantityTypeName);
+
+                match.QuantityType = QuantityTypeJArray;
+                string output = JsonConvert.SerializeObject(jsonDeserialized, Formatting.Indented);
+
+                File.WriteAllText(filepath, output);
+            }
+            catch (InvalidOperationException)
+            {
+                return "This unit name is not in file";
+            }
+
+            return "0";
+        }
+
+        public string RemoveQuantityType(string unitName, string quantityTypeName)
         {
             try
             {

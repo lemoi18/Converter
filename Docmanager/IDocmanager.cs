@@ -3,7 +3,7 @@ namespace Docmanager
     public interface IDocmanager
     {
         public bool NameExists(string unitName);
-        public List<string> ReadKeys(string unitName);
+        public List<string> ReadProperties(string unitName);
         public string ReadUOM(string unitName);
         public string ReadAnnotation(string unitName);
         public string ReadIsBase(string unitName);
@@ -13,7 +13,8 @@ namespace Docmanager
         public string CreateUnit(string id, string annotation, string name, string qualitytype, string dimensionalclass, string baseunit);
         public string EditUnit(string oldName, string keyToChange, dynamic newValue);
         public string DeleteUnit(string id);
-        public string RemoveQualityType(string unitName, string quantityTypeName);
+        public string AddQuantityType(string unitName, string quantityTypeName);
+        public string RemoveQuantityType(string unitName, string quantityTypeName);
 
     }
 
