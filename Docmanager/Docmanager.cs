@@ -24,157 +24,198 @@ namespace Docmanager
     internal class Docmanager : IDocmanager
     {
         //Fetch and derealize json file
-        const string filepath = @"C:\Users\Skole\source\repos\Exam\Converter\Docmanager\POSC.json";
+        const string filepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\POSC.json";
         List<UOM> jsonDeserialized = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(filepath));
 
         public string ReadAnnotation(string unitName)
         {
-            UOM match =
-                (from unit in jsonDeserialized
-                 where unit.Name == unitName
-                 select unit).First();
-
             try
             {
-                return match.annotation;
-            }
-            catch (NullReferenceException) { return ""; }
+                UOM match =
+                    (from unit in jsonDeserialized
+                     where unit.Name == unitName
+                     select unit).First();
 
-            return "";
+                try
+                {
+                    return match.annotation;
+                }
+                catch (NullReferenceException) 
+                { 
+                    return "This unit does not have annotation"; 
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                return "This name is not in file";
+            }
         }
 
         public string ReadIsBase(string unitName)
         {
-            UOM match =
-                (from unit in jsonDeserialized
-                 where unit.Name == unitName
-                 select unit).First();
-
             try
-            {
-                return match.ConversionToBaseUnit.baseUnit;
-            }
-            catch (NullReferenceException) { return ""; }
+            { 
+                UOM match =
+                    (from unit in jsonDeserialized
+                     where unit.Name == unitName
+                     select unit).First();
 
-            return "";
+                try
+                {
+                    return match.ConversionToBaseUnit.baseUnit;
+                }
+                catch (NullReferenceException) 
+                { 
+                    return "This unit does not have ConversionToBaseUnit.baseUnit"; 
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                return "This name is not in file";
+            }
         }
 
         public bool IsBase(string unitName)
         {
-            UOM match =
-             (from unit in jsonDeserialized
-              where unit.Name == unitName
-              select unit).First();
-
             try
             {
-                return match.BaseUnit != null;
-            }
-            catch (NullReferenceException) { }
+                UOM match =
+                 (from unit in jsonDeserialized
+                  where unit.Name == unitName
+                  select unit).First();
 
+                try
+                {
+                    return match.BaseUnit != null;
+                }
+                catch (NullReferenceException) 
+                {
+                    throw new NullReferenceException("Logfile cannot be read-only");
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                throw new InvalidOperationException("This name is not in file");
+            }
             return true;
         }
+
         public string NameOfBaseUnit(string annotationName)
         {
-            UOM match =
-                (from unit in jsonDeserialized
-                 where unit.annotation == annotationName
-                 select unit).First();
-
             try
             {
-                return match.Name;
+                UOM match =
+                    (from unit in jsonDeserialized
+                     where unit.annotation == annotationName
+                     select unit).First();
+
+                try
+                {
+                    return match.Name;
+                }
+                catch (NullReferenceException)
+                {
+                    return "This unit does not have a name";
+                }
             }
-            catch (NullReferenceException) { return ""; }
-
-            return "";
+            catch (InvalidOperationException)
+            {
+                return "This annotation is not in file";
+            }
         }
-
-
-        public void ReadConversion(string unitName, ref double A, ref double B, ref double C, ref double D)
+        public string ReadConversion(string unitName, ref double A, ref double B, ref double C, ref double D)
         {
             A = 0; B = 0; C = 0; D = 0;
 
-            UOM match =
-                (from unit in jsonDeserialized
-                 where unit.Name == unitName
-                 select unit).First();
-
             try
             {
-                if (match.ConversionToBaseUnit.baseUnit != null)
-                {
-                    C = 1;
-                }
-            }
-            catch (NullReferenceException) { }
+                UOM match =
+                    (from unit in jsonDeserialized
+                     where unit.Name == unitName
+                     select unit).First();
 
-            try
+                try
+                {
+                    if (match.ConversionToBaseUnit.baseUnit != null)
+                    {
+                        C = 1;
+                    }
+                }
+                catch (NullReferenceException) { }
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.Formula.A != null)
+                    {
+                        A = double.Parse(match.ConversionToBaseUnit.Formula.A);
+                    }
+                }
+                catch (NullReferenceException) { }
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.Formula.B != null)
+                    {
+                        B = double.Parse(match.ConversionToBaseUnit.Formula.B);
+                    }
+                }
+                catch (NullReferenceException) { }
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.Formula.C != null)
+                    {
+                        C = double.Parse(match.ConversionToBaseUnit.Formula.C);
+                    }
+                }
+                catch (NullReferenceException) { }
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.Formula.D != null)
+                    {
+                        D = double.Parse(match.ConversionToBaseUnit.Formula.D);
+                    }
+                }
+                catch (NullReferenceException) { }
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.Factor != null)
+                    {
+
+
+                        B = double.Parse(match.ConversionToBaseUnit.Factor, CultureInfo.GetCultureInfo("en-US"));
+                    }
+                }
+                catch (NullReferenceException) { }
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.Fraction.Numerator != null)
+                    {
+                        B = double.Parse(match.ConversionToBaseUnit.Fraction.Numerator);
+                    }
+                }
+                catch (NullReferenceException) { }
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.Fraction.Denominator != null)
+                    {
+                        C = double.Parse(match.ConversionToBaseUnit.Fraction.Denominator);
+                    }
+                }
+                catch (NullReferenceException) { }
+            }
+            catch (InvalidOperationException)
             {
-                if (match.ConversionToBaseUnit.Formula.A != null)
-                {
-                    A = double.Parse(match.ConversionToBaseUnit.Formula.A);
-                }
+                return "This name is not in file";
             }
-            catch (NullReferenceException) { }
 
-            try
-            {
-                if (match.ConversionToBaseUnit.Formula.B != null)
-                {
-                    B = double.Parse(match.ConversionToBaseUnit.Formula.B);
-                }
-            }
-            catch (NullReferenceException) { }
-
-            try
-            {
-                if (match.ConversionToBaseUnit.Formula.C != null)
-                {
-                    C = double.Parse(match.ConversionToBaseUnit.Formula.C);
-                }
-            }
-            catch (NullReferenceException) { }
-
-            try
-            {
-                if (match.ConversionToBaseUnit.Formula.D != null)
-                {
-                    D = double.Parse(match.ConversionToBaseUnit.Formula.D);
-                }
-            }
-            catch (NullReferenceException) { }
-
-            try
-            {
-                if (match.ConversionToBaseUnit.Factor != null)
-                {
-                    
-
-                    B = double.Parse(match.ConversionToBaseUnit.Factor, CultureInfo.GetCultureInfo("en-US"));
-                }
-            }
-            catch (NullReferenceException) { }
-
-            try
-            {
-                if (match.ConversionToBaseUnit.Fraction.Numerator != null)
-                {
-                    B = double.Parse(match.ConversionToBaseUnit.Fraction.Numerator);
-                }
-            }
-            catch (NullReferenceException) { }
-
-            try
-            {
-                if (match.ConversionToBaseUnit.Fraction.Denominator != null)
-                {
-                    C = double.Parse(match.ConversionToBaseUnit.Fraction.Denominator);
-                }
-            }
-            catch (NullReferenceException) { }
+            return "0";
         }
-        public void CreateUOM(string id, string annotation, string name, string quantityType, string dimensionalclass, string baseunit)
+        public string CreateUOM(string id, string annotation, string name, string quantityType, string dimensionalclass, string baseunit)
         {
             String newUnitString =
                 "{" +
@@ -217,54 +258,82 @@ namespace Docmanager
             string output = JsonConvert.SerializeObject(jsonDeserialized, Formatting.Indented);
 
             File.WriteAllText(filepath, output);
+
+            return "0";
         }
-        public void EditUOM(string old_id, string id, string annotation, string name, string qualitytype, string dimensionalclass, string baseunit)
+        public string EditUOM(string old_id, string id, string annotation, string name, string qualitytype, string dimensionalclass, string baseunit)
         {
-            UOM match =
-                (from unit in jsonDeserialized
-                 where unit.id == old_id
-                 select unit).First();
+            try
+            {
+                UOM match =
+                    (from unit in jsonDeserialized
+                     where unit.id == old_id
+                     select unit).First();
 
-            match.id = id;
-            match.annotation = annotation;
-            match.Name = name;
-            match.QuantityType = qualitytype;
-            match.DimensionalClass = dimensionalclass;
-            match.ConversionToBaseUnit.baseUnit = baseunit;
+                match.id = id;
+                match.annotation = annotation;
+                match.Name = name;
+                match.QuantityType = qualitytype;
+                match.DimensionalClass = dimensionalclass;
+                match.ConversionToBaseUnit.baseUnit = baseunit;
 
-            string output = JsonConvert.SerializeObject(jsonDeserialized, Formatting.Indented);
+                string output = JsonConvert.SerializeObject(jsonDeserialized, Formatting.Indented);
 
-            File.WriteAllText(filepath, output);
-        }
-        public void DeleteUOM(string id)
-        {
-            UOM match =
-                (from unit in jsonDeserialized
-                 where unit.id == id
-                 select unit).First();
-
-            jsonDeserialized.Remove(match);
-
-            string output = JsonConvert.SerializeObject(jsonDeserialized, Formatting.Indented);
-
-            File.WriteAllText(filepath, output);
+                File.WriteAllText(filepath, output);
+            }
+            catch (InvalidOperationException)
+            {
+                return "This ID is not in file";
+            }
+            return "0";
         }
 
-        public void RemoveQualityType(string unitName, string quantityTypeName)
+        public string DeleteUOM(string id)
         {
-            UOM match =
-                (from unit in jsonDeserialized
-                 where unit.Name == unitName
-                 select unit).First();
+            try
+            {
+                UOM match =
+                    (from unit in jsonDeserialized
+                     where unit.id == id
+                     select unit).First();
 
-            String newQuantityType = match.QuantityType.ToString();
-            newQuantityType = newQuantityType.Replace("\"" + quantityTypeName + "\",", string.Empty);
+                jsonDeserialized.Remove(match);
 
-            Console.WriteLine(newQuantityType);
+                string output = JsonConvert.SerializeObject(jsonDeserialized, Formatting.Indented);
 
-            string output = JsonConvert.SerializeObject(jsonDeserialized, Formatting.Indented);
+                File.WriteAllText(filepath, output);
+            }
+            catch (InvalidOperationException)
+            {
+                return "This ID is not in file";
+            }
+            return "0";
+        }
 
-            File.WriteAllText(filepath, output);
+        public string RemoveQualityType(string unitName, string quantityTypeName)
+        {
+            try
+            {
+                UOM match =
+                    (from unit in jsonDeserialized
+                     where unit.Name == unitName
+                     select unit).First();
+
+                String newQuantityType = match.QuantityType.ToString();
+                newQuantityType = newQuantityType.Replace("\"" + quantityTypeName + "\",", string.Empty);
+
+                Console.WriteLine(newQuantityType);
+
+                string output = JsonConvert.SerializeObject(jsonDeserialized, Formatting.Indented);
+
+                File.WriteAllText(filepath, output);
+            }
+            catch (InvalidOperationException)
+            {
+                return "This name is not in file";
+            }
+
+            return "0";
         }
 
 
