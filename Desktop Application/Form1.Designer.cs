@@ -213,7 +213,7 @@
             // 
             // EditButton
             // 
-            this.EditButton.Location = new System.Drawing.Point(1292, 138);
+            this.EditButton.Location = new System.Drawing.Point(1292, 188);
             this.EditButton.Name = "EditButton";
             this.EditButton.Size = new System.Drawing.Size(75, 23);
             this.EditButton.TabIndex = 19;
@@ -262,9 +262,9 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(1063, 249);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(60, 15);
+            this.label8.Size = new System.Drawing.Size(79, 15);
             this.label8.TabIndex = 24;
-            this.label8.Text = "Add UOM";
+            this.label8.Text = "Add UOM/QT";
             // 
             // EditWhat
             // 

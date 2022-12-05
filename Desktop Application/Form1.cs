@@ -20,6 +20,8 @@ namespace Desktop_Application
             InitializeComponent();
             converter = ConnectorFactory.CreateConnectorFactory("Connector");
             request = RequestFactory.CreateRequestsFactory("Test");
+            this.EditComboBox.Hide();
+            this.label6.Hide();
 
         }
 
@@ -150,6 +152,14 @@ namespace Desktop_Application
                 
             }
 
+            EditTextbox.Clear();
+            EditComboBox.Items.Clear();
+            EditComboBox.Text = "";
+            EditWhat.Text = "";
+            textBox2.Clear();
+            this.EditComboBox.Hide();
+            this.label6.Hide();
+
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -159,11 +169,17 @@ namespace Desktop_Application
 
         private void EditWhat_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+           
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (EditWhat.Text == "UOM")
+            {
+                this.EditComboBox.Show();
+                this.label6.Show();
+            }
+
             foreach (var student in request.ListKeys(EditTextbox.Text))
             {
                 string str2 = string.Format("{0}", student);
