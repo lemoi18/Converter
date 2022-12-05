@@ -17,7 +17,7 @@ namespace Desktop_Application
         public Form1()
         {
             InitializeComponent();
-            converter = ConnectorFactory.CreateConnectorFactory("Test");
+            converter = ConnectorFactory.CreateConnectorFactory("Connector");
             request = RequestFactory.CreateRequestsFactory("Test");
            
         }
@@ -40,7 +40,7 @@ namespace Desktop_Application
         private void ConverterButton_Click(object sender, EventArgs e)
         {
             
-            Tuple<double, string, string> Edited = converter.ConverterWrapper(Convert.ToDouble(Value.Text), UnitFrom.Text, UnitTo.Text);
+            Tuple<double, string, string> Edited = converter.ConverterWrapper(Convert.ToDouble(Value.Text), UnitFrom.Text.ToLower(), UnitTo.Text.ToLower());
             string str = string.Format("{0}  {1} {2}", Edited.Item1.ToString(), Edited.Item2, Edited.Item3);
           
             OutputConsole.Items.Add(str);    

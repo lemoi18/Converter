@@ -20,10 +20,9 @@ namespace Connector
 		{
             IC connector = null;
 
-            if (name.ToUpper() == "Connector")
+            if (name.ToUpper() == "CONNECTOR")
                 connector = new Conn();
-            else if (name.ToUpper() == "TEST")
-                connector = new Stub();
+
             return connector;
         }
 		

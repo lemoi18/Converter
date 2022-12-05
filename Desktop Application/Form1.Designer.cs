@@ -46,9 +46,9 @@
             // 
             // UnitFrom
             // 
-            this.UnitFrom.Location = new System.Drawing.Point(76, 62);
+            this.UnitFrom.Location = new System.Drawing.Point(39, 62);
             this.UnitFrom.Name = "UnitFrom";
-            this.UnitFrom.Size = new System.Drawing.Size(75, 23);
+            this.UnitFrom.Size = new System.Drawing.Size(112, 23);
             this.UnitFrom.TabIndex = 0;
             this.UnitFrom.TextChanged += new System.EventHandler(this.UnitFrom_TextChanged);
             // 
@@ -56,7 +56,7 @@
             // 
             this.Value.Location = new System.Drawing.Point(199, 126);
             this.Value.Name = "Value";
-            this.Value.Size = new System.Drawing.Size(69, 23);
+            this.Value.Size = new System.Drawing.Size(136, 23);
             this.Value.TabIndex = 1;
             this.Value.TextChanged += new System.EventHandler(this.Value_TextChanged);
             // 
@@ -64,7 +64,7 @@
             // 
             this.UnitTo.Location = new System.Drawing.Point(199, 62);
             this.UnitTo.Name = "UnitTo";
-            this.UnitTo.Size = new System.Drawing.Size(69, 23);
+            this.UnitTo.Size = new System.Drawing.Size(136, 23);
             this.UnitTo.TabIndex = 2;
             this.UnitTo.TextChanged += new System.EventHandler(this.UnitTo_TextChanged);
             // 
@@ -109,9 +109,9 @@
             // 
             this.OutputConsole.FormattingEnabled = true;
             this.OutputConsole.ItemHeight = 15;
-            this.OutputConsole.Location = new System.Drawing.Point(115, 169);
+            this.OutputConsole.Location = new System.Drawing.Point(39, 169);
             this.OutputConsole.Name = "OutputConsole";
-            this.OutputConsole.Size = new System.Drawing.Size(120, 319);
+            this.OutputConsole.Size = new System.Drawing.Size(296, 319);
             this.OutputConsole.TabIndex = 8;
             this.OutputConsole.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
