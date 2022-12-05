@@ -52,7 +52,7 @@ namespace Connector
 
             Tuple<double, string, string> My_Tuple1 = new Tuple<double, string, string>(value, unitFrom, unitTo);
 
-            if (docmanager.IsBase(unitFrom)== "true")
+            if (docmanager.IsBase(unitFrom)== true)
             {
                 My_Tuple2 = BaseToConvert(My_Tuple1.Item1, unitTo);
                 Console.WriteLine(WriteToConsole(My_Tuple2));
