@@ -6,31 +6,27 @@
 //  Original author: Skole
 ///////////////////////////////////////////////////////////
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-
 namespace Connector
 {
-    public static class ConnectorFactory {
+	public static class ConnectorFactory
+	{
 
-		
+
 		public static IC CreateConnectorFactory(string name)
 		{
-            IC connector = null;
+			IC connector = null;
 
-            if (name.ToUpper() == "CONNECTOR")
-                connector = new Conn();
+			if (name.ToUpper() == "CONNECTOR")
+				connector = new Conn();
 
-            return connector;
-        }
-		
+			return connector;
+		}
 
-		
+
+
 
 	}
 
-	
+
 
 }//end namespace Connector

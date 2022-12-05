@@ -40,8 +40,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.ConfimList = new System.Windows.Forms.Button();
             this.OutputList = new System.Windows.Forms.ListBox();
-            this.SpecificCheckBox = new System.Windows.Forms.CheckBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // UnitFrom
@@ -158,31 +158,29 @@
             this.OutputList.TabIndex = 12;
             this.OutputList.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged_1);
             // 
-            // SpecificCheckBox
-            // 
-            this.SpecificCheckBox.AutoSize = true;
-            this.SpecificCheckBox.Location = new System.Drawing.Point(428, 104);
-            this.SpecificCheckBox.Name = "SpecificCheckBox";
-            this.SpecificCheckBox.Size = new System.Drawing.Size(67, 19);
-            this.SpecificCheckBox.TabIndex = 13;
-            this.SpecificCheckBox.Text = "Specific";
-            this.SpecificCheckBox.UseVisualStyleBackColor = true;
-            this.SpecificCheckBox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(547, 102);
+            this.textBox1.Location = new System.Drawing.Point(500, 108);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 23);
             this.textBox1.TabIndex = 14;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(521, 88);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(48, 15);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "Specify ";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1247, 646);
+            this.ClientSize = new System.Drawing.Size(1437, 646);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.SpecificCheckBox);
             this.Controls.Add(this.OutputList);
             this.Controls.Add(this.ConfimList);
             this.Controls.Add(this.label1);
@@ -216,7 +214,7 @@
         private Label label1;
         private Button ConfimList;
         private ListBox OutputList;
-        private CheckBox SpecificCheckBox;
         private TextBox textBox1;
+        private Label label2;
     }
 }

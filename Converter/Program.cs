@@ -2,9 +2,6 @@
 
 
 using Connector;
-using System;
-using Docmanager;
-using Newtonsoft.Json.Linq;
 
 IC converter;
 // Test is only mm to cm
@@ -12,7 +9,7 @@ converter = ConnectorFactory.CreateConnectorFactory("CONNECTOR");
 
 
 
-converter.ConverterWrapper(1, "yards", "per centimetre");
+converter.ConverterWrapper(1, "millimetres", "centimetre");
 //converter.ConverterWrapper(100, "mm", "m");
 //converter.ConverterWrapper(1000, "mm", "cm");
 

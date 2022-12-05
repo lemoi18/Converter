@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RequestLib
+﻿namespace RequestLib
 {
     internal class RequestStub : IRequests
     {
 
-        
+
 
         public void AddQualityclass(string name, string uom)
         {
@@ -76,10 +70,10 @@ namespace RequestLib
 
         public List<string[]> ListUnitdimentions()
         {
-            string[] strings = { "L", "Length", "Meter","m" };
+            string[] strings = { "L", "Length", "Meter", "m" };
             string[] strings2 = { "M", "Mass", "Kilogram", "kg" };
             string[] strings3 = { "T", "Time", "Second", "s" };
-            return new List<string[]> { strings, strings2, strings3 } ;
+            return new List<string[]> { strings, strings2, strings3 };
         }
 
         public void RemoveQualityclass(string unit, string name)

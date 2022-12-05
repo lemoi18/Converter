@@ -6,17 +6,8 @@
 //  Original author: Lars
 ///////////////////////////////////////////////////////////
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using Docmanager;
-using System.Runtime.CompilerServices;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using System.Text.RegularExpressions;
-using static Docmanager.Docmanager;
-using System.Xml.Linq;
+using Newtonsoft.Json.Linq;
 using System.Globalization;
 using System.Linq.Expressions;
 
@@ -94,9 +85,9 @@ namespace Docmanager
                 {
                     return match.annotation;
                 }
-                catch (NullReferenceException) 
-                { 
-                    return "This unit does not have annotation"; 
+                catch (NullReferenceException)
+                {
+                    return "This unit does not have annotation";
                 }
             }
             catch (InvalidOperationException)
@@ -134,7 +125,7 @@ namespace Docmanager
         public string ReadIsBase(string unitName)
         {
             try
-            { 
+            {
                 UOM match =
                     (from unit in jsonDeserialized
                      where unit.Name == unitName
@@ -144,9 +135,9 @@ namespace Docmanager
                 {
                     return match.ConversionToBaseUnit.baseUnit;
                 }
-                catch (NullReferenceException) 
-                { 
-                    return "This unit does not have ConversionToBaseUnit.baseUnit"; 
+                catch (NullReferenceException)
+                {
+                    return "This unit does not have ConversionToBaseUnit.baseUnit";
                 }
             }
             catch (InvalidOperationException)
@@ -168,7 +159,7 @@ namespace Docmanager
                 {
                     return match.BaseUnit != null;
                 }
-                catch (NullReferenceException) 
+                catch (NullReferenceException)
                 {
                     throw new NullReferenceException("Logfile cannot be read-only");
                 }
@@ -533,7 +524,7 @@ namespace Docmanager
             public object BaseUnit { get; set; }
             public string Deprecated { get; set; }
             public ConversionToBaseUnit ConversionToBaseUnit { get; set; }
-            
+
         }
 
 

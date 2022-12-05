@@ -2,7 +2,7 @@
 {
     public interface IRequests
     {
-        public IRequests CreateRequest() { return new RequestStub(); }
+        
         public string[] GetUnitdimension(string description);
         public List<string[]> ListUnitdimentions();
         public List<string[]> GetQualityclass(string description);

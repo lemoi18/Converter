@@ -6,14 +6,10 @@
 //  Original author: Skole
 ///////////////////////////////////////////////////////////
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-
 namespace Docmanager
 {
-    public class Unit{
+	public class Unit
+	{
 
 		public string? _name;
 		public string? _SI;
@@ -22,9 +18,9 @@ namespace Docmanager
 		public double? _C;
 		public double? _D;
 
-		
 
-		
+
+
 
 		public void AddUnit(string unitName)
 		{
@@ -86,7 +82,7 @@ namespace Docmanager
 			throw new NotImplementedException();
 		}
 
-		
+
 	}//end Unit
 
 }//end namespace Docmanager

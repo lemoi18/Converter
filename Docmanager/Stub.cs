@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using System.Text.Json.Nodes;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-
-namespace Docmanager
+﻿namespace Docmanager
 {
     internal class DocStub
     {
@@ -20,7 +9,7 @@ namespace Docmanager
         public double _C;
         public double _D;
 
-       
+
 
         public void AddUnit(string unitName)
         {
@@ -66,7 +55,7 @@ namespace Docmanager
                         (0).ToString()
                 };
             else if (name.ToLower() == "m")
-                {
+            {
 
 
 
@@ -79,11 +68,11 @@ namespace Docmanager
                         (1.0).ToString(),
                         (0.0).ToString(),
                         (1.0).ToString()
-                };               
-                 }
+                };
+            }
 
-            else return new string[] {name};
-            
+            else return new string[] { name };
+
         }
 
         public List<Group> ListGroups()
@@ -111,7 +100,7 @@ namespace Docmanager
             throw new NotImplementedException();
         }
 
-        
+
     }
 
 }
