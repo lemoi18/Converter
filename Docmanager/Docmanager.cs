@@ -18,13 +18,14 @@ using System.Text.RegularExpressions;
 using static Docmanager.Docmanager;
 using System.Xml.Linq;
 using System.Globalization;
+using System.Linq.Expressions;
 
 namespace Docmanager
 {
     internal class Docmanager : IDocmanager
     {
         //Fetch and derealize json file
-        const string filepath = @"C:\Users\Skole\source\repos\Exam\Converter\Docmanager\POSC.json";
+        const string filepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\POSC.json";
         List<UOM> jsonDeserialized = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(filepath));
 
         public bool nameExists(string unitName)
@@ -44,7 +45,7 @@ namespace Docmanager
             return true;
         }
 
-        //public readAllUunitNames
+        //public readAllUnitNames
 
         public string ReadAnnotation(string unitName)
         {
@@ -307,21 +308,88 @@ namespace Docmanager
 
             return "0";
         }
-        public string EditUnit(string old_id, string id, string annotation, string name, string qualitytype, string dimensionalclass, string baseunit)
+        public enum UnitKeys
+        {
+            ID,
+            Name,
+            Annotation,
+            QuantityType,
+            DimensionalClass,
+            UOM,
+            NamingSystem,
+            CatalogName,
+            CatalogSymbolIsEzplicit,
+            CatalogSymbolText,
+            ISBaseUnit,
+            Deprecated,
+            BaseUnit,
+            A,
+            B,
+            C,
+            D
+        }
+        public string EditUnit(string oldName, UnitKeys keyToChange, dynamic newValue)
         {
             try
             {
                 UOM match =
                     (from unit in jsonDeserialized
-                     where unit.id == old_id
-                     select unit).First();
+                     where unit.Name == oldName
+                select unit).First();
 
-                match.id = id;
-                match.annotation = annotation;
-                match.Name = name;
-                match.QuantityType = qualitytype;
-                match.DimensionalClass = dimensionalclass;
-                match.ConversionToBaseUnit.baseUnit = baseunit;
+                switch (keyToChange)
+                {
+                    case UnitKeys.ID:
+                        match.id = newValue;
+                        break;
+                    case UnitKeys.Name:
+                        match.Name = newValue;
+                        break;
+                    case UnitKeys.Annotation:
+                        match.annotation = newValue;
+                        break;
+                    //case UnitKeys.QuantityType:
+                        //addQuantityType(oldName, newValue)
+                        //break;
+                    case UnitKeys.DimensionalClass:
+                        match.DimensionalClass = newValue;
+                        break;
+                    //case UnitKeys.UOM:
+                        //
+                        //break;
+                    //case UnitKeys.NamingSystem:
+                        //match.id = newValue;
+                        //break;
+                    case UnitKeys.CatalogName:
+                        match.CatalogName = newValue;
+                        break;
+                    //case UnitKeys.CatalogSymbolIsEzplicit:
+                        //
+                        //break;
+                    //case UnitKeys.CatalogSymbolText:
+                        //
+                        //break;
+                    case UnitKeys.ISBaseUnit:
+                        match.BaseUnit = newValue;
+                        break;
+                    //case UnitKeys.BaseUnit:
+                        //
+                        //break;
+                    //case UnitKeys.A:
+                    //    match.A = newValue;
+                    //    break;
+                    //case UnitKeys.ID:
+                    //    match.B = newValue;
+                    //    break;
+                    //case UnitKeys.ID:
+                    //    match.C = newValue;
+                    //    break;
+                    //case UnitKeys.ID:
+                    //    match.D = newValue;
+                    //    break;
+                    default:
+                        return "Option does not exist";
+                }
 
                 string output = JsonConvert.SerializeObject(jsonDeserialized, Formatting.Indented);
 
@@ -329,7 +397,7 @@ namespace Docmanager
             }
             catch (InvalidOperationException)
             {
-                return "This ID is not in file";
+                return "This unit name is not in file";
             }
             return "0";
         }
