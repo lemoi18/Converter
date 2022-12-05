@@ -13,4 +13,4 @@ docmanager = DocFactory.CreateDocmanager("Test");
 
 
 //docmanager.CreateUOM("test", "test", "test", "test", "test", "test");
-Console.WriteLine(docmanager.ReadUOM("per Kelvin"));
+Console.WriteLine(docmanager.RemoveQualityType("per Kelvin", "linear thermal expansion"));

@@ -261,7 +261,7 @@ namespace Docmanager
 
             return "0";
         }
-        public string CreateUOM(string id, string annotation, string name, string quantityType, string dimensionalclass, string baseunit)
+        public string CreateUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string baseunit)
         {
             String newUnitString =
                 "{" +
@@ -307,7 +307,7 @@ namespace Docmanager
 
             return "0";
         }
-        public string EditUOM(string old_id, string id, string annotation, string name, string qualitytype, string dimensionalclass, string baseunit)
+        public string EditUnit(string old_id, string id, string annotation, string name, string qualitytype, string dimensionalclass, string baseunit)
         {
             try
             {
@@ -334,7 +334,7 @@ namespace Docmanager
             return "0";
         }
 
-        public string DeleteUOM(string id)
+        public string DeleteUnit(string id)
         {
             try
             {
@@ -365,11 +365,11 @@ namespace Docmanager
                      where unit.Name == unitName
                      select unit).First();
 
-                String newQuantityType = match.QuantityType.ToString();
-                newQuantityType = newQuantityType.Replace("\"" + quantityTypeName + "\",", string.Empty);
+                string QuantityTypeString = match.QuantityType.ToString();
+                JArray QuantityTypeJArray = (JArray)JsonConvert.DeserializeObject(QuantityTypeString);
+                QuantityTypeJArray.Where(i => i.Type == JTokenType.String && (string)i == quantityTypeName).ToList().ForEach(i => i.Remove());
 
-                Console.WriteLine(newQuantityType);
-
+                match.QuantityType = QuantityTypeJArray;
                 string output = JsonConvert.SerializeObject(jsonDeserialized, Formatting.Indented);
 
                 File.WriteAllText(filepath, output);
@@ -381,7 +381,6 @@ namespace Docmanager
 
             return "0";
         }
-
 
         public class CatalogSymbol
         {
