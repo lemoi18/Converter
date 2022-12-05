@@ -10,6 +10,8 @@ namespace Docmanager
 {
     public interface IDocmanager
     {
+        public bool nameExists(string unitName);
+        public string ReadUOM(string unitName);
         public string ReadAnnotation(string unitName);
         public string ReadIsBase(string unitName);
         public string NameOfBaseUnit(string annotationName);

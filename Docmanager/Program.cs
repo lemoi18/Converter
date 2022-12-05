@@ -13,4 +13,4 @@ docmanager = DocFactory.CreateDocmanager("Test");
 
 
 //docmanager.CreateUOM("test", "test", "test", "test", "test", "test");
-docmanager.RemoveQualityType("euclid", "shear strain");
+Console.WriteLine(docmanager.ReadUOM("per Kelvin"));

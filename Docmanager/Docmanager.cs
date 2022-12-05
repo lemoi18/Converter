@@ -27,6 +27,25 @@ namespace Docmanager
         const string filepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\POSC.json";
         List<UOM> jsonDeserialized = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(filepath));
 
+        public bool nameExists(string unitName)
+        {
+            try
+            {
+                UOM match =
+                    (from unit in jsonDeserialized
+                     where unit.Name == unitName
+                     select unit).First();
+            }
+            catch (InvalidOperationException)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        //public readAllUunitNames
+
         public string ReadAnnotation(string unitName)
         {
             try
@@ -43,6 +62,32 @@ namespace Docmanager
                 catch (NullReferenceException) 
                 { 
                     return "This unit does not have annotation"; 
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                return "This name is not in file";
+            }
+        }
+
+        public string ReadUOM(string unitName)
+        {
+            try
+            {
+                UOM match =
+                    (from unit in jsonDeserialized
+                     where unit.Name == unitName
+                     select unit).First();
+
+                try
+                {
+                    string SameUnitString = match.SameUnit.ToString();
+                    JObject SameUnitJObject = (JObject)JsonConvert.DeserializeObject(SameUnitString);
+                    return (string)SameUnitJObject["uom"];
+                }
+                catch (NullReferenceException)
+                {
+                    return "This unit does not have annotation";
                 }
             }
             catch (InvalidOperationException)
@@ -123,6 +168,7 @@ namespace Docmanager
                 return "This annotation is not in file";
             }
         }
+
         public string ReadConversion(string unitName, ref double A, ref double B, ref double C, ref double D)
         {
             A = 0; B = 0; C = 0; D = 0;
@@ -337,12 +383,6 @@ namespace Docmanager
         }
 
 
-        public class BaseUnit
-        {
-            public string BasicAuthority { get; set; }
-            public string Description { get; set; }
-        }
-
         public class CatalogSymbol
         {
             public string isExplicit { get; set; }
@@ -381,10 +421,9 @@ namespace Docmanager
             public object SameUnit { get; set; }
             public string CatalogName { get; set; }
             public CatalogSymbol CatalogSymbol { get; set; }
-            public BaseUnit BaseUnit { get; set; }
+            public object BaseUnit { get; set; }
             public string Deprecated { get; set; }
             public ConversionToBaseUnit ConversionToBaseUnit { get; set; }
-            
         }
 
 
