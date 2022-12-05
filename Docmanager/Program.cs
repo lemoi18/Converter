@@ -11,6 +11,9 @@ using System.Xml.Linq;
 IDocmanager docmanager;
 docmanager = DocFactory.CreateDocmanager("Test");
 
+List<string> test = docmanager.ReadKeys("inverse henry");
 
-//docmanager.CreateUOM("test", "test", "test", "test", "test", "test");
-Console.WriteLine(docmanager.RemoveQualityType("per Kelvin", "linear thermal expansion"));
+foreach (string key in test)
+{
+    Console.WriteLine(key);
+}

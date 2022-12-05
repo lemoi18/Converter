@@ -28,7 +28,7 @@ namespace Docmanager
         const string filepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\POSC.json";
         List<UOM> jsonDeserialized = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(filepath));
 
-        public bool nameExists(string unitName)
+        public bool NameExists(string unitName)
         {
             try
             {
@@ -45,6 +45,40 @@ namespace Docmanager
             return true;
         }
 
+        public List<string> ReadKeys(string unitName)
+        {
+            try
+            {
+                UOM match =
+                    (from unit in jsonDeserialized
+                     where unit.Name == unitName
+                     select unit).First();
+
+                try
+                {
+                    List<string> output = new List<string>();
+                    string matchString = JsonConvert.SerializeObject(match, Formatting.Indented);
+                    JObject matchJObject = (JObject)JsonConvert.DeserializeObject(matchString);
+
+                    foreach (var item in matchJObject)
+                    {
+                        output.Add(item.Key.ToString());
+                    }
+
+                    return output;
+                }
+                catch (NullReferenceException)
+                {
+                    return new List<string>() { "This unit does not have annotation" };
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                return new List<string>() { "This name is not in file" };
+            }
+
+            return new List<string>() { "0" };
+        }
         //public readAllUnitNames
 
         public string ReadAnnotation(string unitName)
@@ -172,7 +206,7 @@ namespace Docmanager
 
         public string ReadConversion(string unitName, ref double A, ref double B, ref double C, ref double D)
         {
-            A = 0; B = 0; C = 0; D = 0;
+            A = B = C = D = 0;
 
             try
             {
@@ -262,6 +296,7 @@ namespace Docmanager
 
             return "0";
         }
+
         public string CreateUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string baseunit)
         {
             String newUnitString =
@@ -308,27 +343,8 @@ namespace Docmanager
 
             return "0";
         }
-        public enum UnitKeys
-        {
-            ID,
-            Name,
-            Annotation,
-            QuantityType,
-            DimensionalClass,
-            UOM,
-            NamingSystem,
-            CatalogName,
-            CatalogSymbolIsEzplicit,
-            CatalogSymbolText,
-            ISBaseUnit,
-            Deprecated,
-            BaseUnit,
-            A,
-            B,
-            C,
-            D
-        }
-        public string EditUnit(string oldName, UnitKeys keyToChange, dynamic newValue)
+
+        public string EditUnit(string oldName, string keyToChange, dynamic newValue)
         {
             try
             {
@@ -337,56 +353,82 @@ namespace Docmanager
                      where unit.Name == oldName
                 select unit).First();
 
-                switch (keyToChange)
+                if (new[] { "A", "B", "C", "D" }.Contains(keyToChange))
                 {
-                    case UnitKeys.ID:
+                    if ((bool)match.BaseUnit == true)
+                    {
+                        return "This unit is a base unit, base units can not have conversion";
+                    }
+                    else
+                    {
+                        double A, B, C, D;
+                        A = B = C = D = 0;
+                        ReadConversion(oldName, ref A, ref B, ref C, ref D);
+
+                        string conversion =
+                        "{" +
+                            "\"baseUnit\": null," +
+                            "\"Formula\": {" +
+                                "\"A\": null," +
+                                "\"B\": null," +
+                                "\"C\": null," +
+                                "\"D\": null" +
+                            "}" +
+                        "}";
+                    }
+
+                }
+
+                switch (keyToChange)
+                    {
+                    case "id":
                         match.id = newValue;
                         break;
-                    case UnitKeys.Name:
+                    case "Name":
                         match.Name = newValue;
                         break;
-                    case UnitKeys.Annotation:
+                    case "annotation":
                         match.annotation = newValue;
                         break;
-                    //case UnitKeys.QuantityType:
+                    //case "QuantityType":
                         //addQuantityType(oldName, newValue)
                         //break;
-                    case UnitKeys.DimensionalClass:
+                    case "DimensionalClass":
                         match.DimensionalClass = newValue;
                         break;
-                    //case UnitKeys.UOM:
+                    //case IDocmanager.UnitKeys.UOM:
                         //
                         //break;
-                    //case UnitKeys.NamingSystem:
+                    //case IDocmanager.UnitKeys.NamingSystem:
                         //match.id = newValue;
                         //break;
-                    case UnitKeys.CatalogName:
+                    case "CatalogName":
                         match.CatalogName = newValue;
                         break;
-                    //case UnitKeys.CatalogSymbolIsEzplicit:
+                    //case "CatalogSymbolIsEzplicit":
                         //
                         //break;
-                    //case UnitKeys.CatalogSymbolText:
+                    //case "CatalogSymbolText":
                         //
                         //break;
-                    case UnitKeys.ISBaseUnit:
+                    case "IsBaseUnit":
                         match.BaseUnit = newValue;
                         break;
-                    //case UnitKeys.BaseUnit:
+                    //case "BaseUnit":
+                    //
+                    //break;
+                    case "A":
                         //
-                        //break;
-                    //case UnitKeys.A:
-                    //    match.A = newValue;
-                    //    break;
-                    //case UnitKeys.ID:
-                    //    match.B = newValue;
-                    //    break;
-                    //case UnitKeys.ID:
-                    //    match.C = newValue;
-                    //    break;
-                    //case UnitKeys.ID:
-                    //    match.D = newValue;
-                    //    break;
+                        break;
+                    case "B":
+                        //;
+                        break;
+                    case "C":
+                        //
+                        break;
+                    case "D":
+
+                        break;
                     default:
                         return "Option does not exist";
                 }

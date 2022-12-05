@@ -5,12 +5,14 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Schema;
+using static Docmanager.Docmanager;
 
 namespace Docmanager
 {
     public interface IDocmanager
     {
-        public bool nameExists(string unitName);
+        public bool NameExists(string unitName);
+        public List<string> ReadKeys(string unitName);
         public string ReadUOM(string unitName);
         public string ReadAnnotation(string unitName);
         public string ReadIsBase(string unitName);
@@ -18,7 +20,7 @@ namespace Docmanager
         public bool IsBase(string unitName);
         public string ReadConversion(string unitName, ref double A, ref double B, ref double C, ref double D);
         public string CreateUnit(string id, string annotation, string name, string qualitytype, string dimensionalclass, string baseunit);
-        public string EditUnit(string old_id, string id, string annotation, string name, string qualitytype, string dimensionalclass, string baseunit);
+        public string EditUnit(string oldName, string keyToChange, dynamic newValue);
         public string DeleteUnit(string id);
         public string RemoveQualityType(string unitName, string quantityTypeName);
 
