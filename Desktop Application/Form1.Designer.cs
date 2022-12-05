@@ -42,6 +42,14 @@
             this.OutputList = new System.Windows.Forms.ListBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.EditComboBox = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.EditTextbox = new System.Windows.Forms.TextBox();
+            this.EditButton = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // UnitFrom
@@ -174,11 +182,87 @@
             this.label2.TabIndex = 15;
             this.label2.Text = "Specify ";
             // 
+            // EditComboBox
+            // 
+            this.EditComboBox.FormattingEnabled = true;
+            this.EditComboBox.Location = new System.Drawing.Point(1054, 139);
+            this.EditComboBox.Name = "EditComboBox";
+            this.EditComboBox.Size = new System.Drawing.Size(201, 23);
+            this.EditComboBox.TabIndex = 16;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(1101, 72);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(27, 15);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "Edit";
+            // 
+            // EditTextbox
+            // 
+            this.EditTextbox.Location = new System.Drawing.Point(867, 139);
+            this.EditTextbox.Name = "EditTextbox";
+            this.EditTextbox.Size = new System.Drawing.Size(146, 23);
+            this.EditTextbox.TabIndex = 18;
+            // 
+            // EditButton
+            // 
+            this.EditButton.Location = new System.Drawing.Point(1292, 138);
+            this.EditButton.Name = "EditButton";
+            this.EditButton.Size = new System.Drawing.Size(75, 23);
+            this.EditButton.TabIndex = 19;
+            this.EditButton.Text = "Confirm";
+            this.EditButton.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(904, 113);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(66, 15);
+            this.label5.TabIndex = 20;
+            this.label5.Text = "Unit to Edit";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(1101, 113);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(91, 15);
+            this.label6.TabIndex = 21;
+            this.label6.Text = "Attribute to edit";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(1054, 189);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(201, 23);
+            this.textBox2.TabIndex = 22;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(1125, 169);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(58, 15);
+            this.label7.TabIndex = 23;
+            this.label7.Text = "Edit value";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1437, 646);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.EditButton);
+            this.Controls.Add(this.EditTextbox);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.EditComboBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.OutputList);
@@ -216,5 +300,13 @@
         private ListBox OutputList;
         private TextBox textBox1;
         private Label label2;
+        private ComboBox EditComboBox;
+        private Label label4;
+        private TextBox EditTextbox;
+        private Button EditButton;
+        private Label label5;
+        private Label label6;
+        private TextBox textBox2;
+        private Label label7;
     }
 }
