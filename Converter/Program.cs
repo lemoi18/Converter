@@ -10,7 +10,9 @@ IC converter;
 // Test is only mm to cm
 converter = ConnectorFactory.CreateConnectorFactory("Test");
 
-converter.ConverterWrapper(10, "cm", "m");
+
+
+converter.ConverterWrapper(10, "meter per seconds", "meter per minute");
 //converter.ConverterWrapper(100, "mm", "m");
 //converter.ConverterWrapper(1000, "mm", "cm");
 

@@ -17,14 +17,14 @@ using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using static Docmanager.Docmanager;
 using System.Xml.Linq;
-
+using System.Globalization;
 
 namespace Docmanager
 {
     internal class Docmanager : IDocmanager
     {
         //Fetch and derealize json file
-        const string filepath = @"E:\Dataing\IKT300\Engineering units - mappe eksamen\Docmanager\POSC.json";
+        const string filepath = @"C:\Users\Skole\source\repos\Exam\Converter\Docmanager\POSC.json";
         List<UOM> jsonDeserialized = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(filepath));
 
         public string ReadAnnotation(string unitName)
@@ -42,6 +42,54 @@ namespace Docmanager
 
             return "";
         }
+
+        public string ReadIsBase(string unitName)
+        {
+            UOM match =
+                (from unit in jsonDeserialized
+                 where unit.Name == unitName
+                 select unit).First();
+
+            try
+            {
+                return match.ConversionToBaseUnit.baseUnit;
+            }
+            catch (NullReferenceException) { return ""; }
+
+            return "";
+        }
+
+        public bool IsBase(string unitName)
+        {
+            UOM match =
+             (from unit in jsonDeserialized
+              where unit.Name == unitName
+              select unit).First();
+
+            try
+            {
+                return match.BaseUnit != null;
+            }
+            catch (NullReferenceException) { }
+
+            return true;
+        }
+        public string NameOfBaseUnit(string annotationName)
+        {
+            UOM match =
+                (from unit in jsonDeserialized
+                 where unit.annotation == annotationName
+                 select unit).First();
+
+            try
+            {
+                return match.Name;
+            }
+            catch (NullReferenceException) { return ""; }
+
+            return "";
+        }
+
 
         public void ReadConversion(string unitName, ref double A, ref double B, ref double C, ref double D)
         {
@@ -101,7 +149,9 @@ namespace Docmanager
             {
                 if (match.ConversionToBaseUnit.Factor != null)
                 {
-                    B = double.Parse(match.ConversionToBaseUnit.Factor);
+                    
+
+                    B = double.Parse(match.ConversionToBaseUnit.Factor, CultureInfo.GetCultureInfo("en-US"));
                 }
             }
             catch (NullReferenceException) { }
@@ -262,9 +312,10 @@ namespace Docmanager
             public object SameUnit { get; set; }
             public string CatalogName { get; set; }
             public CatalogSymbol CatalogSymbol { get; set; }
-            //public BaseUnit BaseUnit { get; set; }
+            public BaseUnit BaseUnit { get; set; }
             public string Deprecated { get; set; }
             public ConversionToBaseUnit ConversionToBaseUnit { get; set; }
+            
         }
 
 

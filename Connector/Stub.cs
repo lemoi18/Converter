@@ -3,6 +3,7 @@
 using Docmanager;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -15,27 +16,26 @@ namespace Connector
     
     internal class Stub : IC
     {
-        public Tuple<double, string, string> BaseToConvert(double value, string unitFrom, string unitTo)
+        public Tuple<double, string, string> BaseToConvert(double value, string unitTo)
         {
 
             IDocmanager docmanager;
             docmanager = DocFactory.CreateDocmanager("Test");
 
-
-            string[] strings = docmanager.GetUnit("cm");
-
             double y = value;
-            double a = 0;
-            double b = 0.01;
-            double c = 1;
-            double d = 0;
+            double A = 0;
+            double B = 0;
+            double C = 0;
+            double D = 0;
             double res = 0;
-            string uom = strings[0];
-            string annotation = strings[1];
+            docmanager.ReadConversion(unitTo, ref A, ref B, ref C, ref D);
+
+            string uom = unitTo;
+            string annotation = docmanager.ReadAnnotation(unitTo);
 
             try
             {
-                res = (a - c * y) / (d * y - b);
+                res = (A - C * y) / (D * y - B);
             }
             catch (Exception)
             {
@@ -49,52 +49,74 @@ namespace Connector
         public Tuple<double, string, string> ConverterWrapper(double value, string unitFrom, string unitTo)
 
         {
-            bool Isbase = true;
+
+            IDocmanager docmanager;
+            docmanager = DocFactory.CreateDocmanager("Test");
+
+            
+
             Tuple<double, string, string> My_Tuple2 = new Tuple<double, string, string>(value, unitFrom, unitTo);
 
-            My_Tuple2 = ConvertToBase(My_Tuple2.Item1, My_Tuple2.Item2, My_Tuple2.Item3);
+            Tuple<double, string, string> My_Tuple1 = new Tuple<double, string, string>(value, unitFrom, unitTo);
 
-
-            if (My_Tuple2.Item2.ToLower() == unitTo)
+            if (docmanager.IsBase(unitFrom))
             {
-                Tuple<double, string, string> Edited = new Tuple<double, string, string>(My_Tuple2.Item1, My_Tuple2.Item2, My_Tuple2.Item3);
-
-                Console.WriteLine(WriteToConsole(Edited));
-                return Edited;
+                My_Tuple2 = BaseToConvert(My_Tuple1.Item1, unitTo);
+                Console.WriteLine(WriteToConsole(My_Tuple2));
+                return My_Tuple2;
 
             }
             else
             {
-                My_Tuple2 = BaseToConvert(My_Tuple2.Item1, My_Tuple2.Item2, My_Tuple2.Item3);
-                Console.WriteLine(WriteToConsole(My_Tuple2));
-                return My_Tuple2;
 
+                My_Tuple1 = ConvertToBase(My_Tuple2.Item1, My_Tuple2.Item2);
+
+                if (docmanager.ReadAnnotation(unitTo) == My_Tuple1.Item2)
+                {
+                    Tuple<double, string, string> Edited = new Tuple<double, string, string>(My_Tuple1.Item1, My_Tuple1.Item2, My_Tuple1.Item3);
+
+                    Console.WriteLine(WriteToConsole(Edited));
+                    return Edited;
+
+                }
+                else
+                {
+                    My_Tuple2 = BaseToConvert(My_Tuple1.Item1, unitTo);
+                    Console.WriteLine(WriteToConsole(My_Tuple2));
+                    return My_Tuple2;
+
+                }
             }
 
 
 
         }
 
-        public Tuple<double, string, string> ConvertToBase(double value, string unitFrom, string unitTo)
+        public Tuple<double, string, string> ConvertToBase(double value, string unitFrom)
         {
 
             IDocmanager docmanager;
             docmanager = DocFactory.CreateDocmanager("Test");
-            string[] From = docmanager.GetUnit("cm");
-            string[] To = docmanager.GetUnit("m");
+            
+          
 
             double x = value;
-            double a = double.Parse(From[2]);
-            double b = double.Parse(From[3]);
-            double c = double.Parse(From[4]);
-            double d = double.Parse(From[5]);
+            double A = 0;
+            double B = 0;
+            double C = 0;
+            double D = 0;
             double res = 0;
-            string uom = To[0];
-            string annotation = To[1];
+            docmanager.ReadConversion(unitFrom, ref A, ref B, ref C, ref D);
+
+
+            string uom = unitFrom;
+            string annotation = docmanager.ReadAnnotation(unitFrom);
+            string base_annotation = docmanager.ReadIsBase(unitFrom);
+            string Base = docmanager.NameOfBaseUnit(base_annotation);
 
             try
             {
-                res = (a + b * x) / (c + d * x);
+                res = (A + B * x) / (C + D * x);
             }
             catch (Exception)
             {
@@ -102,7 +124,7 @@ namespace Connector
                 throw;
             }
 
-            return Tuple.Create(res, uom, annotation);
+            return Tuple.Create(res, base_annotation, Base);
         }
 
         public string WriteToConsole(Tuple<double, string, string> tuple)

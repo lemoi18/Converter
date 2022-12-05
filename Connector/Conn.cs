@@ -8,7 +8,7 @@ namespace Connector
 {
     internal class Conn : IC
     {
-        public Tuple<double, string, string> BaseToConvert(double value, string unitFrom, string unitTo)
+        public Tuple<double, string, string> BaseToConvert(double value, string unitTo)
         {
             throw new NotImplementedException();
         }
@@ -18,7 +18,7 @@ namespace Connector
             throw new NotImplementedException();
         }
 
-        public Tuple<double, string, string> ConvertToBase(double value, string unitFrom, string unitTo)
+        public Tuple<double, string, string> ConvertToBase(double value, string unitFrom)
         {
             throw new NotImplementedException();
         }
