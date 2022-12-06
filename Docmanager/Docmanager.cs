@@ -419,7 +419,7 @@ namespace Docmanager
             return "0";
         }
 
-        public string CreateSecondaryUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string uom, string baseunit, double A, double B, double C, double D, List<string> Aliases)
+        public string CreateSecondaryUnit(string id, string annotation, string name, List<string> quantityType, string dimensionalclass, string uom, string baseunit, double A, double B, double C, double D, List<string> Aliases)
         {
             Formula formulaformula = new Formula
             {
@@ -439,7 +439,7 @@ namespace Docmanager
             newUnit.id = id;
             newUnit.annotation = annotation;
             newUnit.Name = name;
-            //newUnitDeserialized.QuantityType = quantityType;
+            newUnit.QuantityType = quantityType;
             newUnit.DimensionalClass = dimensionalclass;
             newUnit.ConversionToBaseUnit = conversionConversion;
             newUnit.Aliases = Aliases;
