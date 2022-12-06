@@ -724,17 +724,16 @@ namespace Docmanager
 
             //Check each unit for spesefied quantityClassName
 
-            List<UOM> houseOnes = Units.FindAll(unit => unit.QuantityType != null && unit.QuantityType.ToString() == quantityClass).ToList(); 
+            List<UOM> houseOnes = Units.FindAll(unit => unit.QuantityType != null && unit.QuantityType.ToString().Contains(quantityClass)).ToList(); 
 
             foreach (UOM unit in houseOnes)
             {
-                if (hasQuantityType(unit, quantityClass))
-                {
+                
                     string sameUnitString = JsonConvert.SerializeObject(unit.SameUnit, Formatting.Indented);
                     JObject sameUnitJObject = (JObject)JsonConvert.DeserializeObject(sameUnitString);
                     string test = sameUnitJObject["uom"].ToString();
                     output.Add(test);
-                }
+                
             }
 
             return output;
