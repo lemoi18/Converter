@@ -704,9 +704,29 @@ namespace Docmanager
             return "0";
         }
 
-        
+        public List<string> ReadUomFromQuantityClass(string quantityClass)
+        {
+            List<string> output = new List<string>();
 
-        public List<string> ReadDimension(string symbol)
+            //Check each unit for spesefied quantityClassName
+
+            List<UOM> houseOnes = Units.FindAll(unit => unit.QuantityType != null && unit.QuantityType.ToString() == quantityClass).ToList(); 
+
+            foreach (UOM unit in houseOnes)
+            {
+                if (QuantityExists(unit, quantityClass))
+                {
+                    string sameUnitString = JsonConvert.SerializeObject(unit.SameUnit, Formatting.Indented);
+                    JObject sameUnitJObject = (JObject)JsonConvert.DeserializeObject(sameUnitString);
+                    string test = sameUnitJObject["uom"].ToString();
+                    output.Add(test);
+                }
+            }
+
+            return output;
+        }
+
+            public List<string> ReadDimension(string symbol)
         {
             try
             {
@@ -748,6 +768,11 @@ namespace Docmanager
                 throw new NullReferenceException("Unit with this name or uom has no aliases.");
             }
             return output;
+        }
+
+        public List<List<string>> ReadDimensions()
+        {
+            throw new NotImplementedException();
         }
 
         public class CatalogSymbol
