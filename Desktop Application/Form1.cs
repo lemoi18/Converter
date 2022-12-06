@@ -68,6 +68,7 @@ namespace Desktop_Application
             {
                 OutputList.Items.Clear();
 
+                
                 foreach (var student in request.ListUnitdimentions())
                 {
 
