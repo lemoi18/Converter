@@ -333,30 +333,23 @@ namespace Docmanager
             return "0";
         }
 
-        public string CreateBaseUnit(string id, string annotation, string name, List<string> quantityType, string dimensionalclass, List<string> Aliases)
+        public string CreateBaseUnit(string id, string annotation, string name, List<string> quantityType, string dimensionalclass, string uom, List<string> aliases)
         {
-            string newUnitString =
-                "{" +
-                    "\"id\": null," +
-                    "\"annotation\": null," +
-                    "\"Name\": null," +
-                    "\"QuantityType\": null," +
-                    "\"DimensionalClass\": null," +
-                    "\"SameUnit\": {" +
-                      "\"uom\":\"" + annotation + "\"," +
-                    "}," +
-                    "\"BaseUnit\": true," +
-                    "\"Aliases\": []" +
-                 "}";
+            JObject SameUnitJObject = new JObject
+            {
+                ["uom"] = uom,
+            };
 
-            UOM newUnit = JsonConvert.DeserializeObject<UOM>(newUnitString);
+
+            UOM newUnit = new UOM();
 
             newUnit.id = id;
             newUnit.annotation = annotation;
             newUnit.Name = name;
             newUnit.QuantityType = quantityType;
             newUnit.DimensionalClass = dimensionalclass;
-            newUnit.Aliases = Aliases;
+            newUnit.Aliases = aliases;
+            newUnit.SameUnit = SameUnitJObject;
 
             POSCdeserialized.Add(newUnit);
 
@@ -369,41 +362,27 @@ namespace Docmanager
 
         public string CreateSecondaryUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string uom, string baseunit, double A, double B, double C, double D, List<string> Aliases)
         {
+            Formula formulaformula = new Formula
+            {
+                A = A.ToString(),
+                B = B.ToString(),
+                C = C.ToString(),
+                D = D.ToString()
+            };
+            ConversionToBaseUnit conversionConversion = new ConversionToBaseUnit
+            {
+                baseUnit = baseunit,
+                Formula = formulaformula
+            };
 
-            string newUnitString =
-                "{" +
-                    "\"id\": null," +
-                    "\"annotation\": null," +
-                    "\"Name\": null," +
-                    "\"QuantityType\": []," +
-                    "\"DimensionalClass\": null," +
-                    "\"SameUnit\": {" +
-                      "\"uom\":\"" + uom + "\"," +
-                    "}," +
-                    "\"ConversionToBaseUnit\": {" +
-                      "\"baseUnit\": null," +
-                      "\"Formula\": {" +
-                        "\"A\": null," +
-                        "\"B\": null," +
-                        "\"C\": null," +
-                        "\"D\": null" +
-                      "}," +
-                    "}," +
-                    "\"Aliases\": []" +
-                "}";
-
-            UOM newUnit = JsonConvert.DeserializeObject<UOM>(newUnitString);
+            UOM newUnit = new UOM();
 
             newUnit.id = id;
             newUnit.annotation = annotation;
             newUnit.Name = name;
             //newUnitDeserialized.QuantityType = quantityType;
             newUnit.DimensionalClass = dimensionalclass;
-            newUnit.ConversionToBaseUnit.baseUnit = baseunit;
-            newUnit.ConversionToBaseUnit.Formula.A = A.ToString();
-            newUnit.ConversionToBaseUnit.Formula.B = B.ToString();
-            newUnit.ConversionToBaseUnit.Formula.C = C.ToString();
-            newUnit.ConversionToBaseUnit.Formula.D = D.ToString();
+            newUnit.ConversionToBaseUnit = conversionConversion;
             newUnit.Aliases = Aliases;
 
             POSCdeserialized.Add(newUnit);

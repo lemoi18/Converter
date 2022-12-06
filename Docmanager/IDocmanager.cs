@@ -12,7 +12,7 @@ namespace Docmanager
         public string ReadUnitName(string annotationName);
         public bool IsBase(string unitName);
         public string ReadConversion(string unitName, ref double A, ref double B, ref double C, ref double D);
-        public string CreateBaseUnit(string id, string annotation, string name, List<string> quantityType, string dimensionalclass, List<string> Aliases);
+        public string CreateBaseUnit(string id, string annotation, string name, List<string> quantityType, string dimensionalclass, string uom, List<string> Aliases);
         public string CreateSecondaryUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string uom, string baseunit, double A, double B, double C, double D, List<string> Aliases);
         public string EditUnit(string oldName, string keyToChange, dynamic newValue);
         public string DeleteUnit(string id);

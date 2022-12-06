@@ -13,4 +13,4 @@ var bigCities = new List<string>()
                         "Chicago"
                     };
 
-Console.WriteLine(docmanager.CreateBaseUnit("Test", "Test", "Test", bigCities, "Test", bigCities));
+Console.WriteLine(docmanager.CreateSecondaryUnit("Test", "Test", "Test", "Test", "Test", "Test", "Test", 1, 2, 3, 4, bigCities));
