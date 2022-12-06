@@ -2,7 +2,7 @@ using Connector;
 using Microsoft.VisualBasic;
 using RequestLib;
 using System;
-
+using System.Runtime.CompilerServices;
 
 namespace Desktop_Application
 {
@@ -106,6 +106,17 @@ namespace Desktop_Application
                     OutputList.Items.Add(str2);
                 }
             }
+            if (comboBox.Text == "uom for a given quantity class(detailed version)")
+            {
+                OutputList.Items.Clear();
+
+
+                foreach (var student in request.ListUnits())
+                {
+                    string str2 = string.Format("{0}", student);
+                    OutputList.Items.Add(str2);
+                }
+            }
 
 
         }
@@ -185,6 +196,126 @@ namespace Desktop_Application
                 string str2 = string.Format("{0}", student);
                 EditComboBox.Items.Add(str2);
             }
+        }
+
+        private void CreateQTButton_Click(object sender, EventArgs e)
+        {
+            request.AddQualityclass(EditQTName.Text, QTNewName.Text);
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CreateUOMConfirm_Click(object sender, EventArgs e)
+        {
+            //CreateUOMQT.Items.Add(CreateUOMQT.Text);
+            //CreateUOMAlias.Items.Add(CreateUOMAlias.Text);
+
+
+
+
+
+            if (CreateUOMCheckbox.Checked)
+
+                request.CreateBaseUnit(CreateUOMID.Text, CreateUOMAnnotation.Text, CreateUOMName.Text, CreateUOMQT.Text, CreateUOMDimensional.Text,CreateUOM.Text,CreateUOMAlias.Text);
+            else
+            {
+                request.CreateSecondaryUnit(CreateUOMID.Text, CreateUOMAnnotation.Text, CreateUOMName.Text, CreateUOMQT.Text, CreateUOMDimensional.Text, CreateUOM.Text, CreateUOMBaseUnit.Text, Double.Parse(CreateUOMA.Text), Double.Parse(CreateUOMB.Text), Double.Parse(CreateUOMC.Text), Double.Parse(CreateUOMD.Text), CreateUOMAlias.Text) ; 
+            }        
+        }
+
+        private void label19_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
+        {
+            if (CreateUOMCheckbox.Checked)
+            {
+                
+                this.CreateUOMA.Hide();
+                this.CreateUOMB.Hide();
+                this.CreateUOMC.Hide();
+                this.CreateUOMD.Hide();
+
+                this.label19.Hide();
+                this.label20.Hide();
+                this.label21.Hide();
+                this.label22.Hide();
+            }
+            else
+            {
+                this.CreateUOMA.Show();
+                this.CreateUOMB.Show();
+                this.CreateUOMC.Show();
+                this.CreateUOMD.Show();
+
+                this.label19.Show();
+                this.label20.Show();
+                this.label21.Show();
+                this.label22.Show();
+
+                
+
+            }
+        }
+
+        private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ConfirmAdd_Click(object sender, EventArgs e)
+        {
+            request.AddQualityclass(AddQTName.Text, AddRemoveQTValue.Text);
+        }
+
+        private void ConfirmRemove_Click(object sender, EventArgs e)
+        {
+            request.RemoveQualityclass(AddQTName.Text, AddRemoveQTValue.Text);
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ConfirmCreateType_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label31_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DeleteUnitButton_Click(object sender, EventArgs e)
+        {
+            request.DeleteUOM(DeleteUnitBox.Text);
+        }
+
+        private void label30_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DeleteUnitBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label32_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DeleteQTButton_Click(object sender, EventArgs e)
+        {
+            request.DeleteQualityclass(DeleteQT.Text);
         }
     }
 
