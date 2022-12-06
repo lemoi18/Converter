@@ -1360,7 +1360,14 @@
     "BaseUnit": {
       "Description": "The metre is the length equal to 1 650 763.73 wavelengths in vacuum of the radiation corresponding to the transition between the levels 2p10 and 5d5 of the krypton-86 atom.",
       "BasicAuthority": "SI"
-    }
+    },
+    "Aliases": [
+      "M",
+      "meter",
+      "meters",
+      "metres",
+      "Meters"
+    ]
   },
   {
     "id": "mPK",

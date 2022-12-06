@@ -15,35 +15,7 @@
             throw new NotImplementedException();
         }
 
-        public void CreateQualityclass(string name, string baseunit)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CreateUOM(string id, string annotation, string name, string qualitytype, string dimensionalclass, string baseunit)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteQualityclass(string baseunit, string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteUOM(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void EditQualityclass( string name, string newname)
-        {
-            Console.WriteLine(name);
-        }
-
-        public void EditUOM(string oldName, string keyToChange, dynamic newValue)
-        {
-            Console.WriteLine(newValue);
-        }
+       
 
 
         public List<string[]> GetQualityclass(string description)
@@ -82,7 +54,42 @@
             return new string[] { "annotation", "Name", "QuantityType" };
         }
 
-        public void RemoveQualityclass(string unit, string name)
+        string IRequests.AddQualityclass(string name, string uom)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string CreateUOM(string id, string annotation, string name, string qualitytype, string dimensionalclass, string baseunit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string CreateQualityclass(string name, string baseunit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string EditQualityclass(string name, string newname)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string EditUOM(string oldName, string keyToChange, dynamic newValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string DeleteUOM(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string DeleteQualityclass(string baseunit, string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string RemoveQualityclass(string unit, string name)
         {
             throw new NotImplementedException();
         }

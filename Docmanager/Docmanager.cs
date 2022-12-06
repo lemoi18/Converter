@@ -327,7 +327,7 @@ namespace Docmanager
             return "0";
         }
 
-        public string CreateSecondaryUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string uom, string baseunit, double A, double B, double C, double D)
+        public string CreateUnit(string id, string annotation, string name, string quantityType, string dimensionalclass)
         {
             string newUnitString =
                 "{" +
@@ -337,7 +337,41 @@ namespace Docmanager
                     "\"QuantityType\": null," +
                     "\"DimensionalClass\": null," +
                     "\"SameUnit\": {" +
-                      "\"uom\":" + uom + "," +
+                      "\"uom\":\"" + annotation + "\"," +
+                    "}," +
+                    "\"BaseUnit\": \"true,\"" +
+                 "}";
+
+            UOM newUnitDeserialized = JsonConvert.DeserializeObject<UOM>(newUnitString);
+
+            newUnitDeserialized.id = id;
+            newUnitDeserialized.annotation = annotation;
+            newUnitDeserialized.Name = name;
+            //newUnitDeserialized.QuantityType = quantityType;
+            newUnitDeserialized.DimensionalClass = dimensionalclass;
+
+
+            POSCdeserialized.Add(newUnitDeserialized);
+
+            string output = JsonConvert.SerializeObject(POSCdeserialized, Formatting.Indented);
+
+            File.WriteAllText(POSCfilepath, output);
+
+            return "0";
+        }
+
+        public string CreateSecondaryUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string uom, string baseunit, double A, double B, double C, double D)
+        {
+
+            string newUnitString =
+                "{" +
+                    "\"id\": null," +
+                    "\"annotation\": null," +
+                    "\"Name\": null," +
+                    "\"QuantityType\": null," +
+                    "\"DimensionalClass\": null," +
+                    "\"SameUnit\": {" +
+                      "\"uom\":\"" + uom + "\"," +
                     "}," +
                     "\"ConversionToBaseUnit\": {" +
                       "\"baseUnit\": null," +
@@ -362,6 +396,7 @@ namespace Docmanager
             newUnitDeserialized.ConversionToBaseUnit.Formula.B = B.ToString();
             newUnitDeserialized.ConversionToBaseUnit.Formula.C = C.ToString();
             newUnitDeserialized.ConversionToBaseUnit.Formula.D = D.ToString();
+            
 
             POSCdeserialized.Add(newUnitDeserialized);
 
@@ -575,6 +610,29 @@ namespace Docmanager
             }
         }
 
+        public List<string> ReadAliases(string unitName)
+        {
+            try
+            {
+                UOM match =
+                    (from unit in POSCdeserialized
+                     where unit.Name == unitName
+                     select unit).First();
+                try
+                {
+                    return match.Aliases;
+                }
+                catch (NullReferenceException)
+                {
+                    return new List<string>() { "This unit does not have aliases" };
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                return new List<string>() { "This name is not in file" };
+            }
+        }
+
 
         public class CatalogSymbol
         {
@@ -616,6 +674,7 @@ namespace Docmanager
             public CatalogSymbol CatalogSymbol { get; set; }
             public object BaseUnit { get; set; }
             public string Deprecated { get; set; }
+            public List<string> Aliases { get; set; }
             public ConversionToBaseUnit ConversionToBaseUnit { get; set; }
         }
 
