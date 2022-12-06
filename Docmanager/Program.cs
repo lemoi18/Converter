@@ -5,8 +5,12 @@ using System.Xml.Linq;
 IDocmanager docmanager;
 docmanager = DocFactory.CreateDocmanager("Test");
 
+var bigCities = new List<string>()
+                    {
+                        "New York",
+                        "London",
+                        "Mumbai",
+                        "Chicago"
+                    };
 
-foreach (var element in docmanager.ReadAliases("metre"))
-{
-    Console.WriteLine(element);
-}
+Console.WriteLine(docmanager.CreateBaseUnit("Test", "Test", "Test", bigCities, "Test", bigCities));

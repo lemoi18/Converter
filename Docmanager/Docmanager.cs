@@ -63,18 +63,23 @@ namespace Docmanager
                             case "String":
                                 output.Add(prop.Key);
                                 break;
+                            case "Array":
+                                output.Add(prop.Key);
+                                break;
                             case "Object":
                                 //
                                 break;
                             default:
                                 break;
                         }
-                        output.Add("A");
-                        output.Add("B");
-                        output.Add("C");
-                        output.Add("D");
-                        output.Add("IsBaseUnit");
+
                     }
+
+                    output.Add("A");
+                    output.Add("B");
+                    output.Add("C");
+                    output.Add("D");
+                    output.Add("IsBaseUnit");
 
                     return output;
                 }
@@ -137,6 +142,7 @@ namespace Docmanager
                 return "This name is not in file";
             }
         }
+
         public string ReadUOM(string unitName)
         {
             try
@@ -327,7 +333,7 @@ namespace Docmanager
             return "0";
         }
 
-        public string CreateUnit(string id, string annotation, string name, string quantityType, string dimensionalclass)
+        public string CreateBaseUnit(string id, string annotation, string name, List<string> quantityType, string dimensionalclass, List<string> Aliases)
         {
             string newUnitString =
                 "{" +
@@ -339,19 +345,20 @@ namespace Docmanager
                     "\"SameUnit\": {" +
                       "\"uom\":\"" + annotation + "\"," +
                     "}," +
-                    "\"BaseUnit\": \"true,\"" +
+                    "\"BaseUnit\": true," +
+                    "\"Aliases\": []" +
                  "}";
 
-            UOM newUnitDeserialized = JsonConvert.DeserializeObject<UOM>(newUnitString);
+            UOM newUnit = JsonConvert.DeserializeObject<UOM>(newUnitString);
 
-            newUnitDeserialized.id = id;
-            newUnitDeserialized.annotation = annotation;
-            newUnitDeserialized.Name = name;
-            //newUnitDeserialized.QuantityType = quantityType;
-            newUnitDeserialized.DimensionalClass = dimensionalclass;
+            newUnit.id = id;
+            newUnit.annotation = annotation;
+            newUnit.Name = name;
+            newUnit.QuantityType = quantityType;
+            newUnit.DimensionalClass = dimensionalclass;
+            newUnit.Aliases = Aliases;
 
-
-            POSCdeserialized.Add(newUnitDeserialized);
+            POSCdeserialized.Add(newUnit);
 
             string output = JsonConvert.SerializeObject(POSCdeserialized, Formatting.Indented);
 
@@ -360,7 +367,7 @@ namespace Docmanager
             return "0";
         }
 
-        public string CreateSecondaryUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string uom, string baseunit, double A, double B, double C, double D)
+        public string CreateSecondaryUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string uom, string baseunit, double A, double B, double C, double D, List<string> Aliases)
         {
 
             string newUnitString =
@@ -368,7 +375,7 @@ namespace Docmanager
                     "\"id\": null," +
                     "\"annotation\": null," +
                     "\"Name\": null," +
-                    "\"QuantityType\": null," +
+                    "\"QuantityType\": []," +
                     "\"DimensionalClass\": null," +
                     "\"SameUnit\": {" +
                       "\"uom\":\"" + uom + "\"," +
@@ -380,25 +387,26 @@ namespace Docmanager
                         "\"B\": null," +
                         "\"C\": null," +
                         "\"D\": null" +
-                      "}" +
-                    "}" +
+                      "}," +
+                    "}," +
+                    "\"Aliases\": []" +
                 "}";
 
-            UOM newUnitDeserialized = JsonConvert.DeserializeObject<UOM>(newUnitString);
+            UOM newUnit = JsonConvert.DeserializeObject<UOM>(newUnitString);
 
-            newUnitDeserialized.id = id;
-            newUnitDeserialized.annotation = annotation;
-            newUnitDeserialized.Name = name;
+            newUnit.id = id;
+            newUnit.annotation = annotation;
+            newUnit.Name = name;
             //newUnitDeserialized.QuantityType = quantityType;
-            newUnitDeserialized.DimensionalClass = dimensionalclass;
-            newUnitDeserialized.ConversionToBaseUnit.baseUnit = baseunit;
-            newUnitDeserialized.ConversionToBaseUnit.Formula.A = A.ToString();
-            newUnitDeserialized.ConversionToBaseUnit.Formula.B = B.ToString();
-            newUnitDeserialized.ConversionToBaseUnit.Formula.C = C.ToString();
-            newUnitDeserialized.ConversionToBaseUnit.Formula.D = D.ToString();
-            
+            newUnit.DimensionalClass = dimensionalclass;
+            newUnit.ConversionToBaseUnit.baseUnit = baseunit;
+            newUnit.ConversionToBaseUnit.Formula.A = A.ToString();
+            newUnit.ConversionToBaseUnit.Formula.B = B.ToString();
+            newUnit.ConversionToBaseUnit.Formula.C = C.ToString();
+            newUnit.ConversionToBaseUnit.Formula.D = D.ToString();
+            newUnit.Aliases = Aliases;
 
-            POSCdeserialized.Add(newUnitDeserialized);
+            POSCdeserialized.Add(newUnit);
 
             string output = JsonConvert.SerializeObject(POSCdeserialized, Formatting.Indented);
 
@@ -632,7 +640,6 @@ namespace Docmanager
                 return new List<string>() { "This name is not in file" };
             }
         }
-
 
         public class CatalogSymbol
         {
