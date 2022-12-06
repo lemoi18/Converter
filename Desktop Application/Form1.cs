@@ -222,7 +222,7 @@ namespace Desktop_Application
                 request.CreateBaseUnit(CreateUOMID.Text, CreateUOMAnnotation.Text, CreateUOMName.Text, CreateUOMQT.Text, CreateUOMDimensional.Text,CreateUOM.Text,CreateUOMAlias.Text);
             else
             {
-                request.CreateSecondaryUnit(CreateUOMID.Text, CreateUOMAnnotation.Text, CreateUOMName.Text, CreateUOMQT.Text, CreateUOMDimensional.Text, CreateUOMAlias.Text, CreateUOMBaseUnit.Text, CreateUOM.Text, CreateUOMA.Text, CreateUOMB.Text, CreateUOMC.Text, CreateUOMD.Text) ; 
+                request.CreateSecondaryUnit(CreateUOMID.Text, CreateUOMAnnotation.Text, CreateUOMName.Text, CreateUOMQT.Text, CreateUOMDimensional.Text, CreateUOM.Text, CreateUOMBaseUnit.Text, Double.Parse(CreateUOMA.Text), Double.Parse(CreateUOMB.Text), Double.Parse(CreateUOMC.Text), Double.Parse(CreateUOMD.Text), CreateUOMAlias.Text) ; 
             }        
         }
 
