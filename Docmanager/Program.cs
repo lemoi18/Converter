@@ -10,6 +10,5 @@ double B = 404;
 double C = 404;
 double D = 404;
 
-docmanager.ReadConversion("klx", ref A, ref B, ref C, ref D);
+docmanager.EditUnit("inverse henry", "iD", "test");
 
-Console.WriteLine("A: {0}\nB: {1}\nC: {2}\nD: {3}", A, B, C, D);
