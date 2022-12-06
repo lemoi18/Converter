@@ -2,7 +2,7 @@ using Connector;
 using Microsoft.VisualBasic;
 using RequestLib;
 using System;
-
+using System.Runtime.CompilerServices;
 
 namespace Desktop_Application
 {
@@ -200,7 +200,7 @@ namespace Desktop_Application
 
         private void CreateQTButton_Click(object sender, EventArgs e)
         {
-            request.AddQualityclass(CreateQTName.Text, CreateQTNewName.Text);
+            request.AddQualityclass(EditQTName.Text, QTNewName.Text);
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
@@ -213,16 +213,12 @@ namespace Desktop_Application
             //CreateUOMQT.Items.Add(CreateUOMQT.Text);
             //CreateUOMAlias.Items.Add(CreateUOMAlias.Text);
 
-            
 
-            
 
-           
-         
 
 
             if (CreateUOMCheckbox.Checked)
-                request.CreateUOM(CreateUOMID.Text, CreateUOMAnnotation.Text, CreateUOMName.Text, CreateUOMQT.Text, CreateUOMDimensional.Text, CreateUOMAlias.Text, CreateUOMBaseUnit.Text, CreateUOMA.Text, CreateUOMB.Text, CreateUOMC.Text, CreateUOMD.Text); ; ;
+                request.CreateUOM(CreateUOMID.Text, CreateUOMAnnotation.Text, CreateUOMName.Text, CreateUOMQT.Text, CreateUOMDimensional.Text, CreateUOMAlias.Text, CreateUOMBaseUnit.Text, CreateUOM.Text, CreateUOMA.Text, CreateUOMB.Text, CreateUOMC.Text, CreateUOMD.Text) ; 
             //else
             //{
             
@@ -268,6 +264,26 @@ namespace Desktop_Application
         }
 
         private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ConfirmAdd_Click(object sender, EventArgs e)
+        {
+            request.AddQualityclass(AddQTName.Text, AddRemoveQTValue.Text);
+        }
+
+        private void ConfirmRemove_Click(object sender, EventArgs e)
+        {
+            request.RemoveQualityclass(AddQTName.Text, AddRemoveQTValue.Text);
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ConfirmCreateType_Click(object sender, EventArgs e)
         {
 
         }
