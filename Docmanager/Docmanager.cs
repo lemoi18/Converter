@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using static Docmanager.Docmanager;
 
 namespace Docmanager
@@ -683,7 +684,6 @@ namespace Docmanager
             return output;
         }
 
-
         public string AddQuantityType(string unitName, string quantityTypeName)
         {
             try
@@ -768,8 +768,14 @@ namespace Docmanager
 
             foreach (var dimension in Dimensions)
             {
-                string[] dimensionString = { dimension.Symbol, dimension.Definition, dimension.SIUnit };
-                //output.Add(dimension.Symbol.ToString());
+                List<string> dimensionList = new List<string>()
+                    {
+                        dimension.Symbol,
+                        dimension.Definition,
+                        dimension.SIUnit
+                    };
+
+                output.Add(dimensionList);
 
             }
             return output;

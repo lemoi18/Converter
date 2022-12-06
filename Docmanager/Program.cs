@@ -6,8 +6,9 @@ IDocmanager docmanager;
 docmanager = DocFactory.CreateDocmanager("Test");
 
 
-foreach(var element in docmanager.ReadUoms("volumetric thermal expansion"))
+foreach(var element in docmanager.ReadDimensions())
 {
-    Console.WriteLine(element);
+    foreach(var prop in element)
+    Console.WriteLine(prop);
 }
 
