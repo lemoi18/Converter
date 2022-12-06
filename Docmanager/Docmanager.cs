@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using static Docmanager.Docmanager;
@@ -19,12 +20,28 @@ namespace Docmanager
     internal class Docmanager : IDocmanager
     {
         //Fetch and derealize json files
-        const string POSCfilepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\POSC.json";
-        List<UOM> Units = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(POSCfilepath));
 
-        const string DimensionsFilepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\UnitDimensions.json";
-        List<Dimension> Dimensions = JsonConvert.DeserializeObject<List<Dimension>>(File.ReadAllText(DimensionsFilepath));
 
+    
+        List<UOM> Units = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(Pathgetter("POSC.json")));
+
+        List<Dimension> Dimensions = JsonConvert.DeserializeObject<List<Dimension>>(File.ReadAllText(File.ReadAllText(Pathgetter("UnitDimensions.json"))));
+
+
+
+        public static string Pathgetter(string filename)
+        {
+            
+            string path = System.Reflection.Assembly.GetCallingAssembly().CodeBase;
+            string actualPath = path.Substring(0, path.LastIndexOf("bin"));
+            actualPath = actualPath.Substring(0, actualPath.LastIndexOf("/"));
+            actualPath = actualPath.Substring(0, actualPath.LastIndexOf("/"));
+            string projectPath = new Uri(actualPath).LocalPath;
+            path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, projectPath+"/Documents/" + filename);
+            return path;
+
+
+        }
         public List<List<KeyValuePair<string, List<String>>>> ReadUnits()
         {
             List<List<KeyValuePair<string, List<String>>>> output = new List<List<KeyValuePair<string, List<String>>>>();
@@ -443,7 +460,7 @@ namespace Docmanager
 
             string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
 
-            File.WriteAllText(POSCfilepath, output);
+            File.WriteAllText(Pathgetter("POSC.json"), output);
 
             return "0";
         }
@@ -477,7 +494,7 @@ namespace Docmanager
 
             string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
 
-            File.WriteAllText(POSCfilepath, output);
+            File.WriteAllText(Pathgetter("POSC.json"), output);
 
             return "0";
         }
@@ -563,7 +580,7 @@ namespace Docmanager
 
                 string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
 
-                File.WriteAllText(POSCfilepath, output);
+                File.WriteAllText(Pathgetter("POSC.json"), output);
             }
             catch (InvalidOperationException)
             {
@@ -585,7 +602,7 @@ namespace Docmanager
 
                 string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
 
-                File.WriteAllText(POSCfilepath, output);
+                File.WriteAllText(Pathgetter("POSC.json"), output);
             }
             catch (InvalidOperationException)
             {
@@ -647,7 +664,7 @@ namespace Docmanager
                 match.QuantityType = QuantityTypeJArray;
                 string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
 
-                File.WriteAllText(POSCfilepath, output);
+                File.WriteAllText(Pathgetter("POSC.json"), output);
             }
             catch (InvalidOperationException)
             {
@@ -673,7 +690,7 @@ namespace Docmanager
                 match.QuantityType = QuantityTypeJArray;
                 string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
 
-                File.WriteAllText(POSCfilepath, output);
+                File.WriteAllText(Pathgetter("POSC.json"), output);
             }
             catch (InvalidOperationException)
             {
