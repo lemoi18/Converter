@@ -8,9 +8,11 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
+using static Docmanager.Docmanager;
 
 namespace Docmanager
 {
@@ -18,17 +20,43 @@ namespace Docmanager
     {
         //Fetch and derealize json files
         const string POSCfilepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\POSC.json";
-        List<UOM> POSCdeserialized = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(POSCfilepath));
+        List<UOM> Units = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(POSCfilepath));
 
         const string DimensionsFilepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\UnitDimensions.json";
-        List<Dimension> DimensionsDeserialized = JsonConvert.DeserializeObject<List<Dimension>>(File.ReadAllText(DimensionsFilepath));
-        
+        List<Dimension> Dimensions = JsonConvert.DeserializeObject<List<Dimension>>(File.ReadAllText(DimensionsFilepath));
+
+        public List<List<KeyValuePair<string, string>>> ReadUnits()
+        {
+            List<List<KeyValuePair<string, string>>> output = new List<List<KeyValuePair<string, string>>>();
+
+            foreach (var unit in Units)
+            {
+                var unitKVPs = new List<KeyValuePair<string, string>>();
+                unitKVPs.Add(new KeyValuePair<string, string>("id", unit.id));
+                unitKVPs.Add(new KeyValuePair<string, string>("annotation", unit.annotation));
+                unitKVPs.Add(new KeyValuePair<string, string>("name", unit.Name));
+                //unitKVPs.Add(new KeyValuePair<string, string[]>("quantityType", unit.QuantityType));
+                unitKVPs.Add(new KeyValuePair<string, string>("DimensionalClass", unit.DimensionalClass));
+                //unitKVPs.Add(new KeyValuePair<string, string>("uom", unit.S));
+                //unitKVPs.Add(new KeyValuePair<string, string>("isBaseUnit", unit.BaseUnit.ToString()));
+                //unitKVPs.Add(new KeyValuePair<string, string[]>("Aliases", unit.Aliases));
+                //unitKVPs.Add(new KeyValuePair<string, string>("BaseUnit", unit.ConversionToBaseUnit.baseUnit));
+                //unitKVPs.Add(new KeyValuePair<string, string>("A", unit.ConversionToBaseUnit.Formula.A.ToString()));
+                //unitKVPs.Add(new KeyValuePair<string, string>("B", unit.ConversionToBaseUnit.Formula.B.ToString()));
+                //unitKVPs.Add(new KeyValuePair<string, string>("C", unit.ConversionToBaseUnit.Formula.C.ToString()));
+                //unitKVPs.Add(new KeyValuePair<string, string>("D", unit.ConversionToBaseUnit.Formula.D.ToString()));
+
+                output.Add(unitKVPs);
+            }
+            return output;
+        }
+
         public bool NameExists(string unitName)
         {
             try
             {
                 UOM match =
-                    (from unit in POSCdeserialized
+                    (from unit in Units
                      where unit.Name == unitName
                      select unit).First();
             }
@@ -45,7 +73,7 @@ namespace Docmanager
             try
             {
                 UOM match =
-                    (from unit in POSCdeserialized
+                    (from unit in Units
                      where unit.Name == unitName
                      select unit).First();
 
@@ -101,7 +129,7 @@ namespace Docmanager
             try
             {
                 UOM match =
-                    (from unit in POSCdeserialized
+                    (from unit in Units
                      where unit.Name == unitName
                      select unit).First();
 
@@ -125,7 +153,7 @@ namespace Docmanager
             try
             {
                 UOM match =
-                    (from unit in POSCdeserialized
+                    (from unit in Units
                      where unit.Name == unitName
                      select unit).First();
                 try
@@ -148,7 +176,7 @@ namespace Docmanager
             try
             {
                 UOM match =
-                    (from unit in POSCdeserialized
+                    (from unit in Units
                      where unit.Name == unitName
                      select unit).First();
 
@@ -174,7 +202,7 @@ namespace Docmanager
             try
             {
                 UOM match =
-                    (from unit in POSCdeserialized
+                    (from unit in Units
                      where unit.Name == unitName
                      select unit).First();
 
@@ -198,7 +226,7 @@ namespace Docmanager
             try
             {
                 UOM match =
-                 (from unit in POSCdeserialized
+                 (from unit in Units
                   where unit.Name == unitName
                   select unit).First();
 
@@ -223,7 +251,7 @@ namespace Docmanager
             try
             {
                 UOM match =
-                    (from unit in POSCdeserialized
+                    (from unit in Units
                      where unit.annotation == annotationName
                      select unit).First();
 
@@ -249,7 +277,7 @@ namespace Docmanager
             try
             {
                 UOM match =
-                    (from unit in POSCdeserialized
+                    (from unit in Units
                      where unit.Name == unitName
                      select unit).First();
 
@@ -351,9 +379,9 @@ namespace Docmanager
             newUnit.Aliases = aliases;
             newUnit.SameUnit = SameUnitJObject;
 
-            POSCdeserialized.Add(newUnit);
+            Units.Add(newUnit);
 
-            string output = JsonConvert.SerializeObject(POSCdeserialized, Formatting.Indented);
+            string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
 
             File.WriteAllText(POSCfilepath, output);
 
@@ -385,9 +413,9 @@ namespace Docmanager
             newUnit.ConversionToBaseUnit = conversionConversion;
             newUnit.Aliases = Aliases;
 
-            POSCdeserialized.Add(newUnit);
+            Units.Add(newUnit);
 
-            string output = JsonConvert.SerializeObject(POSCdeserialized, Formatting.Indented);
+            string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
 
             File.WriteAllText(POSCfilepath, output);
 
@@ -399,7 +427,7 @@ namespace Docmanager
             try
             {
                 UOM match =
-                    (from unit in POSCdeserialized
+                    (from unit in Units
                      where unit.Name == oldName
                 select unit).First();
 
@@ -473,7 +501,7 @@ namespace Docmanager
                         return "Option does not exist";
                 }
 
-                string output = JsonConvert.SerializeObject(POSCdeserialized, Formatting.Indented);
+                string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
 
                 File.WriteAllText(POSCfilepath, output);
             }
@@ -489,13 +517,13 @@ namespace Docmanager
             try
             {
                 UOM match =
-                    (from unit in POSCdeserialized
+                    (from unit in Units
                      where unit.id == id
                      select unit).First();
 
-                POSCdeserialized.Remove(match);
+                Units.Remove(match);
 
-                string output = JsonConvert.SerializeObject(POSCdeserialized, Formatting.Indented);
+                string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
 
                 File.WriteAllText(POSCfilepath, output);
             }
@@ -511,7 +539,7 @@ namespace Docmanager
             try
             {
                 UOM match =
-                    (from unit in POSCdeserialized
+                    (from unit in Units
                      where unit.Name == unitName
                      select unit).First();
 
@@ -520,7 +548,7 @@ namespace Docmanager
                 QuantityTypeJArray.Add(quantityTypeName);
 
                 match.QuantityType = QuantityTypeJArray;
-                string output = JsonConvert.SerializeObject(POSCdeserialized, Formatting.Indented);
+                string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
 
                 File.WriteAllText(POSCfilepath, output);
             }
@@ -537,7 +565,7 @@ namespace Docmanager
             try
             {
                 UOM match =
-                    (from unit in POSCdeserialized
+                    (from unit in Units
                      where unit.Name == unitName
                      select unit).First();
 
@@ -546,7 +574,7 @@ namespace Docmanager
                 QuantityTypeJArray.Where(i => i.Type == JTokenType.String && (string)i == quantityTypeName).ToList().ForEach(i => i.Remove());
 
                 match.QuantityType = QuantityTypeJArray;
-                string output = JsonConvert.SerializeObject(POSCdeserialized, Formatting.Indented);
+                string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
 
                 File.WriteAllText(POSCfilepath, output);
             }
@@ -562,10 +590,9 @@ namespace Docmanager
         {
             List<string[]> output = new List<string[]>();
 
-            foreach(var dimension in DimensionsDeserialized)
+            foreach(var dimension in Dimensions)
             {
                 string[] dimensionString = {dimension.Symbol, dimension.Definition, dimension.SIUnit};
-
                 output.Add(dimensionString);
             }
             return output;
@@ -576,7 +603,7 @@ namespace Docmanager
             try
             {
                 Dimension match =
-                    (from dimension in DimensionsDeserialized
+                    (from dimension in Dimensions
                      where dimension.Symbol == symbol
                      select dimension).First();
                 try
@@ -602,7 +629,7 @@ namespace Docmanager
             try
             {
                 UOM match =
-                    (from unit in POSCdeserialized
+                    (from unit in Units
                      where unit.Name == unitName
                      select unit).First();
                 try

@@ -4,6 +4,7 @@ namespace Docmanager
     {
 
         public bool NameExists(string unitName);
+        public List<List<KeyValuePair<string, string>>> ReadUnits();
         public List<string> ReadProperties(string unitName);
         public string ReadUOM(string unitName);
         public string ReadBaseUnit(string unitName);
