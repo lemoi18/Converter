@@ -99,6 +99,14 @@
             this.label28 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.DeleteUnitBox = new System.Windows.Forms.TextBox();
+            this.DeleteQT = new System.Windows.Forms.TextBox();
+            this.DeleteUnitButton = new System.Windows.Forms.Button();
+            this.DeleteQTButton = new System.Windows.Forms.Button();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // UnitFrom
@@ -723,11 +731,93 @@
             this.button2.Text = "Create Quantity Type";
             this.button2.UseVisualStyleBackColor = true;
             // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(167, 640);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(65, 15);
+            this.label30.TabIndex = 80;
+            this.label30.Text = "Delete Unit";
+            this.label30.Click += new System.EventHandler(this.label30_Click);
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(434, 640);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(116, 15);
+            this.label31.TabIndex = 81;
+            this.label31.Text = "Delete Quantity Type";
+            this.label31.Click += new System.EventHandler(this.label31_Click);
+            // 
+            // DeleteUnitBox
+            // 
+            this.DeleteUnitBox.Location = new System.Drawing.Point(156, 676);
+            this.DeleteUnitBox.Name = "DeleteUnitBox";
+            this.DeleteUnitBox.Size = new System.Drawing.Size(100, 23);
+            this.DeleteUnitBox.TabIndex = 82;
+            this.DeleteUnitBox.TextChanged += new System.EventHandler(this.DeleteUnitBox_TextChanged);
+            // 
+            // DeleteQT
+            // 
+            this.DeleteQT.Location = new System.Drawing.Point(450, 676);
+            this.DeleteQT.Name = "DeleteQT";
+            this.DeleteQT.Size = new System.Drawing.Size(100, 23);
+            this.DeleteQT.TabIndex = 83;
+            // 
+            // DeleteUnitButton
+            // 
+            this.DeleteUnitButton.Location = new System.Drawing.Point(156, 725);
+            this.DeleteUnitButton.Name = "DeleteUnitButton";
+            this.DeleteUnitButton.Size = new System.Drawing.Size(100, 23);
+            this.DeleteUnitButton.TabIndex = 84;
+            this.DeleteUnitButton.Text = "Delete";
+            this.DeleteUnitButton.UseVisualStyleBackColor = true;
+            this.DeleteUnitButton.Click += new System.EventHandler(this.DeleteUnitButton_Click);
+            // 
+            // DeleteQTButton
+            // 
+            this.DeleteQTButton.Location = new System.Drawing.Point(450, 725);
+            this.DeleteQTButton.Name = "DeleteQTButton";
+            this.DeleteQTButton.Size = new System.Drawing.Size(94, 23);
+            this.DeleteQTButton.TabIndex = 85;
+            this.DeleteQTButton.Text = "Delete";
+            this.DeleteQTButton.UseVisualStyleBackColor = true;
+            this.DeleteQTButton.Click += new System.EventHandler(this.DeleteQTButton_Click);
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(54, 679);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(78, 15);
+            this.label32.TabIndex = 86;
+            this.label32.Text = "Name of Unit";
+            this.label32.Click += new System.EventHandler(this.label32_Click);
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(308, 677);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(129, 15);
+            this.label33.TabIndex = 87;
+            this.label33.Text = "Name of Quantity Type";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1437, 810);
+            this.Controls.Add(this.label33);
+            this.Controls.Add(this.label32);
+            this.Controls.Add(this.DeleteQTButton);
+            this.Controls.Add(this.DeleteUnitButton);
+            this.Controls.Add(this.DeleteQT);
+            this.Controls.Add(this.DeleteUnitBox);
+            this.Controls.Add(this.label31);
+            this.Controls.Add(this.label30);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label29);
             this.Controls.Add(this.label28);
@@ -879,5 +969,13 @@
         private Label label28;
         private Label label29;
         private Button button2;
+        private Label label30;
+        private Label label31;
+        private TextBox DeleteUnitBox;
+        private TextBox DeleteQT;
+        private Button DeleteUnitButton;
+        private Button DeleteQTButton;
+        private Label label32;
+        private Label label33;
     }
 }

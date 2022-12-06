@@ -27,7 +27,8 @@
         public string[] ListKeys(string unitName);
 
         //Create Unit
-        public string CreateUOM(string id, string annotation, string name, string qualitytype, string dimensionalclass,string alias, string baseunit, string uom, string A, string B, string C, string D); //
+        public string CreateBaseUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string uom, string Aliases);
+        public string CreateSecondaryUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string uom, string baseunit, double A, double B, double C, double D, List<string> Aliases);
         //Create Quantity type
         public string CreateQualityclass(string name, string baseunit);
         // Edit Unit

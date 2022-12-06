@@ -218,12 +218,12 @@ namespace Desktop_Application
 
 
             if (CreateUOMCheckbox.Checked)
-                request.CreateUOM(CreateUOMID.Text, CreateUOMAnnotation.Text, CreateUOMName.Text, CreateUOMQT.Text, CreateUOMDimensional.Text, CreateUOMAlias.Text, CreateUOMBaseUnit.Text, CreateUOM.Text, CreateUOMA.Text, CreateUOMB.Text, CreateUOMC.Text, CreateUOMD.Text) ; 
-            //else
-            //{
-            
-                //request.CreateUOM(CreateUOMID.Text, CreateUOMAnnotation.Text, CreateUOMName.Text, CreateUOMQT.Text, CreateUOMDimensional.Text);
-            //}        
+
+                request.CreateBaseUnit(CreateUOMID.Text, CreateUOMAnnotation.Text, CreateUOMName.Text, CreateUOMQT.Text, CreateUOMDimensional.Text,CreateUOM.Text,CreateUOMAlias.Text);
+            else
+            {
+                request.CreateSecondaryUnit(CreateUOMID.Text, CreateUOMAnnotation.Text, CreateUOMName.Text, CreateUOMQT.Text, CreateUOMDimensional.Text, CreateUOMAlias.Text, CreateUOMBaseUnit.Text, CreateUOM.Text, CreateUOMA.Text, CreateUOMB.Text, CreateUOMC.Text, CreateUOMD.Text) ; 
+            }        
         }
 
         private void label19_Click(object sender, EventArgs e)
@@ -286,6 +286,36 @@ namespace Desktop_Application
         private void ConfirmCreateType_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void label31_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DeleteUnitButton_Click(object sender, EventArgs e)
+        {
+            request.DeleteUOM(DeleteUnitBox.Text);
+        }
+
+        private void label30_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DeleteUnitBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label32_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DeleteQTButton_Click(object sender, EventArgs e)
+        {
+            request.DeleteQualityclass(DeleteQT.Text);
         }
     }
 

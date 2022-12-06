@@ -47,10 +47,7 @@
 
 
 
-        public string CreateUOM(string id, string annotation, string name, string qualitytype, string dimensionalclass, string alias, string baseunit, string uom, string A, string B, string C, string D) //
-        {
-            throw new NotImplementedException();
-    }
+      
 
     public string CreateQualityclass(string name, string baseunit)
         {
@@ -108,6 +105,16 @@
         {
             return new string[] { "cm", "mm", "m" };
 
+        }
+
+        public string CreateBaseUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string uom, string Aliases)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string CreateSecondaryUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string uom, string baseunit, double A, double B, double C, double D, List<string> Aliases)
+        {
+            throw new NotImplementedException();
         }
     }
 }
