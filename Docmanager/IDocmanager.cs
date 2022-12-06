@@ -23,6 +23,7 @@ namespace Docmanager
         public List<string> ReadDimension(string symbol);
         public List<string> ReadAliases(string input);
         public List<string> ReadUoms(string quantityClass);
+        public List<string> ReadQuantityClasses();
     }
 
 }

@@ -762,6 +762,7 @@ namespace Docmanager
                 return output;
             }
         }
+
         public List<List<string>> ReadDimensions()
         {
             List<List<string>> output = new List<List<string>>();
@@ -797,6 +798,18 @@ namespace Docmanager
                 throw new NullReferenceException("Unit with this name or uom has no aliases.");
             }
             return output;
+        }
+
+        public List<string> ReadQuantityType()
+        {
+            List<string> output = new List<string>();
+
+            return output;
+        }
+
+        public List<string> ReadQuantityClasses()
+        {
+            throw new NotImplementedException();
         }
 
         public class CatalogSymbol
