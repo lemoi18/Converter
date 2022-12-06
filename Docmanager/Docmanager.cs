@@ -202,31 +202,31 @@ namespace Docmanager
             }
         }
 
-        public string ReadUOM(string unitName)
-        {
-            try
-            {
-                UOM match =
-                    (from unit in Units
-                     where unit.Name == unitName
-                     select unit).First();
+        //public string ReadUOM(string unitName)
+        //{
+        //    try
+        //    {
+        //        UOM match =
+        //            (from unit in Units
+        //             where unit.Name == unitName
+        //             select unit).First();
 
-                try
-                {
-                    string SameUnitString = match.SameUnit.ToString();
-                    JObject SameUnitJObject = (JObject)JsonConvert.DeserializeObject(SameUnitString);
-                    return (string)SameUnitJObject["uom"];
-                }
-                catch (NullReferenceException)
-                {
-                    return "This unit does not have annotation";
-                }
-            }
-            catch (InvalidOperationException)
-            {
-                return "This name is not in file";
-            }
-        }
+        //        try
+        //        {
+        //            string SameUnitString = match.SameUnit.ToString();
+        //            JObject SameUnitJObject = (JObject)JsonConvert.DeserializeObject(SameUnitString);
+        //            return (string)SameUnitJObject["uom"];
+        //        }
+        //        catch (NullReferenceException)
+        //        {
+        //            return "This unit does not have annotation";
+        //        }
+        //    }
+        //    catch (InvalidOperationException)
+        //    {
+        //        return "This name is not in file";
+        //    }
+        //}
 
         public string ReadIsBase(string unitName)
         {
@@ -564,6 +564,43 @@ namespace Docmanager
             }
             return "0";
         }
+        private bool QuantityExists(UOM unit, string quantityType)
+        {
+            string quantityString = "none";
+            if (unit.QuantityType != null)
+            {
+                quantityString = unit.QuantityType.ToString();
+            }
+            //QuantityType is array
+            try
+            {
+                JArray quantityJArray = (JArray)JsonConvert.DeserializeObject(quantityString);
+                return quantityJArray.Any(t => t.Value<string>() == quantityType);
+            }
+            //QuantityType is object
+            catch (JsonReaderException)
+            {
+                return (quantityString == quantityType);
+            }
+        }
+        public List<string> ReadUOM(string quantityType)
+        {
+            List<string> output = new List<string>();
+
+            //Check each unit for spesefied quantityClassName
+            foreach(UOM unit in Units)
+            {
+                if (QuantityExists(unit, quantityType))
+                {
+                    string sameUnitString = JsonConvert.SerializeObject(unit.SameUnit, Formatting.Indented);
+                    JObject sameUnitJObject = (JObject)JsonConvert.DeserializeObject(sameUnitString);
+                    string test = sameUnitJObject["uom"].ToString();
+                    output.Add(test);
+                }
+            }
+
+            return output;
+        }
 
         public string AddQuantityType(string unitName, string quantityTypeName)
         {
@@ -677,6 +714,7 @@ namespace Docmanager
                 return new List<string>() { "This name is not in file" };
             }
         }
+
 
         public class CatalogSymbol
         {

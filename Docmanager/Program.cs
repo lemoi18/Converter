@@ -5,17 +5,12 @@ using System.Xml.Linq;
 IDocmanager docmanager;
 docmanager = DocFactory.CreateDocmanager("Test");
 
+List<string> UOMforGivenQuantityClass = docmanager.ReadUOM("volumerw");
 
-//docmanager.ReadUnits();
-foreach (var Unit in docmanager.ReadUnits())
+Console.WriteLine("-------");
+foreach (string item in UOMforGivenQuantityClass)
 {
-    Console.WriteLine("-------------------");
-    foreach (var list in Unit)
-    {
-        foreach (var prop in list.Value)
-        {
-            Console.WriteLine(prop);
-        }
-    }
-
+    Console.WriteLine(item);
 }
+
+
