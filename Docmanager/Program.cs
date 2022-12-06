@@ -5,12 +5,13 @@ using System.Xml.Linq;
 IDocmanager docmanager;
 docmanager = DocFactory.CreateDocmanager("Test");
 
-List<string> UOMforGivenQuantityClass = docmanager.ReadUOM("volumerw");
+List<string> test = docmanager.ReadAliases("m");
 
 Console.WriteLine("-------");
-foreach (string item in UOMforGivenQuantityClass)
+foreach (string item in test)
 {
     Console.WriteLine(item);
 }
 
+//Console.WriteLine(docmanager.ReadUOM("per Kelvin"));
 
