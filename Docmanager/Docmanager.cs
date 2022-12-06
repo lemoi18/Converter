@@ -334,7 +334,35 @@ namespace Docmanager
             }
         }
 
-        public string ReadConversion(string unitName, ref double A, ref double B, ref double C, ref double D)
+        public string ReadConversion(string input, ref double A, ref double B, ref double C, ref double D)
+        {
+            try
+            {
+                try
+                {
+                    return ReadConversionFromName(input, ref A, ref B, ref C, ref D);
+                }
+                catch (InvalidOperationException)
+                {
+                    try
+                    {
+                        return ReadConversionFromUOM(input, ref A, ref B, ref C, ref D);
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        return "noMatch" ;
+                    }
+                }
+            }
+            catch (NullReferenceException)
+            {
+                // throw new NullReferenceException("No unit with this name has an alias");
+                return "noMatch";
+            }
+            return "0";
+        }
+
+        private string ReadConversionFromName(string unitName, ref double A, ref double B, ref double C, ref double D)
         {
             A = B = C = D = 0;
 
@@ -419,7 +447,98 @@ namespace Docmanager
             }
             catch (InvalidOperationException)
             {
-                return "This name is not in file";
+                throw new InvalidOperationException("There is no unit whit this name");
+            }
+
+            return "0";
+        }
+
+        private string ReadConversionFromUOM(string uom, ref double A, ref double B, ref double C, ref double D)
+        {
+            A = B = C = D = 0;
+
+            try
+            {
+                UOM match =
+                    (from unit in Units
+                     where ReadUom(unit) == uom
+                     select unit).First();
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.baseUnit != null)
+                    {
+                        C = 1;
+                    }
+                }
+                catch (NullReferenceException) { }
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.Formula.A != null)
+                    {
+                        A = double.Parse(match.ConversionToBaseUnit.Formula.A, CultureInfo.GetCultureInfo("en-US"));
+                    }
+                }
+                catch (NullReferenceException) { }
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.Formula.B != null)
+                    {
+                        B = double.Parse(match.ConversionToBaseUnit.Formula.B, CultureInfo.GetCultureInfo("en-US"));
+                    }
+                }
+                catch (NullReferenceException) { }
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.Formula.C != null)
+                    {
+                        C = double.Parse(match.ConversionToBaseUnit.Formula.C, CultureInfo.GetCultureInfo("en-US"));
+                    }
+                }
+                catch (NullReferenceException) { }
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.Formula.D != null)
+                    {
+                        D = double.Parse(match.ConversionToBaseUnit.Formula.D, CultureInfo.GetCultureInfo("en-US"));
+                    }
+                }
+                catch (NullReferenceException) { }
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.Factor != null)
+                    {
+                        B = double.Parse(match.ConversionToBaseUnit.Factor, CultureInfo.GetCultureInfo("en-US"));
+                    }
+                }
+                catch (NullReferenceException) { }
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.Fraction.Numerator != null)
+                    {
+                        B = double.Parse(match.ConversionToBaseUnit.Fraction.Numerator, CultureInfo.GetCultureInfo("en-US"));
+                    }
+                }
+                catch (NullReferenceException) { }
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.Fraction.Denominator != null)
+                    {
+                        C = double.Parse(match.ConversionToBaseUnit.Fraction.Denominator, CultureInfo.GetCultureInfo("en-US"));
+                    }
+                }
+                catch (NullReferenceException) { }
+            }
+            catch (InvalidOperationException)
+            {
+                throw new InvalidOperationException("There is no unit whit this uom");
             }
 
             return "0";
@@ -727,19 +846,32 @@ namespace Docmanager
 
         public List<string> ReadAliases(string input)
         {
-            List<string> output = ReadAliasesName(input);
-            if (output == null)
+            try
             {
-                output = new List<string>() { "none" };
+                try
+                {
+                    return ReadAliasesFromName(input);
+                }
+                catch (InvalidOperationException)
+                {
+                    try 
+                    {
+                        return ReadAliasesFromUOM(input);
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        return new List<string>() { "noMatch" };
+                    }
+                }
             }
-            else if(output[0] == "noMatch")
+            catch (NullReferenceException)
             {
-                output = ReadAliasesUOM(input);
+                // throw new NullReferenceException("No unit with this name has an alias");
+                return new List<string>() { "noMatch" };
             }
-            return output;
         }
 
-        private List<string> ReadAliasesName(string unitName)
+        private List<string> ReadAliasesFromName(string unitName)
         {
             try
             {
@@ -753,17 +885,17 @@ namespace Docmanager
                 }
                 catch (NullReferenceException)
                 {
-                    return null;
+                    throw new NullReferenceException("No unit with this name has an alias");
                 }
             }
             catch (InvalidOperationException)
             {
-                return new List<string>() { "noMatch" };
+                throw new InvalidOperationException("There is no unit whit this name");
             }
         }
 
         //List all aliases given uom
-        private List<string> ReadAliasesUOM(string uom)
+        private List<string> ReadAliasesFromUOM(string uom)
         {
             try
             {
@@ -777,12 +909,12 @@ namespace Docmanager
                 }
                 catch (NullReferenceException)
                 {
-                    return null;
+                    throw new NullReferenceException("No unit with this uom has an alias");
                 }
             }
             catch (InvalidOperationException)
             {
-                return new List<string>() { "noMatch" };
+                throw new InvalidOperationException("There is no unit whit this name");
             }
         }
 

@@ -5,13 +5,11 @@ using System.Xml.Linq;
 IDocmanager docmanager;
 docmanager = DocFactory.CreateDocmanager("Test");
 
-List<string> test = docmanager.ReadAliases("m");
+double A = 404;
+double B = 404;
+double C = 404;
+double D = 404;
 
-Console.WriteLine("-------");
-foreach (string item in test)
-{
-    Console.WriteLine(item);
-}
+docmanager.ReadConversion("klx", ref A, ref B, ref C, ref D);
 
-//Console.WriteLine(docmanager.ReadUOM("per Kelvin"));
-
+Console.WriteLine("A: {0}\nB: {1}\nC: {2}\nD: {3}", A, B, C, D);
