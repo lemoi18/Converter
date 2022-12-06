@@ -10,21 +10,25 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
 using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 
 namespace Docmanager
 {
     internal class Docmanager : IDocmanager
     {
-        //Fetch and derealize json file
-        const string filepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\POSC.json";
-        List<UOM> jsonDeserialized = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(filepath));
+        //Fetch and derealize json files
+        const string POSCfilepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\POSC.json";
+        List<UOM> POSCdeserialized = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(POSCfilepath));
 
+        const string DimensionsFilepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\UnitDimensions.json";
+        List<Dimension> DimensionsDeserialized = JsonConvert.DeserializeObject<List<Dimension>>(File.ReadAllText(DimensionsFilepath));
+        
         public bool NameExists(string unitName)
         {
             try
             {
                 UOM match =
-                    (from unit in jsonDeserialized
+                    (from unit in POSCdeserialized
                      where unit.Name == unitName
                      select unit).First();
             }
@@ -41,7 +45,7 @@ namespace Docmanager
             try
             {
                 UOM match =
-                    (from unit in jsonDeserialized
+                    (from unit in POSCdeserialized
                      where unit.Name == unitName
                      select unit).First();
 
@@ -60,24 +64,16 @@ namespace Docmanager
                                 output.Add(prop.Key);
                                 break;
                             case "Object":
-                                //var temp = prop.Key;
-                                //string matchString2 = JsonConvert.SerializeObject(match.//, Formatting.Indented);
-                                //JObject matchJObject2 = (JObject)JsonConvert.DeserializeObject(matchString2);
-                                //foreach (var prop2 in matchJObject2)
-                                //{
-                                //    //output.Add(prop2.Key);
-                                //    Console.WriteLine(prop2.Key);
-                                //}
-                                output.Add("A");
-                                output.Add("B");
-                                output.Add("C");
-                                output.Add("D");
-                                output.Add("IsBaseUnit");
-
+                                //
                                 break;
                             default:
                                 break;
                         }
+                        output.Add("A");
+                        output.Add("B");
+                        output.Add("C");
+                        output.Add("D");
+                        output.Add("IsBaseUnit");
                     }
 
                     return output;
@@ -94,14 +90,13 @@ namespace Docmanager
 
             return new List<string>() { "0" };
         }
-        //public readAllUnitNames
 
         public string ReadAnnotation(string unitName)
         {
             try
             {
                 UOM match =
-                    (from unit in jsonDeserialized
+                    (from unit in POSCdeserialized
                      where unit.Name == unitName
                      select unit).First();
 
@@ -120,12 +115,34 @@ namespace Docmanager
             }
         }
 
+        public string ReadBaseUnit(string unitName)
+        {
+            try
+            {
+                UOM match =
+                    (from unit in POSCdeserialized
+                     where unit.Name == unitName
+                     select unit).First();
+                try
+                {
+                    return match.ConversionToBaseUnit.baseUnit;
+                }
+                catch (NullReferenceException)
+                {
+                    return "This unit does not have base unit";
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                return "This name is not in file";
+            }
+        }
         public string ReadUOM(string unitName)
         {
             try
             {
                 UOM match =
-                    (from unit in jsonDeserialized
+                    (from unit in POSCdeserialized
                      where unit.Name == unitName
                      select unit).First();
 
@@ -151,7 +168,7 @@ namespace Docmanager
             try
             {
                 UOM match =
-                    (from unit in jsonDeserialized
+                    (from unit in POSCdeserialized
                      where unit.Name == unitName
                      select unit).First();
 
@@ -175,7 +192,7 @@ namespace Docmanager
             try
             {
                 UOM match =
-                 (from unit in jsonDeserialized
+                 (from unit in POSCdeserialized
                   where unit.Name == unitName
                   select unit).First();
 
@@ -195,12 +212,12 @@ namespace Docmanager
             return true;
         }
 
-        public string NameOfBaseUnit(string annotationName)
+        public string ReadUnitName(string annotationName)
         {
             try
             {
                 UOM match =
-                    (from unit in jsonDeserialized
+                    (from unit in POSCdeserialized
                      where unit.annotation == annotationName
                      select unit).First();
 
@@ -226,7 +243,7 @@ namespace Docmanager
             try
             {
                 UOM match =
-                    (from unit in jsonDeserialized
+                    (from unit in POSCdeserialized
                      where unit.Name == unitName
                      select unit).First();
 
@@ -243,7 +260,7 @@ namespace Docmanager
                 {
                     if (match.ConversionToBaseUnit.Formula.A != null)
                     {
-                        A = double.Parse(match.ConversionToBaseUnit.Formula.A);
+                        A = double.Parse(match.ConversionToBaseUnit.Formula.A, CultureInfo.GetCultureInfo("en-US"));
                     }
                 }
                 catch (NullReferenceException) { }
@@ -252,7 +269,7 @@ namespace Docmanager
                 {
                     if (match.ConversionToBaseUnit.Formula.B != null)
                     {
-                        B = double.Parse(match.ConversionToBaseUnit.Formula.B);
+                        B = double.Parse(match.ConversionToBaseUnit.Formula.B, CultureInfo.GetCultureInfo("en-US"));
                     }
                 }
                 catch (NullReferenceException) { }
@@ -261,7 +278,7 @@ namespace Docmanager
                 {
                     if (match.ConversionToBaseUnit.Formula.C != null)
                     {
-                        C = double.Parse(match.ConversionToBaseUnit.Formula.C);
+                        C = double.Parse(match.ConversionToBaseUnit.Formula.C, CultureInfo.GetCultureInfo("en-US"));
                     }
                 }
                 catch (NullReferenceException) { }
@@ -270,7 +287,7 @@ namespace Docmanager
                 {
                     if (match.ConversionToBaseUnit.Formula.D != null)
                     {
-                        D = double.Parse(match.ConversionToBaseUnit.Formula.D);
+                        D = double.Parse(match.ConversionToBaseUnit.Formula.D, CultureInfo.GetCultureInfo("en-US"));
                     }
                 }
                 catch (NullReferenceException) { }
@@ -279,8 +296,6 @@ namespace Docmanager
                 {
                     if (match.ConversionToBaseUnit.Factor != null)
                     {
-
-
                         B = double.Parse(match.ConversionToBaseUnit.Factor, CultureInfo.GetCultureInfo("en-US"));
                     }
                 }
@@ -290,7 +305,7 @@ namespace Docmanager
                 {
                     if (match.ConversionToBaseUnit.Fraction.Numerator != null)
                     {
-                        B = double.Parse(match.ConversionToBaseUnit.Fraction.Numerator);
+                        B = double.Parse(match.ConversionToBaseUnit.Fraction.Numerator, CultureInfo.GetCultureInfo("en-US"));
                     }
                 }
                 catch (NullReferenceException) { }
@@ -299,7 +314,7 @@ namespace Docmanager
                 {
                     if (match.ConversionToBaseUnit.Fraction.Denominator != null)
                     {
-                        C = double.Parse(match.ConversionToBaseUnit.Fraction.Denominator);
+                        C = double.Parse(match.ConversionToBaseUnit.Fraction.Denominator, CultureInfo.GetCultureInfo("en-US"));
                     }
                 }
                 catch (NullReferenceException) { }
@@ -312,9 +327,9 @@ namespace Docmanager
             return "0";
         }
 
-        public string CreateUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string baseunit)
+        public string CreateSecondaryUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string uom, string baseunit, double A, double B, double C, double D)
         {
-            String newUnitString =
+            string newUnitString =
                 "{" +
                     "\"id\": null," +
                     "\"annotation\": null," +
@@ -322,13 +337,7 @@ namespace Docmanager
                     "\"QuantityType\": null," +
                     "\"DimensionalClass\": null," +
                     "\"SameUnit\": {" +
-                      "\"uom\": null," +
-                      "\"namingSystem\": null" +
-                    "}," +
-                    "\"CatalogName\": null," +
-                    "\"CatalogSymbol\": {" +
-                      "\"isExplicit\": null," +
-                      "\"text\": null" +
+                      "\"uom\":" + uom + "," +
                     "}," +
                     "\"ConversionToBaseUnit\": {" +
                       "\"baseUnit\": null," +
@@ -346,15 +355,19 @@ namespace Docmanager
             newUnitDeserialized.id = id;
             newUnitDeserialized.annotation = annotation;
             newUnitDeserialized.Name = name;
-            newUnitDeserialized.QuantityType = quantityType;
+            //newUnitDeserialized.QuantityType = quantityType;
             newUnitDeserialized.DimensionalClass = dimensionalclass;
             newUnitDeserialized.ConversionToBaseUnit.baseUnit = baseunit;
+            newUnitDeserialized.ConversionToBaseUnit.Formula.A = A.ToString();
+            newUnitDeserialized.ConversionToBaseUnit.Formula.B = B.ToString();
+            newUnitDeserialized.ConversionToBaseUnit.Formula.C = C.ToString();
+            newUnitDeserialized.ConversionToBaseUnit.Formula.D = D.ToString();
 
-            jsonDeserialized.Add(newUnitDeserialized);
+            POSCdeserialized.Add(newUnitDeserialized);
 
-            string output = JsonConvert.SerializeObject(jsonDeserialized, Formatting.Indented);
+            string output = JsonConvert.SerializeObject(POSCdeserialized, Formatting.Indented);
 
-            File.WriteAllText(filepath, output);
+            File.WriteAllText(POSCfilepath, output);
 
             return "0";
         }
@@ -364,34 +377,24 @@ namespace Docmanager
             try
             {
                 UOM match =
-                    (from unit in jsonDeserialized
+                    (from unit in POSCdeserialized
                      where unit.Name == oldName
                 select unit).First();
 
                 if (new[] { "A", "B", "C", "D" }.Contains(keyToChange))
                 {
-                    if ((bool)match.BaseUnit == true)
+                    try
                     {
-                        return "This unit is a base unit, base units can not have conversion";
-                    }
-                    else
-                    {
-                        double A, B, C, D;
-                        A = B = C = D = 0;
-                        ReadConversion(oldName, ref A, ref B, ref C, ref D);
 
-                        string conversion =
-                        "{" +
-                            "\"baseUnit\": null," +
-                            "\"Formula\": {" +
-                                "\"A\": null," +
-                                "\"B\": null," +
-                                "\"C\": null," +
-                                "\"D\": null" +
-                            "}" +
-                        "}";
+                        if ((bool)match.BaseUnit == true)
+                        {
+                            return "This unit is a base unit, base units can not have conversion";
+                        }
                     }
+                    catch (NullReferenceException) { };
 
+
+                    match.ConversionToBaseUnit.Formula.A = "666";
                 }
 
                 switch (keyToChange)
@@ -406,51 +409,51 @@ namespace Docmanager
                         match.annotation = newValue;
                         break;
                     //case "QuantityType":
-                        //addQuantityType(oldName, newValue)
-                        //break;
+                    //    AddQuantityType(oldName, newValue);
+                    //    break;
                     case "DimensionalClass":
                         match.DimensionalClass = newValue;
                         break;
-                    //case IDocmanager.UnitKeys.UOM:
-                        //
-                        //break;
-                    //case IDocmanager.UnitKeys.NamingSystem:
-                        //match.id = newValue;
-                        //break;
+                    //case "uom":
+                    //    match.SameUnit.uom = newValue;
+                    //    break;
+                    //case "NamingSystem":
+                    //    match.SameUnit.namingSystem = newValue;
+                    //    break;
                     case "CatalogName":
                         match.CatalogName = newValue;
                         break;
-                    //case "CatalogSymbolIsEzplicit":
-                        //
-                        //break;
-                    //case "CatalogSymbolText":
-                        //
-                        //break;
+                    case "CatalogSymbolIsExplicit":
+                        match.CatalogSymbol.isExplicit = newValue;
+                        break;
+                    case "CatalogSymbolText":
+                        match.CatalogSymbol.text = newValue;
+                        break;
                     case "IsBaseUnit":
                         match.BaseUnit = newValue;
                         break;
-                    //case "BaseUnit":
-                    //
-                    //break;
+                    case "BaseUnit":
+                        match.ConversionToBaseUnit.baseUnit = newValue;
+                        break;
                     case "A":
-                        //
+                        match.ConversionToBaseUnit.Formula.A = newValue;
                         break;
                     case "B":
-                        //;
+                        match.ConversionToBaseUnit.Formula.B = newValue;
                         break;
                     case "C":
-                        //
+                        match.ConversionToBaseUnit.Formula.C = newValue;
                         break;
                     case "D":
-
+                        match.ConversionToBaseUnit.Formula.D = newValue;
                         break;
                     default:
                         return "Option does not exist";
                 }
 
-                string output = JsonConvert.SerializeObject(jsonDeserialized, Formatting.Indented);
+                string output = JsonConvert.SerializeObject(POSCdeserialized, Formatting.Indented);
 
-                File.WriteAllText(filepath, output);
+                File.WriteAllText(POSCfilepath, output);
             }
             catch (InvalidOperationException)
             {
@@ -464,15 +467,15 @@ namespace Docmanager
             try
             {
                 UOM match =
-                    (from unit in jsonDeserialized
+                    (from unit in POSCdeserialized
                      where unit.id == id
                      select unit).First();
 
-                jsonDeserialized.Remove(match);
+                POSCdeserialized.Remove(match);
 
-                string output = JsonConvert.SerializeObject(jsonDeserialized, Formatting.Indented);
+                string output = JsonConvert.SerializeObject(POSCdeserialized, Formatting.Indented);
 
-                File.WriteAllText(filepath, output);
+                File.WriteAllText(POSCfilepath, output);
             }
             catch (InvalidOperationException)
             {
@@ -486,7 +489,7 @@ namespace Docmanager
             try
             {
                 UOM match =
-                    (from unit in jsonDeserialized
+                    (from unit in POSCdeserialized
                      where unit.Name == unitName
                      select unit).First();
 
@@ -495,9 +498,9 @@ namespace Docmanager
                 QuantityTypeJArray.Add(quantityTypeName);
 
                 match.QuantityType = QuantityTypeJArray;
-                string output = JsonConvert.SerializeObject(jsonDeserialized, Formatting.Indented);
+                string output = JsonConvert.SerializeObject(POSCdeserialized, Formatting.Indented);
 
-                File.WriteAllText(filepath, output);
+                File.WriteAllText(POSCfilepath, output);
             }
             catch (InvalidOperationException)
             {
@@ -512,7 +515,7 @@ namespace Docmanager
             try
             {
                 UOM match =
-                    (from unit in jsonDeserialized
+                    (from unit in POSCdeserialized
                      where unit.Name == unitName
                      select unit).First();
 
@@ -521,9 +524,9 @@ namespace Docmanager
                 QuantityTypeJArray.Where(i => i.Type == JTokenType.String && (string)i == quantityTypeName).ToList().ForEach(i => i.Remove());
 
                 match.QuantityType = QuantityTypeJArray;
-                string output = JsonConvert.SerializeObject(jsonDeserialized, Formatting.Indented);
+                string output = JsonConvert.SerializeObject(POSCdeserialized, Formatting.Indented);
 
-                File.WriteAllText(filepath, output);
+                File.WriteAllText(POSCfilepath, output);
             }
             catch (InvalidOperationException)
             {
@@ -532,6 +535,46 @@ namespace Docmanager
 
             return "0";
         }
+
+        public List<string[]> ReadDimensions()
+        {
+            List<string[]> output = new List<string[]>();
+
+            foreach(var dimension in DimensionsDeserialized)
+            {
+                string[] dimensionString = {dimension.Symbol, dimension.Definition, dimension.SIUnit};
+
+                output.Add(dimensionString);
+            }
+            return output;
+        }
+
+        public string[] ReadDimension(string symbol)
+        {
+            try
+            {
+                Dimension match =
+                    (from dimension in DimensionsDeserialized
+                     where dimension.Symbol == symbol
+                     select dimension).First();
+                try
+                {
+                    string[] output = { match.Symbol.ToString(), match.Definition, match.SIUnit };
+                    return output;
+                }
+                catch (NullReferenceException)
+                {
+                    string[] output = { "This unit does not have annotation" };
+                    return output;
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                string[] output = { "This symbol is not in file" };
+                return output;
+            }
+        }
+
 
         public class CatalogSymbol
         {
@@ -574,10 +617,14 @@ namespace Docmanager
             public object BaseUnit { get; set; }
             public string Deprecated { get; set; }
             public ConversionToBaseUnit ConversionToBaseUnit { get; set; }
-
         }
 
-
+        public class Dimension
+        {
+            public string Symbol { get; set; }
+            public string Definition { get; set; }
+            public string SIUnit { get; set; }
+        }
 
 
     }//end GroupParser

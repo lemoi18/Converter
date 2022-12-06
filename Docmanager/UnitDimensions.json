@@ -1,0 +1,82 @@
+﻿[
+  {
+    "Symbol": "A",
+    "Definition": "angle",
+    "SIUnit": "radians"
+  },
+  {
+    "Symbol": "D",
+    "Definition": "temperature difference",
+    "SIUnit": "kelvin"
+  },
+  {
+    "Symbol": "I",
+    "Definition": "electrical current",
+    "SIUnit": "ampere"
+  },
+  {
+    "Symbol": "J",
+    "Definition": "luminous intensity ",
+    "SIUnit": "candela"
+  },
+  {
+    "Symbol": "K",
+    "Definition": "thermodynamic temperature",
+    "SIUnit": "kelvin"
+  },
+  {
+    "Symbol": "L",
+    "Definition": "length",
+    "SIUnit": "meter"
+  },
+  {
+    "Symbol": "M",
+    "Definition": "mass",
+    "SIUnit": "kilogram"
+  },
+  {
+    "Symbol": "N",
+    "Definition": "amount of substance ",
+    "SIUnit": "mole"
+  },
+  {
+    "Symbol": "S",
+    "Definition": "solid angle",
+    "SIUnit": "steradian"
+  },
+  {
+    "Symbol": "T",
+    "Definition": "time",
+    "SIUnit": "second"
+  },
+  {
+    "Symbol": "1",
+    "Definition": "the number one",
+    "SIUnit": "N/A"
+  },
+  {
+    "Symbol": "2",
+    "Definition": "squared (e.g., M2)",
+    "SIUnit": "N/A"
+  },
+  {
+    "Symbol": "3",
+    "Definition": "cubed",
+    "SIUnit": "N/A"
+  },
+  {
+    "Symbol": "4",
+    "Definition": "4th power (5=5th, etc.)",
+    "SIUnit": "N/A"
+  },
+  {
+    "Symbol": "/",
+    "Definition": "division",
+    "SIUnit": "N/A"
+  },
+  {
+    "Symbol": "none",
+    "Definition": "Special notation indicating unit for which a normal dimensionless analysis is possible.",
+    "SIUnit": "N/A"
+  }
+]
