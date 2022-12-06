@@ -8,12 +8,8 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
+using System;
 using System.Globalization;
-using System.IO;
-using System.Linq.Expressions;
-using System.Text.RegularExpressions;
-using static Docmanager.Docmanager;
 
 namespace Docmanager
 {
@@ -26,7 +22,6 @@ namespace Docmanager
         List<UOM> Units = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(Pathgetter("POSC.json")));
 
         List<Dimension> Dimensions = JsonConvert.DeserializeObject<List<Dimension>>(File.ReadAllText(Pathgetter("UnitDimensions.json")));
-
 
         public static string Pathgetter(string filename)
         {
@@ -41,8 +36,39 @@ namespace Docmanager
 
 
         }
+        private UOM queryName(string unitName)
+        {
+            try
+            {
+                UOM match =
+                    (from unit in Units
+                     where unit.Name == unitName
+                     select unit).First();
 
+                return match;
+            }
+            catch (InvalidOperationException)
+            {
+                throw new InvalidOperationException("There is no unit with this name");
+            }
+        }
 
+        private UOM queryUOM(string uom)
+        {
+            try
+            {
+                UOM match =
+                    (from unit in Units
+                     where ReadUom(unit) == uom
+                     select unit).First();
+
+                return match;
+            }
+            catch (InvalidOperationException)
+            {
+                throw new InvalidOperationException("There is no unit with this uom");
+            }
+        }
         public List<List<KeyValuePair<string, List<String>>>> ReadUnits()
         {
             List<List<KeyValuePair<string, List<String>>>> output = new List<List<KeyValuePair<string, List<String>>>>();
@@ -336,210 +362,97 @@ namespace Docmanager
 
         public string ReadConversion(string input, ref double A, ref double B, ref double C, ref double D)
         {
+            UOM match = new UOM();
             try
+            {
+                match = queryName(input);
+            }
+            catch (InvalidOperationException)
             {
                 try
                 {
-                    return ReadConversionFromName(input, ref A, ref B, ref C, ref D);
+                    match = queryUOM(input);
                 }
                 catch (InvalidOperationException)
                 {
-                    try
-                    {
-                        return ReadConversionFromUOM(input, ref A, ref B, ref C, ref D);
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        return "noMatch" ;
-                    }
+                    throw new InvalidOperationException("There is no unti with this name or uom");
                 }
             }
-            catch (NullReferenceException)
-            {
-                // throw new NullReferenceException("No unit with this name has an alias");
-                return "noMatch";
-            }
-            return "0";
-        }
 
-        private string ReadConversionFromName(string unitName, ref double A, ref double B, ref double C, ref double D)
-        {
             A = B = C = D = 0;
 
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where unit.Name == unitName
-                     select unit).First();
-
-                try
+                if (match.ConversionToBaseUnit.baseUnit != null)
                 {
-                    if (match.ConversionToBaseUnit.baseUnit != null)
-                    {
-                        C = 1;
-                    }
+                    C = 1;
                 }
-                catch (NullReferenceException) { }
-
-                try
-                {
-                    if (match.ConversionToBaseUnit.Formula.A != null)
-                    {
-                        A = double.Parse(match.ConversionToBaseUnit.Formula.A, CultureInfo.GetCultureInfo("en-US"));
-                    }
-                }
-                catch (NullReferenceException) { }
-
-                try
-                {
-                    if (match.ConversionToBaseUnit.Formula.B != null)
-                    {
-                        B = double.Parse(match.ConversionToBaseUnit.Formula.B, CultureInfo.GetCultureInfo("en-US"));
-                    }
-                }
-                catch (NullReferenceException) { }
-
-                try
-                {
-                    if (match.ConversionToBaseUnit.Formula.C != null)
-                    {
-                        C = double.Parse(match.ConversionToBaseUnit.Formula.C, CultureInfo.GetCultureInfo("en-US"));
-                    }
-                }
-                catch (NullReferenceException) { }
-
-                try
-                {
-                    if (match.ConversionToBaseUnit.Formula.D != null)
-                    {
-                        D = double.Parse(match.ConversionToBaseUnit.Formula.D, CultureInfo.GetCultureInfo("en-US"));
-                    }
-                }
-                catch (NullReferenceException) { }
-
-                try
-                {
-                    if (match.ConversionToBaseUnit.Factor != null)
-                    {
-                        B = double.Parse(match.ConversionToBaseUnit.Factor, CultureInfo.GetCultureInfo("en-US"));
-                    }
-                }
-                catch (NullReferenceException) { }
-
-                try
-                {
-                    if (match.ConversionToBaseUnit.Fraction.Numerator != null)
-                    {
-                        B = double.Parse(match.ConversionToBaseUnit.Fraction.Numerator, CultureInfo.GetCultureInfo("en-US"));
-                    }
-                }
-                catch (NullReferenceException) { }
-
-                try
-                {
-                    if (match.ConversionToBaseUnit.Fraction.Denominator != null)
-                    {
-                        C = double.Parse(match.ConversionToBaseUnit.Fraction.Denominator, CultureInfo.GetCultureInfo("en-US"));
-                    }
-                }
-                catch (NullReferenceException) { }
             }
-            catch (InvalidOperationException)
-            {
-                throw new InvalidOperationException("There is no unit whit this name");
-            }
-
-            return "0";
-        }
-
-        private string ReadConversionFromUOM(string uom, ref double A, ref double B, ref double C, ref double D)
-        {
-            A = B = C = D = 0;
+            catch (NullReferenceException) { }
 
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where ReadUom(unit) == uom
-                     select unit).First();
-
-                try
+                if (match.ConversionToBaseUnit.Formula.A != null)
                 {
-                    if (match.ConversionToBaseUnit.baseUnit != null)
-                    {
-                        C = 1;
-                    }
+                    A = double.Parse(match.ConversionToBaseUnit.Formula.A, CultureInfo.GetCultureInfo("en-US"));
                 }
-                catch (NullReferenceException) { }
-
-                try
-                {
-                    if (match.ConversionToBaseUnit.Formula.A != null)
-                    {
-                        A = double.Parse(match.ConversionToBaseUnit.Formula.A, CultureInfo.GetCultureInfo("en-US"));
-                    }
-                }
-                catch (NullReferenceException) { }
-
-                try
-                {
-                    if (match.ConversionToBaseUnit.Formula.B != null)
-                    {
-                        B = double.Parse(match.ConversionToBaseUnit.Formula.B, CultureInfo.GetCultureInfo("en-US"));
-                    }
-                }
-                catch (NullReferenceException) { }
-
-                try
-                {
-                    if (match.ConversionToBaseUnit.Formula.C != null)
-                    {
-                        C = double.Parse(match.ConversionToBaseUnit.Formula.C, CultureInfo.GetCultureInfo("en-US"));
-                    }
-                }
-                catch (NullReferenceException) { }
-
-                try
-                {
-                    if (match.ConversionToBaseUnit.Formula.D != null)
-                    {
-                        D = double.Parse(match.ConversionToBaseUnit.Formula.D, CultureInfo.GetCultureInfo("en-US"));
-                    }
-                }
-                catch (NullReferenceException) { }
-
-                try
-                {
-                    if (match.ConversionToBaseUnit.Factor != null)
-                    {
-                        B = double.Parse(match.ConversionToBaseUnit.Factor, CultureInfo.GetCultureInfo("en-US"));
-                    }
-                }
-                catch (NullReferenceException) { }
-
-                try
-                {
-                    if (match.ConversionToBaseUnit.Fraction.Numerator != null)
-                    {
-                        B = double.Parse(match.ConversionToBaseUnit.Fraction.Numerator, CultureInfo.GetCultureInfo("en-US"));
-                    }
-                }
-                catch (NullReferenceException) { }
-
-                try
-                {
-                    if (match.ConversionToBaseUnit.Fraction.Denominator != null)
-                    {
-                        C = double.Parse(match.ConversionToBaseUnit.Fraction.Denominator, CultureInfo.GetCultureInfo("en-US"));
-                    }
-                }
-                catch (NullReferenceException) { }
             }
-            catch (InvalidOperationException)
+            catch (NullReferenceException) { }
+
+            try
             {
-                throw new InvalidOperationException("There is no unit whit this uom");
+                if (match.ConversionToBaseUnit.Formula.B != null)
+                {
+                    B = double.Parse(match.ConversionToBaseUnit.Formula.B, CultureInfo.GetCultureInfo("en-US"));
+                }
             }
+            catch (NullReferenceException) { }
+
+            try
+            {
+                if (match.ConversionToBaseUnit.Formula.C != null)
+                {
+                    C = double.Parse(match.ConversionToBaseUnit.Formula.C, CultureInfo.GetCultureInfo("en-US"));
+                }
+            }
+            catch (NullReferenceException) { }
+
+            try
+            {
+                if (match.ConversionToBaseUnit.Formula.D != null)
+                {
+                    D = double.Parse(match.ConversionToBaseUnit.Formula.D, CultureInfo.GetCultureInfo("en-US"));
+                }
+            }
+            catch (NullReferenceException) { }
+
+            try
+            {
+                if (match.ConversionToBaseUnit.Factor != null)
+                {
+                    B = double.Parse(match.ConversionToBaseUnit.Factor, CultureInfo.GetCultureInfo("en-US"));
+                }
+            }
+            catch (NullReferenceException) { }
+
+            try
+            {
+                if (match.ConversionToBaseUnit.Fraction.Numerator != null)
+                {
+                    B = double.Parse(match.ConversionToBaseUnit.Fraction.Numerator, CultureInfo.GetCultureInfo("en-US"));
+                }
+            }
+            catch (NullReferenceException) { }
+
+            try
+            {
+                if (match.ConversionToBaseUnit.Fraction.Denominator != null)
+                {
+                    C = double.Parse(match.ConversionToBaseUnit.Fraction.Denominator, CultureInfo.GetCultureInfo("en-US"));
+                }
+            }
+            catch (NullReferenceException) { }
+
 
             return "0";
         }
@@ -612,7 +525,7 @@ namespace Docmanager
                 UOM match =
                     (from unit in Units
                      where unit.Name == oldName
-                select unit).First();
+                     select unit).First();
 
                 if (new[] { "A", "B", "C", "D" }.Contains(keyToChange))
                 {
@@ -630,54 +543,56 @@ namespace Docmanager
                     match.ConversionToBaseUnit.Formula.A = "666";
                 }
 
-                switch (keyToChange)
-                    {
+
+                switch (keyToChange.ToString().ToLower())
+                {
                     case "id":
+                        keyToChange.ToString().ToLower();
                         match.id = newValue;
                         break;
-                    case "Name":
+                    case "name":
                         match.Name = newValue;
                         break;
                     case "annotation":
                         match.annotation = newValue;
                         break;
-                    //case "QuantityType":
+                    //case "quantitytype":
                     //    AddQuantityType(oldName, newValue);
                     //    break;
-                    case "DimensionalClass":
+                    case "dimensionalclass":
                         match.DimensionalClass = newValue;
                         break;
                     //case "uom":
                     //    match.SameUnit.uom = newValue;
                     //    break;
-                    //case "NamingSystem":
+                    //case "namingsystem":
                     //    match.SameUnit.namingSystem = newValue;
                     //    break;
-                    case "CatalogName":
+                    case "catalogname":
                         match.CatalogName = newValue;
                         break;
-                    case "CatalogSymbolIsExplicit":
+                    case "catalogsymbolisexplicit":
                         match.CatalogSymbol.isExplicit = newValue;
                         break;
-                    case "CatalogSymbolText":
+                    case "catalogsymboltext":
                         match.CatalogSymbol.text = newValue;
                         break;
-                    case "IsBaseUnit":
+                    case "isbaseunit":
                         match.BaseUnit = newValue;
                         break;
-                    case "BaseUnit":
+                    case "baseunit":
                         match.ConversionToBaseUnit.baseUnit = newValue;
                         break;
-                    case "A":
+                    case "a":
                         match.ConversionToBaseUnit.Formula.A = newValue;
                         break;
-                    case "B":
+                    case "b":
                         match.ConversionToBaseUnit.Formula.B = newValue;
                         break;
-                    case "C":
+                    case "c":
                         match.ConversionToBaseUnit.Formula.C = newValue;
                         break;
-                    case "D":
+                    case "d":
                         match.ConversionToBaseUnit.Formula.D = newValue;
                         break;
                     default:
@@ -716,6 +631,7 @@ namespace Docmanager
             }
             return "0";
         }
+
         private bool QuantityExists(UOM unit, string quantityType)
         {
             string quantityString = "none";
@@ -734,24 +650,6 @@ namespace Docmanager
             {
                 return (quantityString == quantityType);
             }
-        }
-        public List<string> ReadUomFromQuantityClass(string quantityClass)
-        {
-            List<string> output = new List<string>();
-
-            //Check each unit for spesefied quantityClassName
-            foreach(UOM unit in Units)
-            {
-                if (QuantityExists(unit, quantityClass))
-                {
-                    string sameUnitString = JsonConvert.SerializeObject(unit.SameUnit, Formatting.Indented);
-                    JObject sameUnitJObject = (JObject)JsonConvert.DeserializeObject(sameUnitString);
-                    string test = sameUnitJObject["uom"].ToString();
-                    output.Add(test);
-                }
-            }
-
-            return output;
         }
 
         public string AddQuantityType(string unitName, string quantityTypeName)
@@ -836,81 +734,20 @@ namespace Docmanager
 
         public List<string> ReadAliases(string input)
         {
+            List<string> output = new List<string>();
             try
             {
-                try
-                {
-                    return ReadAliasesFromName(input);
-                }
-                catch (InvalidOperationException)
-                {
-                    try 
-                    {
-                        return ReadAliasesFromUOM(input);
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        return new List<string>() { "noMatch" };
-                    }
-                }
-            }
-            catch (NullReferenceException)
-            {
-                // throw new NullReferenceException("No unit with this name has an alias");
-                return new List<string>() { "noMatch" };
-            }
-        }
-
-        private List<string> ReadAliasesFromName(string unitName)
-        {
-            try
-            {
-                UOM match =
-                    (from unit in Units
-                     where unit.Name == unitName
-                     select unit).First();
-                try
-                {
-                    return match.Aliases;
-                }
-                catch (NullReferenceException)
-                {
-                    throw new NullReferenceException("No unit with this name has an alias");
-                }
+                output = queryName(input).Aliases;
             }
             catch (InvalidOperationException)
             {
-                throw new InvalidOperationException("There is no unit whit this name");
+                output = queryUOM(input).Aliases;
             }
-        }
-
-        //List all aliases given uom
-        private List<string> ReadAliasesFromUOM(string uom)
-        {
-            try
+            if (output == null)
             {
-                UOM match =
-                    (from unit in Units
-                     where ReadUom(unit) == uom
-                     select unit).First();
-                try
-                {
-                    return match.Aliases;
-                }
-                catch (NullReferenceException)
-                {
-                    throw new NullReferenceException("No unit with this uom has an alias");
-                }
+                throw new NullReferenceException("Unit with this name or uom has no aliases.");
             }
-            catch (InvalidOperationException)
-            {
-                throw new InvalidOperationException("There is no unit whit this name");
-            }
-        }
-
-        public List<List<string>> ReadDimensions()
-        {
-            throw new NotImplementedException();
+            return output;
         }
 
         public class CatalogSymbol
