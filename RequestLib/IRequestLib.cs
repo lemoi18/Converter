@@ -7,7 +7,7 @@
         public List<string> GetUnitdimension(string description); //
 
         // Get ALL Unit Dimensions[Symbol,Description,Name, SI Symbol]
-        public List<string[]> ListUnitdimentions(); //
+        public List<List<string>> ListUnitdimentions(); //
         // Get Quantity Classes Given Name of Unit
         public List<string> GetQualityclass(string description);
 
@@ -15,7 +15,7 @@
         public List<string> GetUnit(string description); //
 
         // List All Units
-        public List<string[]> ListUnits(); //
+        public List<List<string>> ListUnits(); //
         // List All Quantiy Classes
         public List<string> ListQualityclass(); //
 

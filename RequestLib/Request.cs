@@ -37,9 +37,14 @@ namespace RequestLib
 
         }
 
-        public string CreateBaseUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string uom, string Aliases)
+        public string CreateBaseUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string uom, string aliases)
         {
-            throw new NotImplementedException();
+            docmanager = DocFactory.CreateDocmanager("Test");
+            var alias = aliases.Split(',').ToList();
+            var quantity = quantityType.Split(',').ToList();
+
+            docmanager.CreateBaseUnit(id, annotation, name, quantity, dimensionalclass, uom, alias);//Aliases needs to be string
+            return id;
         }
 
         public string CreateQualityclass(string name, string baseunit)
@@ -50,10 +55,13 @@ namespace RequestLib
 
         }
 
-        public string CreateSecondaryUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string uom, string baseunit, double A, double B, double C, double D, string Aliases)
+        public string CreateSecondaryUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string uom, string baseunit, double A, double B, double C, double D, string aliases)
         {
             docmanager = DocFactory.CreateDocmanager("Test");
-            //docmanager.CreateSecondaryUnit(id, annotation, name, quantityType, dimensionalclass, uom, baseunit, A, B, C, D, Aliases);//Aliases needs to be string
+            var alias = aliases.Split(',').ToList();
+            var quantity = quantityType.Split(',').ToList();
+
+            docmanager.CreateSecondaryUnit(id, annotation, name, quantity, dimensionalclass, uom, baseunit, A, B, C, D, alias);//Aliases needs to be string
             return id;
         }
 
@@ -158,31 +166,35 @@ namespace RequestLib
 
         public List<List<string>> ListUnitdimentions()
         {
-            docmanager = DocFactory.CreateDocmanager("Test");
+            //  docmanager = DocFactory.CreateDocmanager("Test");
+            //
+            //  List<List<string>> dimensionString = new List<List<string>>();
+            //
+            //  foreach (var dim in docmanager.ReadDimensions())
+            //  {
+            //      dimensionString.Add(dim);
+            //
+            //  }
+            //
+            //  return result;
+            throw new NotImplementedException();
 
-            List<List<string>> dimensionString = new List<List<string>>();
-
-            foreach (var dim in docmanager.ReadDimensions())
-            {
-                dimensionString.Add(dim);
-
-            }
-
-            return result;
         }
 
-        public List<string[]> ListUnits()
+        public List<List<string>> ListUnits()
         {
-            docmanager = DocFactory.CreateDocmanager("Test");
-            docmanager.ReadAliases(uom);
-            List<string> result = new List<string>();
+            //  docmanager = DocFactory.CreateDocmanager("Test");
+            //  docmanager.ReadAliases(uom);
+            //  List<string> result = new List<string>();
+            //
+            //  foreach (var alias in docmanager.ReadAliases(uom))
+            //  {
+            //      result.Add(alias.ToString());
+            //  }
+            //
+            //  return result; 
+            throw new NotImplementedException();
 
-            foreach (var alias in docmanager.ReadAliases(uom))
-            {
-                result.Add(alias.ToString());
-            }
-
-            return result; 
         }
 
         public string RemoveQualityclass(string unit, string name)

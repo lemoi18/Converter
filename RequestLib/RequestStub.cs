@@ -17,32 +17,30 @@
 
        
 
-        public string[] GetUnitdimension(string description)
+        public List<string> GetUnitdimension(string description)
         {
-            return new string[] { "T", "Time", "Second", "s" };
+            return new List<string> { "T", "Time", "Second", "s" };
         }
 
-        public string[] ListAlias(string uom)
+        public List<string> ListAlias(string uom)
         {
-            return new string[] { "Meter", "Metros", "Metri" };
+            return new List<string> { "Meter", "Metros", "Metri" };
         }
 
-        public string[] ListQualityclass()
+        public List<string> ListQualityclass()
         {
-            return new string[] { "per length", "per area", "per volume" };
+            return new List<string> { "per length", "per area", "per volume" };
         }
 
-        public List<string[]> ListUnitdimentions()
+        public List<List<string>> ListUnitdimentions()
         {
-            string[] strings = { "L", "Length", "Meter", "m" };
-            string[] strings2 = { "M", "Mass", "Kilogram", "kg" };
-            string[] strings3 = { "T", "Time", "Second", "s" };
-            return new List<string[]> { strings, strings2, strings3 };
+           
+            return new List<List<string>>() { new List<string>() { "L", "Length", "Meter", "m" }, new List<string>() { "M", "Mass", "Kilogram", "kg" } };
         }
 
-        public string[] ListKeys(string unitName)
+        public List<string> ListKeys(string unitName)
         {
-            return new string[] { "annotation", "Name", "QuantityType" };
+            return new List<string> { "annotation", "Name", "QuantityType" };
         }
 
 
@@ -86,12 +84,12 @@
 
        
 
-        public string[] GetUnit(string description)
+        public List<string> GetUnit(string description)
         {
             throw new NotImplementedException();
         }
 
-        public List<string[]> ListUnits()
+        public List<List<string>> ListUnits()
         {
             throw new NotImplementedException();
         }
@@ -101,9 +99,9 @@
             throw new NotImplementedException();
         }
 
-        public string[] GetQualityclass(string description)
+        public List<string> GetQualityclass(string description)
         {
-            return new string[] { "cm", "mm", "m" };
+            return new List<string> { "cm", "mm", "m" };
 
         }
 
@@ -113,6 +111,13 @@
         }
 
         public string CreateSecondaryUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string uom, string baseunit, double A, double B, double C, double D, List<string> Aliases)
+        {
+            throw new NotImplementedException();
+        }
+
+      
+
+        public string CreateSecondaryUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string uom, string baseunit, double A, double B, double C, double D, string Aliases)
         {
             throw new NotImplementedException();
         }
