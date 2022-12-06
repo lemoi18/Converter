@@ -10,14 +10,13 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Globalization;
+using System.Text.RegularExpressions;
+using static Docmanager.Docmanager;
 
 namespace Docmanager
 {
     internal class Docmanager : IDocmanager
     {
-        //Fetch and derealize json files
-
-        
 
         List<UOM> Units = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(Pathgetter("POSC.json")));
 
@@ -36,7 +35,7 @@ namespace Docmanager
 
 
         }
-        private UOM queryName(string unitName)
+        private UOM QueryName(string unitName)
         {
             try
             {
@@ -53,7 +52,7 @@ namespace Docmanager
             }
         }
 
-        private UOM queryUOM(string uom)
+        private UOM QueryUOM(string uom)
         {
             try
             {
@@ -69,6 +68,24 @@ namespace Docmanager
                 throw new InvalidOperationException("There is no unit with this uom");
             }
         }
+
+        private Dimension QueryDimension(string symbol)
+        {
+            try
+            {
+                Dimension match =
+                    (from dimension in Dimensions
+                     where dimension.Symbol == symbol
+                     select dimension).First();
+
+                return match;
+            }
+            catch (InvalidOperationException)
+            {
+                throw new InvalidOperationException("There is no dimension with this symbol");
+            }
+        }
+
         public List<List<KeyValuePair<string, List<String>>>> ReadUnits()
         {
             List<List<KeyValuePair<string, List<String>>>> output = new List<List<KeyValuePair<string, List<String>>>>();
@@ -365,13 +382,13 @@ namespace Docmanager
             UOM match = new UOM();
             try
             {
-                match = queryName(input);
+                match = QueryName(input);
             }
             catch (InvalidOperationException)
             {
                 try
                 {
-                    match = queryUOM(input);
+                    match = QueryUOM(input);
                 }
                 catch (InvalidOperationException)
                 {
@@ -518,7 +535,7 @@ namespace Docmanager
             return "0";
         }
 
-        public string EditUnit(string oldName, string keyToChange, dynamic newValue)
+        public string EditUnit(string oldName, string propertyToChange, dynamic newValue)
         {
             try
             {
@@ -527,7 +544,7 @@ namespace Docmanager
                      where unit.Name == oldName
                      select unit).First();
 
-                if (new[] { "A", "B", "C", "D" }.Contains(keyToChange))
+                if (new[] { "A", "B", "C", "D" }.Contains(propertyToChange))
                 {
                     try
                     {
@@ -538,16 +555,13 @@ namespace Docmanager
                         }
                     }
                     catch (NullReferenceException) { };
-
-
-                    match.ConversionToBaseUnit.Formula.A = "666";
                 }
 
 
-                switch (keyToChange.ToString().ToLower())
+                switch (propertyToChange.ToString().ToLower())
                 {
                     case "id":
-                        keyToChange.ToString().ToLower();
+                        propertyToChange.ToString().ToLower();
                         match.id = newValue;
                         break;
                     case "name":
@@ -632,7 +646,7 @@ namespace Docmanager
             return "0";
         }
 
-        private bool QuantityExists(UOM unit, string quantityType)
+        private bool hasQuantityType(UOM unit, string quantityType)
         {
             string quantityString = "none";
             if (unit.QuantityType != null)
@@ -714,7 +728,7 @@ namespace Docmanager
 
             foreach (UOM unit in houseOnes)
             {
-                if (QuantityExists(unit, quantityClass))
+                if (hasQuantityType(unit, quantityClass))
                 {
                     string sameUnitString = JsonConvert.SerializeObject(unit.SameUnit, Formatting.Indented);
                     JObject sameUnitJObject = (JObject)JsonConvert.DeserializeObject(sameUnitString);
@@ -751,28 +765,41 @@ namespace Docmanager
                 return output;
             }
         }
+        public List<List<string>> ReadDimensions()
+        {
+            List<List<string>> output = new List<List<string>>();
+
+            foreach (var dimension in Dimensions)
+            {
+                List<string> dimensionList = new List<string>()
+                    {
+                        dimension.Symbol,
+                        dimension.Definition,
+                        dimension.SIUnit
+                    };
+
+                output.Add(dimensionList);
+
+            }
+            return output;
+        }
 
         public List<string> ReadAliases(string input)
         {
             List<string> output = new List<string>();
             try
             {
-                output = queryName(input).Aliases;
+                output = QueryName(input).Aliases;
             }
             catch (InvalidOperationException)
             {
-                output = queryUOM(input).Aliases;
+                output = QueryUOM(input).Aliases;
             }
             if (output == null)
             {
                 throw new NullReferenceException("Unit with this name or uom has no aliases.");
             }
             return output;
-        }
-
-        public List<List<string>> ReadDimensions()
-        {
-            throw new NotImplementedException();
         }
 
         public class CatalogSymbol
