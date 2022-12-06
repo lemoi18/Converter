@@ -645,7 +645,7 @@ namespace Docmanager
             return "0";
         }
 
-        private bool QuantityExists(UOM unit, string quantityType)
+        private bool hasQuantityType(UOM unit, string quantityType)
         {
             string quantityString = "none";
             if (unit.QuantityType != null)
@@ -664,6 +664,25 @@ namespace Docmanager
                 return (quantityString == quantityType);
             }
         }
+
+        public List<string> ReadUoms(string quantityClass)
+        {
+            List<string> output = new List<string>();
+
+            //Check each unit for spesefied quantityClassName
+            foreach (UOM unit in Units)
+            {
+                if (hasQuantityType(unit, quantityClass))
+                {
+                    string sameUnitString = JsonConvert.SerializeObject(unit.SameUnit, Formatting.Indented);
+                    JObject sameUnitJObject = (JObject)JsonConvert.DeserializeObject(sameUnitString);
+                    output.Add(sameUnitJObject["uom"].ToString());
+                }
+            }
+
+            return output;
+        }
+
 
         public string AddQuantityType(string unitName, string quantityTypeName)
         {
@@ -717,7 +736,6 @@ namespace Docmanager
             return "0";
         }
 
-        
 
         public List<string> ReadDimension(string symbol)
         {
@@ -743,6 +761,18 @@ namespace Docmanager
                 List<string> output = new List<string>() { "This symbol is not in file" };
                 return output;
             }
+        }
+        public List<List<string>> ReadDimensions()
+        {
+            List<List<string>> output = new List<List<string>>();
+
+            foreach (var dimension in Dimensions)
+            {
+                string[] dimensionString = { dimension.Symbol, dimension.Definition, dimension.SIUnit };
+                //output.Add(dimension.Symbol.ToString());
+
+            }
+            return output;
         }
 
         public List<string> ReadAliases(string input)

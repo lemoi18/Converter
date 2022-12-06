@@ -5,5 +5,9 @@ using System.Xml.Linq;
 IDocmanager docmanager;
 docmanager = DocFactory.CreateDocmanager("Test");
 
-docmanager.EditUnit("inverse henry", "iD", "Test2");
+
+foreach(var element in docmanager.ReadUoms("volumetric thermal expansion"))
+{
+    Console.WriteLine(element);
+}
 
