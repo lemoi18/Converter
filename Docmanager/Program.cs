@@ -5,9 +5,17 @@ using System.Xml.Linq;
 IDocmanager docmanager;
 docmanager = DocFactory.CreateDocmanager("Test");
 
-Console.WriteLine("-------------------");
+
+//docmanager.ReadUnits();
 foreach (var Unit in docmanager.ReadUnits())
 {
-    foreach (var prop in Unit)
-    Console.WriteLine(prop.Value);
+    Console.WriteLine("-------------------");
+    foreach (var list in Unit)
+    {
+        foreach (var prop in list.Value)
+        {
+            Console.WriteLine(prop);
+        }
+    }
+
 }

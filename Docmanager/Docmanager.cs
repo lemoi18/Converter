@@ -25,26 +25,57 @@ namespace Docmanager
         const string DimensionsFilepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\UnitDimensions.json";
         List<Dimension> Dimensions = JsonConvert.DeserializeObject<List<Dimension>>(File.ReadAllText(DimensionsFilepath));
 
-        public List<List<KeyValuePair<string, string>>> ReadUnits()
+        public List<List<KeyValuePair<string, List<String>>>> ReadUnits()
         {
-            List<List<KeyValuePair<string, string>>> output = new List<List<KeyValuePair<string, string>>>();
+            List<List<KeyValuePair<string, List<String>>>> output = new List<List<KeyValuePair<string, List<String>>>>();
 
             foreach (var unit in Units)
             {
-                var unitKVPs = new List<KeyValuePair<string, string>>();
-                unitKVPs.Add(new KeyValuePair<string, string>("id", unit.id));
-                unitKVPs.Add(new KeyValuePair<string, string>("annotation", unit.annotation));
-                unitKVPs.Add(new KeyValuePair<string, string>("name", unit.Name));
-                //unitKVPs.Add(new KeyValuePair<string, string[]>("quantityType", unit.QuantityType));
-                unitKVPs.Add(new KeyValuePair<string, string>("DimensionalClass", unit.DimensionalClass));
-                //unitKVPs.Add(new KeyValuePair<string, string>("uom", unit.S));
-                //unitKVPs.Add(new KeyValuePair<string, string>("isBaseUnit", unit.BaseUnit.ToString()));
-                //unitKVPs.Add(new KeyValuePair<string, string[]>("Aliases", unit.Aliases));
-                //unitKVPs.Add(new KeyValuePair<string, string>("BaseUnit", unit.ConversionToBaseUnit.baseUnit));
-                //unitKVPs.Add(new KeyValuePair<string, string>("A", unit.ConversionToBaseUnit.Formula.A.ToString()));
-                //unitKVPs.Add(new KeyValuePair<string, string>("B", unit.ConversionToBaseUnit.Formula.B.ToString()));
-                //unitKVPs.Add(new KeyValuePair<string, string>("C", unit.ConversionToBaseUnit.Formula.C.ToString()));
-                //unitKVPs.Add(new KeyValuePair<string, string>("D", unit.ConversionToBaseUnit.Formula.D.ToString()));
+                var unitKVPs = new List<KeyValuePair<string, List<string>>>();
+
+                unitKVPs.Add(new KeyValuePair<string, List<string>>("id", new List<string>() { unit.id }));
+                unitKVPs.Add(new KeyValuePair<string, List<string>>("annotation", new List<string>() { unit.annotation }));
+                unitKVPs.Add(new KeyValuePair<string, List<string>>("name", new List<string>() { unit.Name }));
+
+                string quantityTypeString = "none";
+                if (unit.QuantityType != null)
+                {
+                    quantityTypeString = unit.QuantityType.ToString();
+                }
+                try
+                {
+                    JArray quantityTypeJArray = (JArray)JsonConvert.DeserializeObject(quantityTypeString);
+
+                    unitKVPs.Add(new KeyValuePair<string, List<string>>("quantityType", quantityTypeJArray.ToObject<List<string>>()));
+                }
+                catch (JsonReaderException)
+                {
+                    unitKVPs.Add(new KeyValuePair<string, List<string>>("quantityType", new List<string>() { quantityTypeString }));
+                }
+                unitKVPs.Add(new KeyValuePair<string, List<string>>("DimensionalClass", new List<string>() { unit.DimensionalClass }));
+
+                string sameUnitString = "none";
+                try
+                {
+                    if (unit.SameUnit != null)
+                    {
+                        sameUnitString = unit.SameUnit.ToString();
+                        JObject SameUnitJObject = (JObject)JsonConvert.DeserializeObject(sameUnitString);
+                        unitKVPs.Add(new KeyValuePair<string, List<string>>("uom", new List<string>() { SameUnitJObject["uom"].ToString() }));
+                    }
+                }
+                catch (InvalidCastException)
+                {
+                    //unitKVPs.Add(new KeyValuePair<string, List<string>>("uom", new List<string>() { sameUnitString }));
+                }
+
+                //unitKVPs.Add(new KeyValuePair<string, List<string>>("isBaseUnit", unit.BaseUnit.ToString()));
+                //unitKVPs.Add(new KeyValuePair<string, List<string>>("Aliases", unit.Aliases));
+                //unitKVPs.Add(new KeyValuePair<string, List<string>>("BaseUnit", unit.ConversionToBaseUnit.baseUnit));
+                //unitKVPs.Add(new KeyValuePair<string, List<string>>("A", unit.ConversionToBaseUnit.Formula.A.ToString()));
+                //unitKVPs.Add(new KeyValuePair<string, List<string>>("B", unit.ConversionToBaseUnit.Formula.B.ToString()));
+                //unitKVPs.Add(new KeyValuePair<string, List<string>>("C", unit.ConversionToBaseUnit.Formula.C.ToString()));
+                //unitKVPs.Add(new KeyValuePair<string, List<string>>("D", unit.ConversionToBaseUnit.Formula.D.ToString()));
 
                 output.Add(unitKVPs);
             }
