@@ -50,6 +50,7 @@ namespace RequestLib
         public string CreateQualityclass(string name, string baseunit)
         {
             docmanager = DocFactory.CreateDocmanager("Test");
+            
             //docmanager.CreateQuantityClass(string name, string baseunit);
             return name;
 
@@ -96,16 +97,18 @@ namespace RequestLib
 
         public List<string> GetQualityclass(string description)
         {
-            //docmanager = DocFactory.CreateDocmanager("Test");
+            docmanager = DocFactory.CreateDocmanager("Test");
+            List<string> result = new List<string>();
 
 
-            //foreach (var quantity in docmanager.ReadQuantityClasses(description))
-            //{
-            //  string str2 = string.Format("{0}", quantity);
-            // OutputList.Items.Add(str2);
-            //}
+            foreach (var quantity in docmanager.ReadUomFromQuantityClass(description))
+            {
+                result.Add(quantity);
+            }
+            return result;
 
-            throw new NotImplementedException();
+                
+            //throw new NotImplementedException();
 
         }
 
@@ -116,7 +119,15 @@ namespace RequestLib
 
         public List<string> GetUnitdimension(string description)
         {
-            throw new NotImplementedException();
+            docmanager = DocFactory.CreateDocmanager("Test");
+            List<string> result = new List<string>();
+
+            foreach (var dim in docmanager.ReadDimension(description))
+            {
+                result.Add(dim.ToString());
+            }
+
+            return result;
         }
 
         public List<string> ListAlias(string uom)
@@ -170,13 +181,14 @@ namespace RequestLib
             //
             //  List<List<string>> dimensionString = new List<List<string>>();
             //
-            //  foreach (var dim in docmanager.ReadDimensions())
+            //  foreach (var dim in docmanager.Read)
             //  {
             //      dimensionString.Add(dim);
             //
             //  }
             //
             //  return result;
+
             throw new NotImplementedException();
 
         }

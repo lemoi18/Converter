@@ -717,19 +717,9 @@ namespace Docmanager
             return "0";
         }
 
-        public List<string[]> ReadDimensions()
-        {
-            List<string[]> output = new List<string[]>();
+        
 
-            foreach (var dimension in Dimensions)
-            {
-                string[] dimensionString = { dimension.Symbol, dimension.Definition, dimension.SIUnit };
-                output.Add(dimensionString);
-            }
-            return output;
-        }
-
-        public string[] ReadDimension(string symbol)
+        public List<string> ReadDimension(string symbol)
         {
             try
             {
@@ -739,18 +729,18 @@ namespace Docmanager
                      select dimension).First();
                 try
                 {
-                    string[] output = { match.Symbol.ToString(), match.Definition, match.SIUnit };
+                    List<string> output = new List<string>() { match.Symbol.ToString(), match.Definition, match.SIUnit };
                     return output;
                 }
                 catch (NullReferenceException)
                 {
-                    string[] output = { "This unit does not have annotation" };
+                    List<string> output = new List<string>() { "This unit does not have annotation" };
                     return output;
                 }
             }
             catch (InvalidOperationException)
             {
-                string[] output = { "This symbol is not in file" };
+                List<string> output = new List<string>() { "This symbol is not in file" };
                 return output;
             }
         }
