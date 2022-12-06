@@ -21,11 +21,12 @@ namespace Docmanager
     {
         //Fetch and derealize json files
 
+        //Fetch and derealize json files
+        const string POSCfilepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\POSC.json";
+        List<UOM> Units = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(POSCfilepath));
 
-    
-        List<UOM> Units = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(Pathgetter("POSC.json")));
-
-        List<Dimension> Dimensions = JsonConvert.DeserializeObject<List<Dimension>>(File.ReadAllText(File.ReadAllText(Pathgetter("UnitDimensions.json"))));
+        const string DimensionsFilepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\UnitDimensions.json";
+        List<Dimension> Dimensions = JsonConvert.DeserializeObject<List<Dimension>>(File.ReadAllText(DimensionsFilepath));
 
 
 
@@ -335,16 +336,30 @@ namespace Docmanager
 
         public string ReadConversion(string input, ref double A, ref double B, ref double C, ref double D)
         {
-            string output = ReadConversionFromName(input, ref A, ref B, ref C, ref D);
-            if (output == null)
+            try
             {
-                output = "none" ;
+                try
+                {
+                    return ReadConversionFromName(input, ref A, ref B, ref C, ref D);
+                }
+                catch (InvalidOperationException)
+                {
+                    try
+                    {
+                        return ReadConversionFromUOM(input, ref A, ref B, ref C, ref D);
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        return "noMatch" ;
+                    }
+                }
             }
-            else if (output == "noMatch")
+            catch (NullReferenceException)
             {
-                //output = ReadConversionFromUOM(input);
+                // throw new NullReferenceException("No unit with this name has an alias");
+                return "noMatch";
             }
-            return output;
+            return "0";
         }
 
         private string ReadConversionFromName(string unitName, ref double A, ref double B, ref double C, ref double D)
@@ -432,7 +447,98 @@ namespace Docmanager
             }
             catch (InvalidOperationException)
             {
-                return "noMatch";
+                throw new InvalidOperationException("There is no unit whit this name");
+            }
+
+            return "0";
+        }
+
+        private string ReadConversionFromUOM(string uom, ref double A, ref double B, ref double C, ref double D)
+        {
+            A = B = C = D = 0;
+
+            try
+            {
+                UOM match =
+                    (from unit in Units
+                     where ReadUom(unit) == uom
+                     select unit).First();
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.baseUnit != null)
+                    {
+                        C = 1;
+                    }
+                }
+                catch (NullReferenceException) { }
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.Formula.A != null)
+                    {
+                        A = double.Parse(match.ConversionToBaseUnit.Formula.A, CultureInfo.GetCultureInfo("en-US"));
+                    }
+                }
+                catch (NullReferenceException) { }
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.Formula.B != null)
+                    {
+                        B = double.Parse(match.ConversionToBaseUnit.Formula.B, CultureInfo.GetCultureInfo("en-US"));
+                    }
+                }
+                catch (NullReferenceException) { }
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.Formula.C != null)
+                    {
+                        C = double.Parse(match.ConversionToBaseUnit.Formula.C, CultureInfo.GetCultureInfo("en-US"));
+                    }
+                }
+                catch (NullReferenceException) { }
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.Formula.D != null)
+                    {
+                        D = double.Parse(match.ConversionToBaseUnit.Formula.D, CultureInfo.GetCultureInfo("en-US"));
+                    }
+                }
+                catch (NullReferenceException) { }
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.Factor != null)
+                    {
+                        B = double.Parse(match.ConversionToBaseUnit.Factor, CultureInfo.GetCultureInfo("en-US"));
+                    }
+                }
+                catch (NullReferenceException) { }
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.Fraction.Numerator != null)
+                    {
+                        B = double.Parse(match.ConversionToBaseUnit.Fraction.Numerator, CultureInfo.GetCultureInfo("en-US"));
+                    }
+                }
+                catch (NullReferenceException) { }
+
+                try
+                {
+                    if (match.ConversionToBaseUnit.Fraction.Denominator != null)
+                    {
+                        C = double.Parse(match.ConversionToBaseUnit.Fraction.Denominator, CultureInfo.GetCultureInfo("en-US"));
+                    }
+                }
+                catch (NullReferenceException) { }
+            }
+            catch (InvalidOperationException)
+            {
+                throw new InvalidOperationException("There is no unit whit this uom");
             }
 
             return "0";
