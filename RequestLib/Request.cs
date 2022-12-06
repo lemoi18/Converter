@@ -91,7 +91,7 @@ namespace RequestLib
             //docmanager = DocFactory.CreateDocmanager("Test");
 
 
-            //foreach (var quantity in docmanager.ReadQuantityclass(description))
+            //foreach (var quantity in docmanager.ReadQuantityClasses(description))
             //{
             //  string str2 = string.Format("{0}", quantity);
             // OutputList.Items.Add(str2);
@@ -114,7 +114,6 @@ namespace RequestLib
         public List<string> ListAlias(string uom)
         {
             docmanager = DocFactory.CreateDocmanager("Test");
-            docmanager.ReadAliases(uom);
             List<string> result = new List<string>();
             
             foreach (var alias in docmanager.ReadAliases(uom))
@@ -127,22 +126,63 @@ namespace RequestLib
 
         public List<string> ListKeys(string unitName)
         {
+            //docmanager = DocFactory.CreateDocmanager("Test");
+            //List<string> result = new List<string>();
+
+            //foreach (var keys in docmanager.Listkeys(unitName))
+            //{
+            //  result.Add(keys.ToString());
+            //   }
+
+            //    return result;
             throw new NotImplementedException();
+
         }
 
         public List<string> ListQualityclass()
         {
+            //  docmanager = DocFactory.CreateDocmanager("Test");
+            //  docmanager.ReadAliases(uom);
+            //  List<string> result = new List<string>();
+            //  
+            //  foreach (var alias in docmanager.ReadAliases(uom))
+            //  {
+            //      result.Add(alias.ToString());
+            //  }
+            //  
+            //  return result;
+
             throw new NotImplementedException();
+
         }
 
-        public List<string[]> ListUnitdimentions()
+        public List<List<string>> ListUnitdimentions()
         {
-            throw new NotImplementedException();
+            docmanager = DocFactory.CreateDocmanager("Test");
+
+            List<List<string>> dimensionString = new List<List<string>>();
+
+            foreach (var dim in docmanager.ReadDimensions())
+            {
+                dimensionString.Add(dim);
+
+            }
+
+            return result;
         }
 
         public List<string[]> ListUnits()
         {
-            throw new NotImplementedException();
+            docmanager = DocFactory.CreateDocmanager("Test");
+            docmanager.ReadAliases(uom);
+            List<string> result = new List<string>();
+
+            foreach (var alias in docmanager.ReadAliases(uom))
+            {
+                result.Add(alias.ToString());
+            }
+
+            return result; 
         }
 
         public string RemoveQualityclass(string unit, string name)
