@@ -5,7 +5,7 @@ using System.Xml.Linq;
 IDocmanager docmanager;
 docmanager = DocFactory.CreateDocmanager("Test");
 
-List<string> test = docmanager.ReadAliases("m");
+List<string> test = docmanager.ReadAliases("mdfsf");
 
 Console.WriteLine("-------");
 foreach (string item in test)

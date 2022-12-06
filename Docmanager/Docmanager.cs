@@ -316,7 +316,21 @@ namespace Docmanager
             }
         }
 
-        public string ReadConversion(string unitName, ref double A, ref double B, ref double C, ref double D)
+        public string ReadConversion(string input, ref double A, ref double B, ref double C, ref double D)
+        {
+            string output = ReadConversionFromName(input, ref A, ref B, ref C, ref D);
+            if (output == null)
+            {
+                output = "none" ;
+            }
+            else if (output == "noMatch")
+            {
+                //output = ReadConversionFromUOM(input);
+            }
+            return output;
+        }
+
+        private string ReadConversionFromName(string unitName, ref double A, ref double B, ref double C, ref double D)
         {
             A = B = C = D = 0;
 
@@ -401,7 +415,7 @@ namespace Docmanager
             }
             catch (InvalidOperationException)
             {
-                return "This name is not in file";
+                return "noMatch";
             }
 
             return "0";
@@ -709,19 +723,32 @@ namespace Docmanager
 
         public List<string> ReadAliases(string input)
         {
-            List<string> output = ReadAliasesName(input);
-            if (output == null)
+            try
             {
-                output = new List<string>() { "none" };
+                try
+                {
+                    return ReadAliasesFromName(input);
+                }
+                catch (InvalidOperationException)
+                {
+                    try 
+                    {
+                        return ReadAliasesFromUOM(input);
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        return new List<string>() { "noMatch" };
+                    }
+                }
             }
-            else if(output[0] == "noMatch")
+            catch (NullReferenceException)
             {
-                output = ReadAliasesUOM(input);
+                // throw new NullReferenceException("No unit with this name has an alias");
+                return new List<string>() { "noMatch" };
             }
-            return output;
         }
 
-        private List<string> ReadAliasesName(string unitName)
+        private List<string> ReadAliasesFromName(string unitName)
         {
             try
             {
@@ -735,17 +762,17 @@ namespace Docmanager
                 }
                 catch (NullReferenceException)
                 {
-                    return null;
+                    throw new NullReferenceException("No unit with this name has an alias");
                 }
             }
             catch (InvalidOperationException)
             {
-                return new List<string>() { "noMatch" };
+                throw new InvalidOperationException("There is no unit whit this name");
             }
         }
 
         //List all aliases given uom
-        private List<string> ReadAliasesUOM(string uom)
+        private List<string> ReadAliasesFromUOM(string uom)
         {
             try
             {
@@ -759,12 +786,12 @@ namespace Docmanager
                 }
                 catch (NullReferenceException)
                 {
-                    return null;
+                    throw new NullReferenceException("No unit with this uom has an alias");
                 }
             }
             catch (InvalidOperationException)
             {
-                return new List<string>() { "noMatch" };
+                throw new InvalidOperationException("There is no unit whit this name");
             }
         }
 
