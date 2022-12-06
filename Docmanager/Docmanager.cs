@@ -202,31 +202,46 @@ namespace Docmanager
             }
         }
 
-        //public string ReadUOM(string unitName)
-        //{
-        //    try
-        //    {
-        //        UOM match =
-        //            (from unit in Units
-        //             where unit.Name == unitName
-        //             select unit).First();
+        private string ReadUom(UOM unit)
+        {
+            try
+            {
+                string sameUnitString = unit.SameUnit.ToString();
 
-        //        try
-        //        {
-        //            string SameUnitString = match.SameUnit.ToString();
-        //            JObject SameUnitJObject = (JObject)JsonConvert.DeserializeObject(SameUnitString);
-        //            return (string)SameUnitJObject["uom"];
-        //        }
-        //        catch (NullReferenceException)
-        //        {
-        //            return "This unit does not have annotation";
-        //        }
-        //    }
-        //    catch (InvalidOperationException)
-        //    {
-        //        return "This name is not in file";
-        //    }
-        //}
+                if (unit.SameUnit.GetType() == typeof(JArray))
+                {
+                    //Implement reading multiple uoms
+                    return "";
+                }
+                else
+                {
+                    JObject sameUnitJObject = (JObject)JsonConvert.DeserializeObject(sameUnitString);
+                    return (string)sameUnitJObject["uom"];
+                }
+            }
+            catch (NullReferenceException)
+            {
+                return "none";
+            }
+
+        }
+
+        public string ReadUOM(string unitName)
+        {
+            try
+            {
+                UOM match =
+                    (from unit in Units
+                     where unit.Name == unitName
+                     select unit).First();
+
+                return ReadUom(match);
+            }
+            catch (InvalidOperationException)
+            {
+                return "This name is not in file";
+            }
+        }
 
         public string ReadIsBase(string unitName)
         {
@@ -583,14 +598,14 @@ namespace Docmanager
                 return (quantityString == quantityType);
             }
         }
-        public List<string> ReadUOM(string quantityType)
+        public List<string> ReadUomFromQuantityClass(string quantityClass)
         {
             List<string> output = new List<string>();
 
             //Check each unit for spesefied quantityClassName
             foreach(UOM unit in Units)
             {
-                if (QuantityExists(unit, quantityType))
+                if (QuantityExists(unit, quantityClass))
                 {
                     string sameUnitString = JsonConvert.SerializeObject(unit.SameUnit, Formatting.Indented);
                     JObject sameUnitJObject = (JObject)JsonConvert.DeserializeObject(sameUnitString);
@@ -692,7 +707,21 @@ namespace Docmanager
             }
         }
 
-        public List<string> ReadAliases(string unitName)
+        public List<string> ReadAliases(string input)
+        {
+            List<string> output = ReadAliasesName(input);
+            if (output == null)
+            {
+                output = new List<string>() { "none" };
+            }
+            else if(output[0] == "noMatch")
+            {
+                output = ReadAliasesUOM(input);
+            }
+            return output;
+        }
+
+        private List<string> ReadAliasesName(string unitName)
         {
             try
             {
@@ -706,15 +735,38 @@ namespace Docmanager
                 }
                 catch (NullReferenceException)
                 {
-                    return new List<string>() { "This unit does not have aliases" };
+                    return null;
                 }
             }
             catch (InvalidOperationException)
             {
-                return new List<string>() { "This name is not in file" };
+                return new List<string>() { "noMatch" };
             }
         }
 
+        //List all aliases given uom
+        private List<string> ReadAliasesUOM(string uom)
+        {
+            try
+            {
+                UOM match =
+                    (from unit in Units
+                     where ReadUom(unit) == uom
+                     select unit).First();
+                try
+                {
+                    return match.Aliases;
+                }
+                catch (NullReferenceException)
+                {
+                    return null;
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                return new List<string>() { "noMatch" };
+            }
+        }
 
         public class CatalogSymbol
         {

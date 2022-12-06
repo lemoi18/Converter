@@ -6,8 +6,8 @@ namespace Docmanager
         public bool NameExists(string unitName);
         public List<List<KeyValuePair<string, List<String>>>> ReadUnits();
         public List<string> ReadProperties(string unitName);
-        //public string ReadUOM(string unitName);
-        public List<string> ReadUOM(string quantityClassName);
+        public string ReadUOM(string unitName);
+        public List<string> ReadUomFromQuantityClass(string quantityClassName);
         public string ReadBaseUnit(string unitName);
         public string ReadAnnotation(string unitName);
         public string ReadIsBase(string unitName);
@@ -22,7 +22,7 @@ namespace Docmanager
         public string RemoveQuantityType(string unitName, string quantityTypeName);
         public List<string[]> ReadDimensions();
         public string[] ReadDimension(string symbol);
-        public List<string> ReadAliases(string unitName);
+        public List<string> ReadAliases(string input);
     }
 
 }
