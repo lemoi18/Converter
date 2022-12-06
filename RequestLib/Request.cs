@@ -74,40 +74,63 @@ namespace RequestLib
 
         public string EditQualityclass(string name, string newname)
         {
-            throw new NotImplementedException();
+            docmanager = DocFactory.CreateDocmanager("Test");
+            //docmanager.EditQuantityclass(name, newname);
+            return name;
         }
 
         public string EditUOM(string oldName, string keyToChange, dynamic newValue)
         {
-            throw new NotImplementedException();
+            docmanager = DocFactory.CreateDocmanager("Test");
+            docmanager.EditUnit(oldName,keyToChange, newValue);
+            return newValue;
         }
 
-        public string[] GetQualityclass(string description)
+        public List<string> GetQualityclass(string description)
+        {
+            //docmanager = DocFactory.CreateDocmanager("Test");
+
+
+            //foreach (var quantity in docmanager.ReadQuantityclass(description))
+            //{
+            //  string str2 = string.Format("{0}", quantity);
+            // OutputList.Items.Add(str2);
+            //}
+
+            throw new NotImplementedException();
+
+        }
+
+        public List<string> GetUnit(string description)
         {
             throw new NotImplementedException();
         }
 
-        public string[] GetUnit(string description)
+        public List<string> GetUnitdimension(string description)
         {
             throw new NotImplementedException();
         }
 
-        public string[] GetUnitdimension(string description)
+        public List<string> ListAlias(string uom)
+        {
+            docmanager = DocFactory.CreateDocmanager("Test");
+            docmanager.ReadAliases(uom);
+            List<string> result = new List<string>();
+            
+            foreach (var alias in docmanager.ReadAliases(uom))
+            {
+                result.Add(alias.ToString());
+            }
+
+              return result;
+        }
+
+        public List<string> ListKeys(string unitName)
         {
             throw new NotImplementedException();
         }
 
-        public string[] ListAlias(string uom)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string[] ListKeys(string unitName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string[] ListQualityclass()
+        public List<string> ListQualityclass()
         {
             throw new NotImplementedException();
         }

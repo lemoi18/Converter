@@ -4,27 +4,27 @@
     {
 
         // Get a spesific Unit Dimension [Symbol,Description,Name, SI Symbol]
-        public string[] GetUnitdimension(string description); //
+        public List<string> GetUnitdimension(string description); //
 
         // Get ALL Unit Dimensions[Symbol,Description,Name, SI Symbol]
         public List<string[]> ListUnitdimentions(); //
         // Get Quantity Classes Given Name of Unit
-        public string[] GetQualityclass(string description);
+        public List<string> GetQualityclass(string description);
 
         // Get a Given Unit
-        public string[] GetUnit(string description); //
+        public List<string> GetUnit(string description); //
 
         // List All Units
         public List<string[]> ListUnits(); //
         // List All Quantiy Classes
-        public string[] ListQualityclass(); //
+        public List<string> ListQualityclass(); //
 
         // List Aliases Given UOM
-        public string[] ListAlias(string uom);
+        public List<string> ListAlias(string uom);
         public Tuple<double, string, string> Convert(double number, string uom1, string uom2);
 
         // List Available Attributes to Edit
-        public string[] ListKeys(string unitName);
+        public List<string> ListKeys(string unitName);
 
         //Create Unit
         public string CreateBaseUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string uom, string Aliases);
