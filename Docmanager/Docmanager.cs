@@ -17,13 +17,11 @@ namespace Docmanager
     {
         //Fetch and derealize json files
 
-        //Fetch and derealize json files
-        const string POSCfilepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\POSC.json";
-        List<UOM> Units = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(POSCfilepath));
+        
 
-        const string DimensionsFilepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\UnitDimensions.json";
-        List<Dimension> Dimensions = JsonConvert.DeserializeObject<List<Dimension>>(File.ReadAllText(DimensionsFilepath));
+        List<UOM> Units = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(Pathgetter("POSC.json")));
 
+        List<Dimension> Dimensions = JsonConvert.DeserializeObject<List<Dimension>>(File.ReadAllText(Pathgetter("UnitDimensions.json")));
 
         public static string Pathgetter(string filename)
         {
@@ -33,7 +31,7 @@ namespace Docmanager
             actualPath = actualPath.Substring(0, actualPath.LastIndexOf("/"));
             actualPath = actualPath.Substring(0, actualPath.LastIndexOf("/"));
             string projectPath = new Uri(actualPath).LocalPath;
-            path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, projectPath + "/Documents/" + filename);
+            path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, projectPath + "/JsonGetter/" + filename);
             return path;
 
 
