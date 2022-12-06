@@ -9,6 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Connector", "Connector\Conn
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Docmanager", "Docmanager\Docmanager.csproj", "{5C8F5411-E903-462D-B7BC-AF1DC2BE066E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0853CAEB-1116-47AC-969E-2634B985C572} = {0853CAEB-1116-47AC-969E-2634B985C572}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webmanager", "Webmanager\Webmanager.csproj", "{484DD0AD-4C49-44F5-B0F6-21EE90CEA695}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -27,6 +30,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestLib", "RequestLib\Re
 	ProjectSection(ProjectDependencies) = postProject
 		{5C8F5411-E903-462D-B7BC-AF1DC2BE066E} = {5C8F5411-E903-462D-B7BC-AF1DC2BE066E}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonGetter", "JsonGetter\JsonGetter.csproj", "{0853CAEB-1116-47AC-969E-2634B985C572}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +59,10 @@ Global
 		{A9CE11A8-F413-4235-B5D3-B8F9C7480971}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9CE11A8-F413-4235-B5D3-B8F9C7480971}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9CE11A8-F413-4235-B5D3-B8F9C7480971}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0853CAEB-1116-47AC-969E-2634B985C572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0853CAEB-1116-47AC-969E-2634B985C572}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0853CAEB-1116-47AC-969E-2634B985C572}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0853CAEB-1116-47AC-969E-2634B985C572}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

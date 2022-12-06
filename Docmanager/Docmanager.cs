@@ -21,27 +21,28 @@ namespace Docmanager
     {
         //Fetch and derealize json files
 
+        
 
-    
         List<UOM> Units = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(Pathgetter("POSC.json")));
 
-        List<Dimension> Dimensions = JsonConvert.DeserializeObject<List<Dimension>>(File.ReadAllText(File.ReadAllText(Pathgetter("UnitDimensions.json"))));
-
+        List<Dimension> Dimensions = JsonConvert.DeserializeObject<List<Dimension>>(File.ReadAllText(Pathgetter("UnitDimensions.json")));
 
 
         public static string Pathgetter(string filename)
         {
-            
+
             string path = System.Reflection.Assembly.GetCallingAssembly().CodeBase;
             string actualPath = path.Substring(0, path.LastIndexOf("bin"));
             actualPath = actualPath.Substring(0, actualPath.LastIndexOf("/"));
             actualPath = actualPath.Substring(0, actualPath.LastIndexOf("/"));
             string projectPath = new Uri(actualPath).LocalPath;
-            path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, projectPath+"/Documents/" + filename);
+            path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, projectPath + "/JsonGetter/" + filename);
             return path;
 
 
         }
+
+
         public List<List<KeyValuePair<string, List<String>>>> ReadUnits()
         {
             List<List<KeyValuePair<string, List<String>>>> output = new List<List<KeyValuePair<string, List<String>>>>();
