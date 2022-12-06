@@ -31,6 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Desktop Application", "Desk
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestLib", "RequestLib\RequestLib.csproj", "{A9CE11A8-F413-4235-B5D3-B8F9C7480971}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5C8F5411-E903-462D-B7BC-AF1DC2BE066E} = {5C8F5411-E903-462D-B7BC-AF1DC2BE066E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

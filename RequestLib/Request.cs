@@ -1,4 +1,5 @@
 ﻿using Connector;
+using Docmanager;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,18 @@ namespace RequestLib
 {
     internal class Request : IRequests
     {
+
+        IDocmanager docmanager;
+
+
+
         public string AddQualityclass(string name, string uom)
         {
-            throw new NotImplementedException();
+            docmanager = DocFactory.CreateDocmanager("Test");
+            docmanager.AddQuantityType(name, uom);
+            
+            return name;
+
         }
 
         public Tuple<double, string, string> Convert(double number, string uom1, string uom2)
@@ -34,22 +44,32 @@ namespace RequestLib
 
         public string CreateQualityclass(string name, string baseunit)
         {
-            throw new NotImplementedException();
+            docmanager = DocFactory.CreateDocmanager("Test");
+            //docmanager.CreateQuantityClass(string name, string baseunit);
+            return name;
+
         }
 
         public string CreateSecondaryUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string uom, string baseunit, double A, double B, double C, double D, string Aliases)
         {
-            throw new NotImplementedException();
+            docmanager = DocFactory.CreateDocmanager("Test");
+            //docmanager.CreateSecondaryUnit(id, annotation, name, quantityType, dimensionalclass, uom, baseunit, A, B, C, D, Aliases);//Aliases needs to be string
+            return id;
         }
 
         public string DeleteQualityclass(string name)
         {
-            throw new NotImplementedException();
+            docmanager = DocFactory.CreateDocmanager("Test");
+            //docmanager.DeleteQantityClass(name);
+            return name;
         }
 
         public string DeleteUOM(string name)
         {
-            throw new NotImplementedException();
+            docmanager = DocFactory.CreateDocmanager("Test");
+            docmanager.DeleteUnit(name);
+            return name;
+
         }
 
         public string EditQualityclass(string name, string newname)

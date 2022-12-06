@@ -25,6 +25,9 @@ namespace Docmanager
         const string DimensionsFilepath = @"C:\Users\Yea\IKT300\Engineering units - mappe eksamen\Docmanager\UnitDimensions.json";
         List<Dimension> Dimensions = JsonConvert.DeserializeObject<List<Dimension>>(File.ReadAllText(DimensionsFilepath));
 
+
+
+
         public List<List<KeyValuePair<string, string>>> ReadUnits()
         {
             List<List<KeyValuePair<string, string>>> output = new List<List<KeyValuePair<string, string>>>();
