@@ -107,6 +107,7 @@
             this.DeleteQTButton = new System.Windows.Forms.Button();
             this.label32 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // UnitFrom
@@ -805,11 +806,22 @@
             this.label33.TabIndex = 87;
             this.label33.Text = "Name of Quantity Type";
             // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(860, 564);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(32, 15);
+            this.label34.TabIndex = 88;
+            this.label34.Text = "uom";
+            this.label34.Click += new System.EventHandler(this.label34_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1437, 810);
+            this.Controls.Add(this.label34);
             this.Controls.Add(this.label33);
             this.Controls.Add(this.label32);
             this.Controls.Add(this.DeleteQTButton);
@@ -977,5 +989,6 @@
         private Button DeleteQTButton;
         private Label label32;
         private Label label33;
+        private Label label34;
     }
 }

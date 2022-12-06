@@ -19,7 +19,7 @@ namespace Desktop_Application
         {
             InitializeComponent();
             converter = ConnectorFactory.CreateConnectorFactory("Connector");
-            request = RequestFactory.CreateRequestsFactory("Test");
+            request = RequestFactory.CreateRequestsFactory("Request");
             this.EditComboBox.Hide();
             this.label6.Hide();
 
@@ -43,7 +43,7 @@ namespace Desktop_Application
         private void ConverterButton_Click(object sender, EventArgs e)
         {
 
-            Tuple<double, string, string> Edited = converter.ConverterWrapper(Convert.ToDouble(Value.Text), UnitFrom.Text.ToLower(), UnitTo.Text.ToLower());
+            Tuple<double, string, string> Edited = converter.ConverterWrapper(Double.Parse(Value.Text), UnitFrom.Text, UnitTo.Text);
             string str = string.Format("{0}  {1} {2}", Edited.Item1.ToString(), Edited.Item2, Edited.Item3);
 
             OutputConsole.Items.Add(str);
@@ -65,14 +65,16 @@ namespace Desktop_Application
         private void ConfimList_Click(object sender, EventArgs e)
         {
             if (comboBox.Text == "unit dimensions")
+            {
                 OutputList.Items.Clear();
 
-            foreach (var student in request.ListUnitdimentions())
+                foreach (var student in request.ListUnitdimentions())
                 {
 
                     string str2 = string.Format("{0} {1} {2} {3} ", student[0], student[1], student[2], student[3]);
                     OutputList.Items.Add(str2);
                 }
+            }
             if (comboBox.Text == "quantity classes")
             {
                 OutputList.Items.Clear();
@@ -296,6 +298,7 @@ namespace Desktop_Application
         private void DeleteUnitButton_Click(object sender, EventArgs e)
         {
             request.DeleteUOM(DeleteUnitBox.Text);
+            DeleteUnitBox.Clear();
         }
 
         private void label30_Click(object sender, EventArgs e)
@@ -316,6 +319,12 @@ namespace Desktop_Application
         private void DeleteQTButton_Click(object sender, EventArgs e)
         {
             request.DeleteQualityclass(DeleteQT.Text);
+            DeleteQT.Clear();
+        }
+
+        private void label34_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
