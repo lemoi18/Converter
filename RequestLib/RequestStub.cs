@@ -5,10 +5,7 @@
 
 
 
-        public void AddQualityclass(string name, string uom)
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public Tuple<double, string, string> Convert(double number, string uom1, string uom2)
         {
@@ -18,13 +15,7 @@
        
 
 
-        public List<string[]> GetQualityclass(string description)
-        {
-            string[] strings = { "kilogram/metre fourth" };
-            string[] strings2 = { "kilograms/metre" };
-            string[] strings3 = { "radians/metre" };
-            return new List<string[]> { strings, strings2, strings3 };
-        }
+       
 
         public string[] GetUnitdimension(string description)
         {
@@ -54,17 +45,14 @@
             return new string[] { "annotation", "Name", "QuantityType" };
         }
 
-        string IRequests.AddQualityclass(string name, string uom)
+
+
+        public string CreateUOM(string id, string annotation, string name, string qualitytype, string dimensionalclass, string alias, string baseunit, string uom, string A, string B, string C, string D) //
         {
             throw new NotImplementedException();
-        }
+    }
 
-        public string CreateUOM(string id, string annotation, string name, string qualitytype, string dimensionalclass, string baseunit)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string CreateQualityclass(string name, string baseunit)
+    public string CreateQualityclass(string name, string baseunit)
         {
             throw new NotImplementedException();
         }
@@ -92,6 +80,34 @@
         public string RemoveQualityclass(string unit, string name)
         {
             throw new NotImplementedException();
+        }
+
+        public string AddQualityclass(string name, string uom)
+        {
+            throw new NotImplementedException();
+        }
+
+       
+
+        public string[] GetUnit(string description)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string[]> ListUnits()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string DeleteQualityclass(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string[] GetQualityclass(string description)
+        {
+            return new string[] { "cm", "mm", "m" };
+
         }
     }
 }

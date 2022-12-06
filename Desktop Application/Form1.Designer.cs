@@ -53,21 +53,39 @@
             this.label8 = new System.Windows.Forms.Label();
             this.EditWhat = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.CreateUOMID = new System.Windows.Forms.TextBox();
+            this.CreateUOMName = new System.Windows.Forms.TextBox();
+            this.CreateUOMAnnotation = new System.Windows.Forms.TextBox();
+            this.CreateUOMDimensional = new System.Windows.Forms.TextBox();
+            this.CreateUOMBaseUnit = new System.Windows.Forms.TextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.ConfirmAddType = new System.Windows.Forms.Button();
+            this.ConfirmCreateType = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.ConfirmAdd = new System.Windows.Forms.Button();
+            this.CreateUOMConfirm = new System.Windows.Forms.Button();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.CreateQTButton = new System.Windows.Forms.Button();
+            this.CreateQTName = new System.Windows.Forms.TextBox();
+            this.CreateQTNewName = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.CreateUOMA = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.CreateUOMB = new System.Windows.Forms.TextBox();
+            this.CreateUOMC = new System.Windows.Forms.TextBox();
+            this.CreateUOMD = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.CreateUOMCheckbox = new System.Windows.Forms.CheckBox();
+            this.Alias = new System.Windows.Forms.Label();
+            this.CreateUOMQT = new System.Windows.Forms.TextBox();
+            this.CreateUOMAlias = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // UnitFrom
@@ -153,6 +171,7 @@
             this.comboBox.Name = "comboBox";
             this.comboBox.Size = new System.Drawing.Size(243, 23);
             this.comboBox.TabIndex = 9;
+            this.comboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -277,9 +296,9 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(1063, 249);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(79, 15);
+            this.label8.Size = new System.Drawing.Size(91, 15);
             this.label8.TabIndex = 24;
-            this.label8.Text = "Add UOM/QT";
+            this.label8.Text = "Create UOM/QT";
             // 
             // EditWhat
             // 
@@ -303,69 +322,66 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // textBox3
+            // CreateUOMID
             // 
-            this.textBox3.Location = new System.Drawing.Point(1087, 343);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 23);
-            this.textBox3.TabIndex = 27;
+            this.CreateUOMID.Location = new System.Drawing.Point(1079, 362);
+            this.CreateUOMID.Name = "CreateUOMID";
+            this.CreateUOMID.Size = new System.Drawing.Size(100, 23);
+            this.CreateUOMID.TabIndex = 27;
+            this.CreateUOMID.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
-            // textBox4
+            // CreateUOMName
             // 
-            this.textBox4.Location = new System.Drawing.Point(1087, 372);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 23);
-            this.textBox4.TabIndex = 28;
+            this.CreateUOMName.Location = new System.Drawing.Point(1079, 391);
+            this.CreateUOMName.Name = "CreateUOMName";
+            this.CreateUOMName.Size = new System.Drawing.Size(100, 23);
+            this.CreateUOMName.TabIndex = 28;
             // 
-            // textBox5
+            // CreateUOMAnnotation
             // 
-            this.textBox5.Location = new System.Drawing.Point(1087, 401);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 23);
-            this.textBox5.TabIndex = 29;
+            this.CreateUOMAnnotation.Location = new System.Drawing.Point(1079, 420);
+            this.CreateUOMAnnotation.Name = "CreateUOMAnnotation";
+            this.CreateUOMAnnotation.Size = new System.Drawing.Size(100, 23);
+            this.CreateUOMAnnotation.TabIndex = 29;
             // 
-            // textBox6
+            // CreateUOMDimensional
             // 
-            this.textBox6.Location = new System.Drawing.Point(1087, 459);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(100, 23);
-            this.textBox6.TabIndex = 30;
+            this.CreateUOMDimensional.Location = new System.Drawing.Point(1079, 478);
+            this.CreateUOMDimensional.Name = "CreateUOMDimensional";
+            this.CreateUOMDimensional.Size = new System.Drawing.Size(100, 23);
+            this.CreateUOMDimensional.TabIndex = 30;
             // 
-            // textBox7
+            // CreateUOMBaseUnit
             // 
-            this.textBox7.Location = new System.Drawing.Point(1087, 430);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(100, 23);
-            this.textBox7.TabIndex = 31;
-            // 
-            // textBox8
-            // 
-            this.textBox8.Location = new System.Drawing.Point(1087, 488);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(100, 23);
-            this.textBox8.TabIndex = 32;
+            this.CreateUOMBaseUnit.Location = new System.Drawing.Point(1079, 569);
+            this.CreateUOMBaseUnit.Name = "CreateUOMBaseUnit";
+            this.CreateUOMBaseUnit.Size = new System.Drawing.Size(100, 23);
+            this.CreateUOMBaseUnit.TabIndex = 32;
             // 
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "UOM",
+            "QUANTITY TYPE"});
             this.comboBox1.Location = new System.Drawing.Point(1081, 280);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 23);
             this.comboBox1.TabIndex = 33;
             // 
-            // ConfirmAddType
+            // ConfirmCreateType
             // 
-            this.ConfirmAddType.Location = new System.Drawing.Point(1212, 279);
-            this.ConfirmAddType.Name = "ConfirmAddType";
-            this.ConfirmAddType.Size = new System.Drawing.Size(75, 23);
-            this.ConfirmAddType.TabIndex = 34;
-            this.ConfirmAddType.Text = "OK";
-            this.ConfirmAddType.UseVisualStyleBackColor = true;
+            this.ConfirmCreateType.Location = new System.Drawing.Point(1212, 279);
+            this.ConfirmCreateType.Name = "ConfirmCreateType";
+            this.ConfirmCreateType.Size = new System.Drawing.Size(75, 23);
+            this.ConfirmCreateType.TabIndex = 34;
+            this.ConfirmCreateType.Text = "OK";
+            this.ConfirmCreateType.UseVisualStyleBackColor = true;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(1034, 346);
+            this.label9.Location = new System.Drawing.Point(1026, 365);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(18, 15);
             this.label9.TabIndex = 35;
@@ -374,7 +390,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(1013, 375);
+            this.label10.Location = new System.Drawing.Point(1005, 394);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(39, 15);
             this.label10.TabIndex = 36;
@@ -383,7 +399,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(1002, 404);
+            this.label11.Location = new System.Drawing.Point(994, 423);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(67, 15);
             this.label11.TabIndex = 37;
@@ -392,7 +408,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(989, 433);
+            this.label12.Location = new System.Drawing.Point(896, 449);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(80, 15);
             this.label12.TabIndex = 38;
@@ -401,7 +417,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(966, 462);
+            this.label13.Location = new System.Drawing.Point(958, 481);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(103, 15);
             this.label13.TabIndex = 39;
@@ -410,41 +426,221 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(1011, 491);
+            this.label14.Location = new System.Drawing.Point(1003, 572);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(56, 15);
             this.label14.TabIndex = 40;
             this.label14.Text = "Base Unit";
             // 
-            // ConfirmAdd
+            // CreateUOMConfirm
             // 
-            this.ConfirmAdd.Location = new System.Drawing.Point(1087, 528);
-            this.ConfirmAdd.Name = "ConfirmAdd";
-            this.ConfirmAdd.Size = new System.Drawing.Size(100, 23);
-            this.ConfirmAdd.TabIndex = 41;
-            this.ConfirmAdd.Text = "Confirm";
-            this.ConfirmAdd.UseVisualStyleBackColor = true;
+            this.CreateUOMConfirm.Location = new System.Drawing.Point(1075, 717);
+            this.CreateUOMConfirm.Name = "CreateUOMConfirm";
+            this.CreateUOMConfirm.Size = new System.Drawing.Size(100, 23);
+            this.CreateUOMConfirm.TabIndex = 41;
+            this.CreateUOMConfirm.Text = "Confirm";
+            this.CreateUOMConfirm.UseVisualStyleBackColor = true;
+            this.CreateUOMConfirm.Click += new System.EventHandler(this.CreateUOMConfirm_Click);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(1099, 312);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(35, 15);
+            this.label15.TabIndex = 42;
+            this.label15.Text = "UOM";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(1287, 315);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(80, 15);
+            this.label16.TabIndex = 43;
+            this.label16.Text = "Quantity Type";
+            // 
+            // CreateQTButton
+            // 
+            this.CreateQTButton.Location = new System.Drawing.Point(1292, 425);
+            this.CreateQTButton.Name = "CreateQTButton";
+            this.CreateQTButton.Size = new System.Drawing.Size(75, 23);
+            this.CreateQTButton.TabIndex = 44;
+            this.CreateQTButton.Text = "Confirm";
+            this.CreateQTButton.UseVisualStyleBackColor = true;
+            this.CreateQTButton.Click += new System.EventHandler(this.CreateQTButton_Click);
+            // 
+            // CreateQTName
+            // 
+            this.CreateQTName.Location = new System.Drawing.Point(1282, 347);
+            this.CreateQTName.Name = "CreateQTName";
+            this.CreateQTName.Size = new System.Drawing.Size(100, 23);
+            this.CreateQTName.TabIndex = 45;
+            // 
+            // CreateQTNewName
+            // 
+            this.CreateQTNewName.Location = new System.Drawing.Point(1282, 386);
+            this.CreateQTNewName.Name = "CreateQTNewName";
+            this.CreateQTNewName.Size = new System.Drawing.Size(100, 23);
+            this.CreateQTNewName.TabIndex = 46;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(1214, 348);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(39, 15);
+            this.label17.TabIndex = 47;
+            this.label17.Text = "Name";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(1206, 389);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(66, 15);
+            this.label18.TabIndex = 48;
+            this.label18.Text = "New Name";
+            // 
+            // CreateUOMA
+            // 
+            this.CreateUOMA.Location = new System.Drawing.Point(1079, 598);
+            this.CreateUOMA.Name = "CreateUOMA";
+            this.CreateUOMA.Size = new System.Drawing.Size(100, 23);
+            this.CreateUOMA.TabIndex = 49;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(1026, 601);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(15, 15);
+            this.label22.TabIndex = 50;
+            this.label22.Text = "A";
+            // 
+            // CreateUOMB
+            // 
+            this.CreateUOMB.Location = new System.Drawing.Point(1079, 627);
+            this.CreateUOMB.Name = "CreateUOMB";
+            this.CreateUOMB.Size = new System.Drawing.Size(100, 23);
+            this.CreateUOMB.TabIndex = 51;
+            // 
+            // CreateUOMC
+            // 
+            this.CreateUOMC.Location = new System.Drawing.Point(1079, 656);
+            this.CreateUOMC.Name = "CreateUOMC";
+            this.CreateUOMC.Size = new System.Drawing.Size(100, 23);
+            this.CreateUOMC.TabIndex = 52;
+            // 
+            // CreateUOMD
+            // 
+            this.CreateUOMD.Location = new System.Drawing.Point(1079, 685);
+            this.CreateUOMD.Name = "CreateUOMD";
+            this.CreateUOMD.Size = new System.Drawing.Size(100, 23);
+            this.CreateUOMD.TabIndex = 53;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(944, 630);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(115, 15);
+            this.label19.TabIndex = 54;
+            this.label19.Text = "B/Factor/Numerator";
+            this.label19.Click += new System.EventHandler(this.label19_Click);
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(971, 656);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(90, 15);
+            this.label20.TabIndex = 55;
+            this.label20.Text = "C/Denominator";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(1026, 688);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(15, 15);
+            this.label21.TabIndex = 56;
+            this.label21.Text = "D";
+            // 
+            // CreateUOMCheckbox
+            // 
+            this.CreateUOMCheckbox.AutoSize = true;
+            this.CreateUOMCheckbox.Location = new System.Drawing.Point(1063, 337);
+            this.CreateUOMCheckbox.Name = "CreateUOMCheckbox";
+            this.CreateUOMCheckbox.Size = new System.Drawing.Size(125, 19);
+            this.CreateUOMCheckbox.TabIndex = 58;
+            this.CreateUOMCheckbox.Text = "Create a base unit?";
+            this.CreateUOMCheckbox.UseVisualStyleBackColor = true;
+            this.CreateUOMCheckbox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged_1);
+            // 
+            // Alias
+            // 
+            this.Alias.AutoSize = true;
+            this.Alias.Location = new System.Drawing.Point(927, 522);
+            this.Alias.Name = "Alias";
+            this.Alias.Size = new System.Drawing.Size(32, 15);
+            this.Alias.TabIndex = 62;
+            this.Alias.Text = "Alias";
+            // 
+            // CreateUOMQT
+            // 
+            this.CreateUOMQT.Location = new System.Drawing.Point(982, 449);
+            this.CreateUOMQT.Name = "CreateUOMQT";
+            this.CreateUOMQT.PlaceholderText = "Commaseperated to add more";
+            this.CreateUOMQT.Size = new System.Drawing.Size(195, 23);
+            this.CreateUOMQT.TabIndex = 63;
+            // 
+            // CreateUOMAlias
+            // 
+            this.CreateUOMAlias.Location = new System.Drawing.Point(981, 522);
+            this.CreateUOMAlias.Name = "CreateUOMAlias";
+            this.CreateUOMAlias.PlaceholderText = "Commaseperated to add more";
+            this.CreateUOMAlias.Size = new System.Drawing.Size(202, 23);
+            this.CreateUOMAlias.TabIndex = 64;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1437, 646);
-            this.Controls.Add(this.ConfirmAdd);
+            this.ClientSize = new System.Drawing.Size(1437, 810);
+            this.Controls.Add(this.CreateUOMAlias);
+            this.Controls.Add(this.CreateUOMQT);
+            this.Controls.Add(this.Alias);
+            this.Controls.Add(this.CreateUOMCheckbox);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this.label20);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.CreateUOMD);
+            this.Controls.Add(this.CreateUOMC);
+            this.Controls.Add(this.CreateUOMB);
+            this.Controls.Add(this.label22);
+            this.Controls.Add(this.CreateUOMA);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.CreateQTNewName);
+            this.Controls.Add(this.CreateQTName);
+            this.Controls.Add(this.CreateQTButton);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.CreateUOMConfirm);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.ConfirmAddType);
+            this.Controls.Add(this.ConfirmCreateType);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.textBox8);
-            this.Controls.Add(this.textBox7);
-            this.Controls.Add(this.textBox6);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.CreateUOMBaseUnit);
+            this.Controls.Add(this.CreateUOMDimensional);
+            this.Controls.Add(this.CreateUOMAnnotation);
+            this.Controls.Add(this.CreateUOMName);
+            this.Controls.Add(this.CreateUOMID);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.EditWhat);
             this.Controls.Add(this.label8);
@@ -504,20 +700,38 @@
         private Label label8;
         private ComboBox EditWhat;
         private Button button1;
-        private TextBox textBox3;
-        private TextBox textBox4;
-        private TextBox textBox5;
-        private TextBox textBox6;
-        private TextBox textBox7;
-        private TextBox textBox8;
+        private TextBox CreateUOMID;
+        private TextBox CreateUOMName;
+        private TextBox CreateUOMAnnotation;
+        private TextBox CreateUOMDimensional;
+        private TextBox CreateUOMBaseUnit;
         private ComboBox comboBox1;
-        private Button ConfirmAddType;
+        private Button ConfirmCreateType;
         private Label label9;
         private Label label10;
         private Label label11;
         private Label label12;
         private Label label13;
         private Label label14;
-        private Button ConfirmAdd;
+        private Button CreateUOMConfirm;
+        private Label label15;
+        private Label label16;
+        private Button CreateQTButton;
+        private TextBox CreateQTName;
+        private TextBox CreateQTNewName;
+        private Label label17;
+        private Label label18;
+        private TextBox CreateUOMA;
+        private Label label22;
+        private TextBox CreateUOMB;
+        private TextBox CreateUOMC;
+        private TextBox CreateUOMD;
+        private Label label19;
+        private Label label20;
+        private Label label21;
+        private CheckBox CreateUOMCheckbox;
+        private Label Alias;
+        private TextBox CreateUOMQT;
+        private TextBox CreateUOMAlias;
     }
 }

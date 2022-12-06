@@ -106,6 +106,17 @@ namespace Desktop_Application
                     OutputList.Items.Add(str2);
                 }
             }
+            if (comboBox.Text == "uom for a given quantity class(detailed version)")
+            {
+                OutputList.Items.Clear();
+
+
+                foreach (var student in request.ListUnits())
+                {
+                    string str2 = string.Format("{0}", student);
+                    OutputList.Items.Add(str2);
+                }
+            }
 
 
         }
@@ -185,6 +196,80 @@ namespace Desktop_Application
                 string str2 = string.Format("{0}", student);
                 EditComboBox.Items.Add(str2);
             }
+        }
+
+        private void CreateQTButton_Click(object sender, EventArgs e)
+        {
+            request.AddQualityclass(CreateQTName.Text, CreateQTNewName.Text);
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CreateUOMConfirm_Click(object sender, EventArgs e)
+        {
+            //CreateUOMQT.Items.Add(CreateUOMQT.Text);
+            //CreateUOMAlias.Items.Add(CreateUOMAlias.Text);
+
+            
+
+            
+
+           
+         
+
+
+            if (CreateUOMCheckbox.Checked)
+                request.CreateUOM(CreateUOMID.Text, CreateUOMAnnotation.Text, CreateUOMName.Text, CreateUOMQT.Text, CreateUOMDimensional.Text, CreateUOMAlias.Text, CreateUOMBaseUnit.Text, CreateUOMA.Text, CreateUOMB.Text, CreateUOMC.Text, CreateUOMD.Text); ; ;
+            //else
+            //{
+            
+                //request.CreateUOM(CreateUOMID.Text, CreateUOMAnnotation.Text, CreateUOMName.Text, CreateUOMQT.Text, CreateUOMDimensional.Text);
+            //}        
+        }
+
+        private void label19_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
+        {
+            if (CreateUOMCheckbox.Checked)
+            {
+                
+                this.CreateUOMA.Hide();
+                this.CreateUOMB.Hide();
+                this.CreateUOMC.Hide();
+                this.CreateUOMD.Hide();
+
+                this.label19.Hide();
+                this.label20.Hide();
+                this.label21.Hide();
+                this.label22.Hide();
+            }
+            else
+            {
+                this.CreateUOMA.Show();
+                this.CreateUOMB.Show();
+                this.CreateUOMC.Show();
+                this.CreateUOMD.Show();
+
+                this.label19.Show();
+                this.label20.Show();
+                this.label21.Show();
+                this.label22.Show();
+
+                
+
+            }
+        }
+
+        private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 
