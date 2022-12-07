@@ -32,7 +32,7 @@ namespace RequestLib
             converter = ConnectorFactory.CreateConnectorFactory("CONNECTOR");
             Tuple<double, string, string> My_Tuple1 = new Tuple<double, string, string>(number, uom1, uom2);
 
-            converter.ConverterWrapper(My_Tuple1.Item1, My_Tuple1.Item2, My_Tuple1.Item3);
+           My_Tuple1= converter.ConverterWrapper(My_Tuple1.Item1, My_Tuple1.Item2, My_Tuple1.Item3);
             return My_Tuple1;
 
         }

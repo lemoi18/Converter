@@ -43,8 +43,10 @@ namespace Desktop_Application
         private void ConverterButton_Click(object sender, EventArgs e)
         {
 
-            Tuple<double, string, string> Edited = converter.ConverterWrapper(Double.Parse(Value.Text), UnitFrom.Text, UnitTo.Text);
-            string str = string.Format("{0}  {1} {2}", Edited.Item1.ToString(), Edited.Item2, Edited.Item3);
+            //Tuple<double, string, string> Edited = converter.ConverterWrapper(Double.Parse(Value.Text), UnitFrom.Text, UnitTo.Text);
+            Tuple<double, string, string> Edited = request.Convert(Double.Parse(Value.Text), UnitFrom.Text, UnitTo.Text);
+            
+            string str = string.Format("{0} {1} {2}", Edited.Item1.ToString(), Edited.Item2, Edited.Item3);
 
             OutputConsole.Items.Add(str);
 
@@ -340,6 +342,11 @@ namespace Desktop_Application
         private void label34_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void OutputList_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            textBox1.Text = OutputList.Text;
         }
     }
 

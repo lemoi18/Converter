@@ -219,12 +219,14 @@
             // OutputList
             // 
             this.OutputList.FormattingEnabled = true;
+            this.OutputList.HorizontalScrollbar = true;
             this.OutputList.ItemHeight = 15;
             this.OutputList.Location = new System.Drawing.Point(428, 169);
             this.OutputList.Name = "OutputList";
             this.OutputList.Size = new System.Drawing.Size(317, 319);
             this.OutputList.TabIndex = 12;
             this.OutputList.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged_1);
+            this.OutputList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OutputList_MouseDoubleClick);
             // 
             // textBox1
             // 
