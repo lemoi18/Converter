@@ -2,6 +2,7 @@
 using RequestLib;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Xml.Linq;
 using Webmanager.WebREST.Models;
 
 namespace Webmanager.WebREST.Services;
@@ -47,39 +48,33 @@ public static class UOMService
     public static void Add(UOM Uom)
     {
         
-        string ADD = request.CreateSecondaryUnit(Uom.Id, Uom.Annotation, Uom.Name, 
-            Uom.Quantitytype, Uom.Dimensionalclass, Uom.Baseunit, Uom.Uom, Uom.A, Uom.B, Uom.C, Uom.D, Uom.Aliases);
+        string ADD = request.CreateSecondaryUnit(Uom.Id.Replace('&', ' '), Uom.Annotation.Replace('&', ' '), Uom.Name.Replace('&', ' '), 
+            Uom.Quantitytype.Replace('&', ' '), Uom.Dimensionalclass.Replace('&', ' '), Uom.Baseunit.Replace('&', ' '),
+            Uom.Uom.Replace('&', ' '), Uom.A, Uom.B, Uom.C, Uom.D, Uom.Aliases.Replace('&', ' '));
         UOMs.Add(Uom);
     }
 
     public static void Delete(string name)
     {
-        var Uom = Get(name);
-        if (Uom is null)
-            return;
-        string DEL = request.DeleteUOM(name);
-        UOMs.Remove(Uom);
+        string DEL = request.DeleteUOM(name.Replace('&', ' '));
+        
     }
 
     public static void Update(string Name, UOM_Update Uom)
     {
-        Console.WriteLine("Up_UNIT1");
-        Console.WriteLine(Uom.NewName + " " + Uom.Change );
+        
 
-
-
-       
-        if (Uom.Change == "id" || Uom.Change == "Id") { string NO = request.EditUOM(Name, "id", Uom.NewName.ToString()); }
-        if (Uom.Change == "annotation " || Uom.Change == "Annotation") { string NO = request.EditUOM(Name, "annotation", Uom.NewName.ToString()); }
-        if (Uom.Change == "name" || Uom.Change == "Name") { string NO = request.EditUOM(Name, "name", Uom.NewName.ToString()); }
-        if (Uom.Change == "quantitytype" || Uom.Change == "Quantitytype") { string NO = request.EditUOM(Name, "quantity", Uom.NewName.ToString()); }
-        if (Uom.Change == "dimensionalclass" || Uom.Change == "Dimensionalclass") { string NO = request.EditUOM(Name, "dimensionalclass", Uom.NewName.ToString()); }
-        if (Uom.Change == "baseunit" || Uom.Change == "Baseunit") { string NO = request.EditUOM(Name, "baseunit", Uom.NewName.ToString()); }
-        if (Uom.Change != "uom" || Uom.Change != "Uom") { string NO = request.EditUOM(Name, "uom", Uom.NewName.ToString()); }
-        if (Uom.Change != "a" || Uom.Change != "A") { string NO = request.EditUOM(Name, "a", Uom.NewName.ToString()); }
-        if (Uom.Change != "b" || Uom.Change != "B") { string NO = request.EditUOM(Name, "b", Uom.NewName.ToString()); }
-        if (Uom.Change != "c" || Uom.Change != "C") { string NO = request.EditUOM(Name, "c", Uom.NewName.ToString()); }
-        if (Uom.Change != "d" || Uom.Change != "D") { string NO = request.EditUOM(Name, "d", Uom.NewName.ToString()); }
+        if (Uom.Change.ToUpper() == "id".ToUpper()) { string NO = request.EditUOM(Name.Replace('&', ' '), "id", Uom.Newname.ToString().Replace('&', ' ')); }
+        if (Uom.Change.ToUpper() == "annotation".ToUpper()) { string NO = request.EditUOM(Name.Replace('&', ' '), "annotation", Uom.Newname.ToString().Replace('&', ' ')); }
+        if (Uom.Change.ToUpper() == "name".ToUpper()) { string NO = request.EditUOM(Name.Replace('&', ' '), "name", Uom.Newname.ToString().Replace('&', ' ')); }
+        if (Uom.Change.ToUpper() == "quantitytype".ToUpper()) { string NO = request.EditUOM(Name.Replace('&', ' '), "quantity", Uom.Newname.ToString().Replace('&', ' ')); }
+        if (Uom.Change.ToUpper() == "dimensionalclass".ToUpper()) { string NO = request.EditUOM(Name.Replace('&', ' '), "dimensionalclass", Uom.Newname.ToString().Replace('&', ' ')); }
+        if (Uom.Change.ToUpper() == "baseunit".ToUpper()) { string NO = request.EditUOM(Name.Replace('&', ' '), "baseunit", Uom.Newname.ToString().Replace('&', ' ')); }
+        if (Uom.Change.ToUpper() == "uom".ToUpper()) { string NO = request.EditUOM(Name.Replace('&', ' '), "uom", Uom.Newname.ToString().Replace('&', ' ')); }
+        if (Uom.Change.ToUpper() == "a".ToUpper()) { string NO = request.EditUOM(Name.Replace('&', ' '), "a", Uom.Newname.ToString().Replace('&', ' ')); }
+        if (Uom.Change.ToUpper() == "b".ToUpper()) { string NO = request.EditUOM(Name.Replace('&', ' '), "b", Uom.Newname.ToString().Replace('&', ' ')); }
+        if (Uom.Change.ToUpper() == "c".ToUpper()) { string NO = request.EditUOM(Name.Replace('&', ' '), "c", Uom.Newname.ToString().Replace('&', ' ')); }
+        if (Uom.Change.ToUpper() == "d".ToUpper()) { string NO = request.EditUOM(Name.Replace('&', ' '), "d", Uom.Newname.ToString().Replace('&', ' ')); }
 
 
         

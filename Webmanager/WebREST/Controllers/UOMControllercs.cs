@@ -57,11 +57,6 @@ public class UOMController : ControllerBase
     [HttpDelete("{Name}")]
     public IActionResult Delete(string Name)
     {
-        var Uom = UOMService.Get(Name);
-
-        if (Uom is null)
-            return NotFound();
-
         UOMService.Delete(Name);
 
         return NoContent();

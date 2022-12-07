@@ -20,6 +20,6 @@ public class UOM
 public class UOM_Update
 {
     public string Change { get; set; }
-    public dynamic NewName { get; set; }
+    public dynamic Newname { get; set; }
 
 }
