@@ -72,8 +72,10 @@ namespace Desktop_Application
                 foreach (var student in request.ListUnitdimentions())
                 {
 
-                    string str2 = string.Format("{0} {1} {2} {3} ", student[0], student[1], student[2], student[3]);
+                
+                    string str2 = string.Format("{0} {1} {2} ", student[0], student[1], student[2]);
                     OutputList.Items.Add(str2);
+                    
                 }
             }
             if (comboBox.Text == "unit dimension")
@@ -84,7 +86,7 @@ namespace Desktop_Application
                 foreach (var student in request.GetUnitdimension(textBox1.Text))
                 {
 
-                    string str2 = string.Format("{0} {1} {2} {3} ", student[0], student[1], student[2], student[3]);
+                    string str2 = string.Format("{0} ", student);
                     OutputList.Items.Add(str2);
                 }
             }

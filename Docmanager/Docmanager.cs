@@ -764,6 +764,46 @@ namespace Docmanager
                 return output;
             }
         }
+        public List<string> ReadAllQuantityClass()
+        {
+            List<string> output = new List<string>();
+
+            //Check each unit for spesefied quantityClassName
+
+            List<UOM> houseOnes = Units.FindAll(unit => unit.QuantityType != null).ToList();
+
+
+          
+
+            foreach (UOM unit in houseOnes)
+            {
+
+                if (unit.QuantityType.ToString().Contains(","))
+                {
+
+                    //var flatten = unit.QuantityType.ToString().Split("[").Split(",").Split("\r\n").ToList();
+                    //var flatten = Regex.Replace(unit.QuantityType.ToString(), "[\\[,\\]\"]", "").ToList();
+                    var flatten = Regex.Split(unit.QuantityType.ToString(), @"[\[,\r\n"" \t]+|[^ ]")
+                        .Where(s => !string.IsNullOrEmpty(s))
+                        .ToList();
+
+                    output.AddRange(flatten);
+                }
+                else
+                {
+                    output.Add(unit.QuantityType.ToString());
+                }
+
+            }
+            
+                
+            output = output.Distinct().ToList();
+            output.Sort();
+            
+            return output;
+        }
+
+
         public List<List<string>> ReadDimensions()
         {
             List<List<string>> output = new List<List<string>>();

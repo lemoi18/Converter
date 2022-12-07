@@ -120,14 +120,7 @@ namespace RequestLib
         public List<string> GetUnitdimension(string description)
         {
             docmanager = DocFactory.CreateDocmanager("Test");
-            List<string> result = new List<string>();
-
-            foreach (var dim in docmanager.ReadDimension(description))
-            {
-                result.Add(dim.ToString());
-            }
-
-            return result;
+            return docmanager.ReadDimension(description);
         }
 
         public List<string> ListAlias(string uom)
@@ -160,7 +153,7 @@ namespace RequestLib
 
         public List<string> ListQualityclass()
         {
-            //  docmanager = DocFactory.CreateDocmanager("Test");
+             docmanager = DocFactory.CreateDocmanager("Test");
             //  docmanager.ReadAliases(uom);
             //  List<string> result = new List<string>();
             //  
@@ -171,26 +164,14 @@ namespace RequestLib
             //  
             //  return result;
 
-            throw new NotImplementedException();
+            return docmanager.ReadAllQuantityClass();
 
         }
 
         public List<List<string>> ListUnitdimentions()
         {
-            //  docmanager = DocFactory.CreateDocmanager("Test");
-            //
-            //  List<List<string>> dimensionString = new List<List<string>>();
-            //
-            //  foreach (var dim in docmanager.Read)
-            //  {
-            //      dimensionString.Add(dim);
-            //
-            //  }
-            //
-            //  return result;
-
-            throw new NotImplementedException();
-
+              docmanager = DocFactory.CreateDocmanager("Test");
+            return docmanager.ReadDimensions();
         }
 
         public List<List<string>> ListUnits()
