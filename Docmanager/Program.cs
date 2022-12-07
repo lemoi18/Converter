@@ -12,4 +12,4 @@ docmanager = DocFactory.CreateDocmanager("Test");
 
 //docmanager.EditUnit("inverse henry", "quantitytype" , "test");
 
-Console.WriteLine(docmanager.ReadAnnotation("1/Ksdff"));
+Console.WriteLine(docmanager.ReadName("m"));

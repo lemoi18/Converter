@@ -8,13 +8,8 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Globalization;
-using System.IO;
-using System.Numerics;
-using System.Reflection.Metadata;
 using System.Text.RegularExpressions;
-using static Docmanager.Docmanager;
 
 namespace Docmanager
 {
@@ -68,7 +63,7 @@ namespace Docmanager
         {
             try
             {
-                
+
 
                 UOM houseOnes = Units.First(unit => ReadUom(unit).Contains(uom));
 
@@ -87,7 +82,7 @@ namespace Docmanager
             {
 
                 Dimension match = Dimensions.First(dim => dim.Symbol == symbol);
-                   
+
 
                 return match;
             }
@@ -270,18 +265,18 @@ namespace Docmanager
             {
                 sameUnitString = unit.SameUnit.ToString();
             }
-            catch(NullReferenceException)
+            catch (NullReferenceException)
             {
                 return new List<string> { null };
             }
-            
+
 
             List<string> output = new List<string>();
 
             if (unit.SameUnit.GetType() == typeof(JArray))
             {
                 JArray sameUnitObject = (JArray)JsonConvert.DeserializeObject(sameUnitString);
-                foreach(var obj in sameUnitObject)
+                foreach (var obj in sameUnitObject)
                 {
                     string objString = obj.ToString();
                     JObject sameUnitJObject = (JObject)JsonConvert.DeserializeObject(objString);
@@ -331,8 +326,6 @@ namespace Docmanager
 
             try
             {
-                
-
                 try
                 {
                     return match.ConversionToBaseUnit.baseUnit;
@@ -350,17 +343,18 @@ namespace Docmanager
 
         public bool IsBase(string uom)
         {
-            //try
-            //{
-                UOM match = QueryUOM(uom);
-            //}
-            //catch()
-            //{
-
-            //}
+            UOM match = new UOM();
             try
             {
-               
+                match = QueryUOM(uom);
+            }
+            catch (InvalidOperationException)
+            {
+                throw;
+            }
+            try
+            {
+
 
                 try
                 {
@@ -379,29 +373,29 @@ namespace Docmanager
             return true;
         }
 
-        public string ReadUnitName(string annotationName)
+        public string ReadName(string uom)
         {
+            UOM match = new UOM();
             try
             {
-                
-
-                UOM houseOnes = Units.First(unit => unit.annotation == annotationName);
-
-
-                try
-                {
-                    return houseOnes.Name;
-                }
-                catch (NullReferenceException)
-                {
-                    return "This unit does not have a name";
-                }
+                match = QueryUOM(uom);
             }
             catch (InvalidOperationException)
             {
-                return "This annotation is not in file";
+                throw;
+            }
+
+            try
+            {
+                return match.Name;
+            }
+            catch (NullReferenceException)
+            {
+                throw new NullReferenceException("This unit does not have a name");
             }
         }
+
+        
 
         public string ReadConversion(string uom, ref double A, ref double B, ref double C, ref double D)
         {
@@ -415,7 +409,7 @@ namespace Docmanager
             {
                 throw;
             }
-            
+
 
             A = B = C = D = 0;
 
@@ -564,7 +558,7 @@ namespace Docmanager
             {
                 UOM match = QueryName(oldName);
 
-                try 
+                try
                 {
                     switch (propertyToChange.ToString().ToLower())
                     {
@@ -616,7 +610,7 @@ namespace Docmanager
                             break;
                         default:
                             throw new Exception("Invalid propertyToChange value");
-                    } 
+                    }
                 }
                 catch (NullReferenceException)
                 {
@@ -687,9 +681,9 @@ namespace Docmanager
                     QuantityTypeJArray.Add(quantityTypeName);
                     match.QuantityType = QuantityTypeJArray;
                 }
-                catch(JsonReaderException)
+                catch (JsonReaderException)
                 {
-                    List<string>QuantityTypeArray = new List<string>() {QuantityTypeString, quantityTypeName};
+                    List<string> QuantityTypeArray = new List<string>() { QuantityTypeString, quantityTypeName };
                     match.QuantityType = QuantityTypeArray;
                 }
 
@@ -723,8 +717,8 @@ namespace Docmanager
                         string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
 
                         File.WriteAllText(Pathgetter("POSC.json"), output);
-                }
-                    catch (JsonReaderException e) 
+                    }
+                    catch (JsonReaderException e)
                     {
                         throw new NullReferenceException("Can not remove a units last quantity type");
 
@@ -747,12 +741,12 @@ namespace Docmanager
         {
             List<string> output = new List<string>();
 
-            List<UOM> houseOnes = Units.FindAll(unit => unit.QuantityType != null && unit.QuantityType.ToString().Contains(quantityClass)).ToList(); 
+            List<UOM> houseOnes = Units.FindAll(unit => unit.QuantityType != null && unit.QuantityType.ToString().Contains(quantityClass)).ToList();
 
             foreach (UOM unit in houseOnes)
-            { 
-                foreach(string uom in ReadUom(unit))
-                output.Add(uom);
+            {
+                foreach (string uom in ReadUom(unit))
+                    output.Add(uom);
             }
 
             return output;
@@ -787,7 +781,7 @@ namespace Docmanager
             List<UOM> houseOnes = Units.FindAll(unit => unit.QuantityType != null).ToList();
 
 
-          
+
 
             foreach (UOM unit in houseOnes)
             {
@@ -809,11 +803,11 @@ namespace Docmanager
                 }
 
             }
-            
-                
+
+
             output = output.Distinct().ToList();
             output.Sort();
-            
+
             return output;
         }
 
