@@ -76,7 +76,7 @@ namespace Docmanager
             {
                 UOM match =
                     (from unit in Units
-                     where ReadUom(unit) == uom
+                     where ReadUom(unit).Contains(uom)
                      select unit).First();
 
                 return match;
@@ -273,44 +273,41 @@ namespace Docmanager
             }
         }
 
-        private string ReadUom(UOM unit)
+        public List<string> ReadUom(UOM unit)
         {
-            try
-            {
-                string sameUnitString = unit.SameUnit.ToString();
+            string sameUnitString = unit.SameUnit.ToString();
 
-                if (unit.SameUnit.GetType() == typeof(JArray))
+            List<string> output = new List<string>();
+
+            if (unit.SameUnit.GetType() == typeof(JArray))
+            {
+                JArray sameUnitObject = (JArray)JsonConvert.DeserializeObject(sameUnitString);
+                foreach(var obj in sameUnitObject)
                 {
-                    //Implement reading multiple uoms
-                    return "";
-                }
-                else
-                {
-                    JObject sameUnitJObject = (JObject)JsonConvert.DeserializeObject(sameUnitString);
-                    return (string)sameUnitJObject["uom"];
+                    string objString = obj.ToString();
+                    JObject sameUnitJObject = (JObject)JsonConvert.DeserializeObject(objString);
+                    output.Add(sameUnitJObject["uom"].ToString());
                 }
             }
-            catch (NullReferenceException)
+            else
             {
-                return "none";
+                JObject sameUnitJObject = (JObject)JsonConvert.DeserializeObject(sameUnitString);
+                output.Add(sameUnitJObject["uom"].ToString());
             }
 
+            return output;
         }
 
-        public string ReadUOM(string unitName)
+        public List<String> ReadUom(string unitName)
         {
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where unit.Name == unitName
-                     select unit).First();
-
+                UOM match = QueryName(unitName);
                 return ReadUom(match);
             }
             catch (InvalidOperationException)
             {
-                return "This name is not in file";
+                throw;
             }
         }
 
@@ -553,44 +550,63 @@ namespace Docmanager
             {
                 UOM match = QueryName(oldName);
 
-                switch (propertyToChange.ToString().ToLower())
+                try 
                 {
-                    case "id":
-                        propertyToChange.ToString().ToLower();
-                        match.id = newValue;
-                        break;
-                    case "name":
-                        match.Name = newValue;
-                        break;
-                    case "annotation":
-                        match.annotation = newValue;
-                        break;
-                    case "quantitytype":
-                        AddQuantityType(oldName, newValue);
-                        break;
-                    case "dimensionalclass":
-                        match.DimensionalClass = newValue;
-                        break;
-                    //case "uom":
-                    //    match.SameUnit.uom = newValue;
-                    //    break;
-                    case "catalogname":
-                        match.CatalogName = newValue;
-                        break;
-                    case "catalogsymbolisexplicit":
-                        match.CatalogSymbol.isExplicit = newValue;
-                        break;
-                    case "catalogsymboltext":
-                        match.CatalogSymbol.text = newValue;
-                        break;
-                    case "isbaseunit":
-                        match.BaseUnit = newValue;
-                        break;
-                    case "baseunit":
-                        match.ConversionToBaseUnit.baseUnit = newValue;
-                        break;
-                    default:
-                        throw new Exception("Invalid propertyToChange value");;
+                    switch (propertyToChange.ToString().ToLower())
+                    {
+                        case "id":
+                            propertyToChange.ToString().ToLower();
+                            match.id = newValue;
+                            break;
+                        case "name":
+                            match.Name = newValue;
+                            break;
+                        case "annotation":
+                            match.annotation = newValue;
+                            break;
+                        case "quantitytype":
+                            AddQuantityType(oldName, newValue);
+                            break;
+                        case "dimensionalclass":
+                            match.DimensionalClass = newValue;
+                            break;
+                        //case "uom":
+                        //    match.SameUnit.uom = newValue;
+                        //    break;
+                        case "catalogname":
+                            match.CatalogName = newValue;
+                            break;
+                        case "catalogsymbolisexplicit":
+                            match.CatalogSymbol.isExplicit = newValue;
+                            break;
+                        case "catalogsymboltext":
+                            match.CatalogSymbol.text = newValue;
+                            break;
+                        case "isbaseunit":
+                            match.BaseUnit = newValue;
+                            break;
+                        case "baseunit":
+                            match.ConversionToBaseUnit.baseUnit = newValue;
+                            break;
+                        case "a":
+                            match.ConversionToBaseUnit.Formula.A = newValue;
+                            break;
+                        case "b":
+                            match.ConversionToBaseUnit.Formula.B = newValue;
+                            break;
+                        case "c":
+                            match.ConversionToBaseUnit.Formula.C = newValue;
+                            break;
+                        case "d":
+                            match.ConversionToBaseUnit.Formula.D = newValue;
+                            break;
+                        default:
+                            throw new Exception("Invalid propertyToChange value");
+                    } 
+                }
+                catch (NullReferenceException)
+                {
+                    throw new Exception("Unit does not have this property");
                 }
 
                 string output = JsonConvert.SerializeObject(Units, Formatting.Indented);

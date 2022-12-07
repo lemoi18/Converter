@@ -5,10 +5,10 @@ using System.Xml.Linq;
 IDocmanager docmanager;
 docmanager = DocFactory.CreateDocmanager("Test");
 
-List<string> quantityTypes = new List<string>() { "test1", "test2" };
-List<string> aliases = new List<string>() { "test3", "test4" };
+List<string> uoms = docmanager.ReadUom("milliEuclid");
 
-docmanager.EditUnit("inverse henry", "A", "testuom");
+foreach (string uom in uoms)
+Console.WriteLine(uom);
 
 //docmanager.EditUnit("inverse henry", "quantitytype" , "test");
 
