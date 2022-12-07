@@ -53,6 +53,23 @@ namespace Docmanager
             }
         }
 
+        private UOM QueryID(string ID)
+        {
+            try
+            {
+                UOM match =
+                    (from unit in Units
+                     where unit.id == ID
+                     select unit).First();
+
+                return match;
+            }
+            catch (InvalidOperationException)
+            {
+                throw new InvalidOperationException("There is no unit with this ID");
+            }
+        }
+
         private UOM QueryUOM(string uom)
         {
             try
@@ -148,10 +165,7 @@ namespace Docmanager
         {
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where unit.Name == unitName
-                     select unit).First();
+                QueryName(unitName);
             }
             catch (InvalidOperationException)
             {
@@ -165,10 +179,7 @@ namespace Docmanager
         {
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where unit.Name == unitName
-                     select unit).First();
+                UOM match = QueryName(unitName);
 
                 try
                 {
@@ -206,15 +217,13 @@ namespace Docmanager
                 }
                 catch (NullReferenceException)
                 {
-                    return new List<string>() { "This unit does not have annotation" };
+                    throw new NullReferenceException("This unit does not have annotation");
                 }
             }
             catch (InvalidOperationException)
             {
-                return new List<string>() { "This name is not in file" };
+                throw;
             }
-
-            return new List<string>() { "0" };
         }
 
         public string ReadAnnotation(string unitName)
@@ -492,6 +501,7 @@ namespace Docmanager
             newUnit.DimensionalClass = dimensionalclass;
             newUnit.Aliases = aliases;
             newUnit.SameUnit = SameUnitJObject;
+            newUnit.BaseUnit = true;
 
             Units.Add(newUnit);
 
@@ -526,6 +536,7 @@ namespace Docmanager
             newUnit.DimensionalClass = dimensionalclass;
             newUnit.ConversionToBaseUnit = conversionConversion;
             newUnit.Aliases = Aliases;
+            newUnit.BaseUnit = false;
 
             Units.Add(newUnit);
 
@@ -540,24 +551,7 @@ namespace Docmanager
         {
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where unit.Name == oldName
-                     select unit).First();
-
-                if (new[] { "A", "B", "C", "D" }.Contains(propertyToChange))
-                {
-                    try
-                    {
-
-                        if ((bool)match.BaseUnit == true)
-                        {
-                            return "This unit is a base unit, base units can not have conversion";
-                        }
-                    }
-                    catch (NullReferenceException) { };
-                }
-
+                UOM match = QueryName(oldName);
 
                 switch (propertyToChange.ToString().ToLower())
                 {
@@ -580,9 +574,6 @@ namespace Docmanager
                     //case "uom":
                     //    match.SameUnit.uom = newValue;
                     //    break;
-                    //case "namingsystem":
-                    //    match.SameUnit.namingSystem = newValue;
-                    //    break;
                     case "catalogname":
                         match.CatalogName = newValue;
                         break;
@@ -598,20 +589,8 @@ namespace Docmanager
                     case "baseunit":
                         match.ConversionToBaseUnit.baseUnit = newValue;
                         break;
-                    case "a":
-                        match.ConversionToBaseUnit.Formula.A = newValue;
-                        break;
-                    case "b":
-                        match.ConversionToBaseUnit.Formula.B = newValue;
-                        break;
-                    case "c":
-                        match.ConversionToBaseUnit.Formula.C = newValue;
-                        break;
-                    case "d":
-                        match.ConversionToBaseUnit.Formula.D = newValue;
-                        break;
                     default:
-                        return "Option does not exist";
+                        throw new Exception("Invalid propertyToChange value");;
                 }
 
                 string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
@@ -620,7 +599,7 @@ namespace Docmanager
             }
             catch (InvalidOperationException)
             {
-                return "This unit name is not in file";
+                throw;
             }
             return "0";
         }
@@ -629,10 +608,7 @@ namespace Docmanager
         {
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where unit.id == id
-                     select unit).First();
+                UOM match = QueryName(id);
 
                 Units.Remove(match);
 
@@ -642,7 +618,7 @@ namespace Docmanager
             }
             catch (InvalidOperationException)
             {
-                return "This ID is not in file";
+                throw;
             }
             return "0";
         }
@@ -690,7 +666,7 @@ namespace Docmanager
                 string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
                 File.WriteAllText(Pathgetter("POSC.json"), output);
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException)
             {
                 throw;
             }
@@ -747,12 +723,10 @@ namespace Docmanager
 
             foreach (UOM unit in houseOnes)
             {
-                
-                    string sameUnitString = JsonConvert.SerializeObject(unit.SameUnit, Formatting.Indented);
-                    JObject sameUnitJObject = (JObject)JsonConvert.DeserializeObject(sameUnitString);
-                    string test = sameUnitJObject["uom"].ToString();
-                    output.Add(test);
-                
+                string sameUnitString = JsonConvert.SerializeObject(unit.SameUnit, Formatting.Indented);
+                JObject sameUnitJObject = (JObject)JsonConvert.DeserializeObject(sameUnitString);
+                string test = sameUnitJObject["uom"].ToString();
+                output.Add(test);
             }
 
             return output;
@@ -762,10 +736,7 @@ namespace Docmanager
         {
             try
             {
-                Dimension match =
-                    (from dimension in Dimensions
-                     where dimension.Symbol == symbol
-                     select dimension).First();
+                Dimension match = QueryDimension(symbol);
                 try
                 {
                     List<string> output = new List<string>() { match.Symbol.ToString(), match.Definition, match.SIUnit };
@@ -773,14 +744,12 @@ namespace Docmanager
                 }
                 catch (NullReferenceException)
                 {
-                    List<string> output = new List<string>() { "This unit does not have annotation" };
-                    return output;
+                    throw new Exception("This dimension is missing parameters");
                 }
             }
             catch (InvalidOperationException)
             {
-                List<string> output = new List<string>() { "This symbol is not in file" };
-                return output;
+                throw;
             }
         }
 
