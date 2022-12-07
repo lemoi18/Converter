@@ -18,7 +18,7 @@ namespace Connector
             double res = 0;
             docmanager.ReadConversion(unitfrom, ref A, ref B, ref C, ref D);
 
-            string uom = docmanager.ReadUOM(unitfrom);
+            string uom = unitfrom;
             string annotation = docmanager.ReadAnnotation(unitfrom);
 
             try
