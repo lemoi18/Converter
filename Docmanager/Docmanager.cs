@@ -35,8 +35,6 @@ namespace Docmanager
             string projectPath = new Uri(actualPath).LocalPath;
             path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, projectPath + "/JsonGetter/" + filename);
             return path;
-
-
         }
         private UOM QueryName(string unitName)
         {
@@ -49,12 +47,9 @@ namespace Docmanager
 
                 return match;
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException)
             {
-                if (e.HResult == -2146233079)
-                {
-                    throw new InvalidOperationException("There is no unit with this name");
-                }
+                throw new InvalidOperationException("There is no unit with this name");
             }
         }
 
@@ -493,11 +488,9 @@ namespace Docmanager
             newUnit.id = id;
             newUnit.annotation = annotation;
             newUnit.Name = name;
-
-
-            //UOM Units = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(Pathgetter("POSC.json")));
+            newUnit.QuantityType = quantityTypes.ToArray();
             newUnit.DimensionalClass = dimensionalclass;
-            //newUnit.Aliases = aliases;
+            newUnit.Aliases = aliases;
             newUnit.SameUnit = SameUnitJObject;
 
             Units.Add(newUnit);
@@ -529,7 +522,7 @@ namespace Docmanager
             newUnit.id = id;
             newUnit.annotation = annotation;
             newUnit.Name = name;
-            newUnit.QuantityType = quantityType;
+            newUnit.QuantityType = quantityType.ToArray();
             newUnit.DimensionalClass = dimensionalclass;
             newUnit.ConversionToBaseUnit = conversionConversion;
             newUnit.Aliases = Aliases;
@@ -578,9 +571,9 @@ namespace Docmanager
                     case "annotation":
                         match.annotation = newValue;
                         break;
-                    //case "quantitytype":
-                    //    AddQuantityType(oldName, newValue);
-                    //    break;
+                    case "quantitytype":
+                        AddQuantityType(oldName, newValue);
+                        break;
                     case "dimensionalclass":
                         match.DimensionalClass = newValue;
                         break;
@@ -727,12 +720,10 @@ namespace Docmanager
                 }
                     catch (JsonReaderException e) 
                     {
-                        if (e.HResult == -2146233088)
-                        {
-                            throw new NullReferenceException("Can not remove a units last quantity type");
-                        }
+                        throw new NullReferenceException("Can not remove a units last quantity type");
+
                     }
-        }
+                }
                 else
                 {
                     throw new InvalidOperationException("The unit does not have this quantity type");
