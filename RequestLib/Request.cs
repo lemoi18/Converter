@@ -84,7 +84,7 @@ namespace RequestLib
         public string EditQualityclass(string name, string newname)
         {
             docmanager = DocFactory.CreateDocmanager("Test");
-            //docmanager.EditQuantityclass(name, newname);
+            docmanager.EditQuantityclass(name, newname);
             return name;
         }
 
