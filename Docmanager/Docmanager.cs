@@ -10,6 +10,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Globalization;
+using System.IO;
+using System.Numerics;
+using System.Reflection.Metadata;
 using System.Text.RegularExpressions;
 using static Docmanager.Docmanager;
 
@@ -32,8 +35,6 @@ namespace Docmanager
             string projectPath = new Uri(actualPath).LocalPath;
             path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, projectPath + "/JsonGetter/" + filename);
             return path;
-
-
         }
         private UOM QueryName(string unitName)
         {
@@ -49,6 +50,23 @@ namespace Docmanager
             catch (InvalidOperationException)
             {
                 throw new InvalidOperationException("There is no unit with this name");
+            }
+        }
+
+        private UOM QueryID(string ID)
+        {
+            try
+            {
+                UOM match =
+                    (from unit in Units
+                     where unit.id == ID
+                     select unit).First();
+
+                return match;
+            }
+            catch (InvalidOperationException)
+            {
+                throw new InvalidOperationException("There is no unit with this ID");
             }
         }
 
@@ -147,10 +165,7 @@ namespace Docmanager
         {
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where unit.Name == unitName
-                     select unit).First();
+                QueryName(unitName);
             }
             catch (InvalidOperationException)
             {
@@ -164,10 +179,7 @@ namespace Docmanager
         {
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where unit.Name == unitName
-                     select unit).First();
+                UOM match = QueryName(unitName);
 
                 try
                 {
@@ -205,15 +217,13 @@ namespace Docmanager
                 }
                 catch (NullReferenceException)
                 {
-                    return new List<string>() { "This unit does not have annotation" };
+                    throw new NullReferenceException("This unit does not have annotation");
                 }
             }
             catch (InvalidOperationException)
             {
-                return new List<string>() { "This name is not in file" };
+                throw;
             }
-
-            return new List<string>() { "0" };
         }
 
         public string ReadAnnotation(string unitName)
@@ -474,7 +484,7 @@ namespace Docmanager
             return "0";
         }
 
-        public string CreateBaseUnit(string id, string annotation, string name, List<string> quantityType, string dimensionalclass, string uom, List<string> aliases)
+        public string CreateBaseUnit(string id, string annotation, string name, List<string> quantityTypes, string dimensionalclass, string uom, List<string> aliases)
         {
             JObject SameUnitJObject = new JObject
             {
@@ -487,10 +497,11 @@ namespace Docmanager
             newUnit.id = id;
             newUnit.annotation = annotation;
             newUnit.Name = name;
-            newUnit.QuantityType = quantityType;
+            newUnit.QuantityType = quantityTypes.ToArray();
             newUnit.DimensionalClass = dimensionalclass;
             newUnit.Aliases = aliases;
             newUnit.SameUnit = SameUnitJObject;
+            newUnit.BaseUnit = true;
 
             Units.Add(newUnit);
 
@@ -521,10 +532,11 @@ namespace Docmanager
             newUnit.id = id;
             newUnit.annotation = annotation;
             newUnit.Name = name;
-            newUnit.QuantityType = quantityType;
+            newUnit.QuantityType = quantityType.ToArray();
             newUnit.DimensionalClass = dimensionalclass;
             newUnit.ConversionToBaseUnit = conversionConversion;
             newUnit.Aliases = Aliases;
+            newUnit.BaseUnit = false;
 
             Units.Add(newUnit);
 
@@ -539,24 +551,7 @@ namespace Docmanager
         {
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where unit.Name == oldName
-                     select unit).First();
-
-                if (new[] { "A", "B", "C", "D" }.Contains(propertyToChange))
-                {
-                    try
-                    {
-
-                        if ((bool)match.BaseUnit == true)
-                        {
-                            return "This unit is a base unit, base units can not have conversion";
-                        }
-                    }
-                    catch (NullReferenceException) { };
-                }
-
+                UOM match = QueryName(oldName);
 
                 switch (propertyToChange.ToString().ToLower())
                 {
@@ -570,17 +565,14 @@ namespace Docmanager
                     case "annotation":
                         match.annotation = newValue;
                         break;
-                    //case "quantitytype":
-                    //    AddQuantityType(oldName, newValue);
-                    //    break;
+                    case "quantitytype":
+                        AddQuantityType(oldName, newValue);
+                        break;
                     case "dimensionalclass":
                         match.DimensionalClass = newValue;
                         break;
                     //case "uom":
                     //    match.SameUnit.uom = newValue;
-                    //    break;
-                    //case "namingsystem":
-                    //    match.SameUnit.namingSystem = newValue;
                     //    break;
                     case "catalogname":
                         match.CatalogName = newValue;
@@ -597,20 +589,8 @@ namespace Docmanager
                     case "baseunit":
                         match.ConversionToBaseUnit.baseUnit = newValue;
                         break;
-                    case "a":
-                        match.ConversionToBaseUnit.Formula.A = newValue;
-                        break;
-                    case "b":
-                        match.ConversionToBaseUnit.Formula.B = newValue;
-                        break;
-                    case "c":
-                        match.ConversionToBaseUnit.Formula.C = newValue;
-                        break;
-                    case "d":
-                        match.ConversionToBaseUnit.Formula.D = newValue;
-                        break;
                     default:
-                        return "Option does not exist";
+                        throw new Exception("Invalid propertyToChange value");;
                 }
 
                 string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
@@ -619,7 +599,7 @@ namespace Docmanager
             }
             catch (InvalidOperationException)
             {
-                return "This unit name is not in file";
+                throw;
             }
             return "0";
         }
@@ -628,10 +608,7 @@ namespace Docmanager
         {
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where unit.id == id
-                     select unit).First();
+                UOM match = QueryName(id);
 
                 Units.Remove(match);
 
@@ -641,7 +618,7 @@ namespace Docmanager
             }
             catch (InvalidOperationException)
             {
-                return "This ID is not in file";
+                throw;
             }
             return "0";
         }
@@ -670,23 +647,28 @@ namespace Docmanager
         {
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where unit.Name == unitName
-                     select unit).First();
+                UOM match = QueryName(unitName);
 
                 string QuantityTypeString = match.QuantityType.ToString();
-                JArray QuantityTypeJArray = (JArray)JsonConvert.DeserializeObject(QuantityTypeString);
-                QuantityTypeJArray.Add(quantityTypeName);
 
-                match.QuantityType = QuantityTypeJArray;
+                try
+                {
+                    JArray QuantityTypeJArray = (JArray)JsonConvert.DeserializeObject(QuantityTypeString);
+                    QuantityTypeJArray.Add(quantityTypeName);
+                    match.QuantityType = QuantityTypeJArray;
+                }
+                catch(JsonReaderException)
+                {
+                    List<string>QuantityTypeArray = new List<string>() {QuantityTypeString, quantityTypeName};
+                    match.QuantityType = QuantityTypeArray;
+                }
+
                 string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
-
                 File.WriteAllText(Pathgetter("POSC.json"), output);
             }
             catch (InvalidOperationException)
             {
-                return "This unit name is not in file";
+                throw;
             }
 
             return "0";
@@ -696,23 +678,36 @@ namespace Docmanager
         {
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where unit.Name == unitName
-                     select unit).First();
+                UOM match = QueryName(unitName);
 
-                string QuantityTypeString = match.QuantityType.ToString();
-                JArray QuantityTypeJArray = (JArray)JsonConvert.DeserializeObject(QuantityTypeString);
-                QuantityTypeJArray.Where(i => i.Type == JTokenType.String && (string)i == quantityTypeName).ToList().ForEach(i => i.Remove());
+                if (hasQuantityType(match, quantityTypeName))
+                {
+                    string QuantityTypeString = match.QuantityType.ToString();
 
-                match.QuantityType = QuantityTypeJArray;
-                string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
+                    try
+                    {
+                        JArray QuantityTypeJArray = (JArray)JsonConvert.DeserializeObject(QuantityTypeString);
+                        QuantityTypeJArray.Where(i => (string)i == quantityTypeName).ToList().ForEach(i => i.Remove());
 
-                File.WriteAllText(Pathgetter("POSC.json"), output);
+                        match.QuantityType = QuantityTypeJArray;
+                        string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
+
+                        File.WriteAllText(Pathgetter("POSC.json"), output);
+                }
+                    catch (JsonReaderException e) 
+                    {
+                        throw new NullReferenceException("Can not remove a units last quantity type");
+
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException("The unit does not have this quantity type");
+                }
             }
             catch (InvalidOperationException)
             {
-                return "This name is not in file";
+                throw;
             }
 
             return "0";
@@ -728,12 +723,10 @@ namespace Docmanager
 
             foreach (UOM unit in houseOnes)
             {
-                
-                    string sameUnitString = JsonConvert.SerializeObject(unit.SameUnit, Formatting.Indented);
-                    JObject sameUnitJObject = (JObject)JsonConvert.DeserializeObject(sameUnitString);
-                    string test = sameUnitJObject["uom"].ToString();
-                    output.Add(test);
-                
+                string sameUnitString = JsonConvert.SerializeObject(unit.SameUnit, Formatting.Indented);
+                JObject sameUnitJObject = (JObject)JsonConvert.DeserializeObject(sameUnitString);
+                string test = sameUnitJObject["uom"].ToString();
+                output.Add(test);
             }
 
             return output;
@@ -743,10 +736,7 @@ namespace Docmanager
         {
             try
             {
-                Dimension match =
-                    (from dimension in Dimensions
-                     where dimension.Symbol == symbol
-                     select dimension).First();
+                Dimension match = QueryDimension(symbol);
                 try
                 {
                     List<string> output = new List<string>() { match.Symbol.ToString(), match.Definition, match.SIUnit };
@@ -754,14 +744,12 @@ namespace Docmanager
                 }
                 catch (NullReferenceException)
                 {
-                    List<string> output = new List<string>() { "This unit does not have annotation" };
-                    return output;
+                    throw new Exception("This dimension is missing parameters");
                 }
             }
             catch (InvalidOperationException)
             {
-                List<string> output = new List<string>() { "This symbol is not in file" };
-                return output;
+                throw;
             }
         }
         public List<string> ReadAllQuantityClass()
@@ -839,6 +827,18 @@ namespace Docmanager
                 throw new NullReferenceException("Unit with this name or uom has no aliases.");
             }
             return output;
+        }
+
+        public List<string> ReadQuantityType()
+        {
+            List<string> output = new List<string>();
+
+            return output;
+        }
+
+        public List<string> ReadQuantityClasses()
+        {
+            throw new NotImplementedException();
         }
 
         public class CatalogSymbol
