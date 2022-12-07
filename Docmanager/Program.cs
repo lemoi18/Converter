@@ -5,11 +5,14 @@ using System.Xml.Linq;
 IDocmanager docmanager;
 docmanager = DocFactory.CreateDocmanager("Test");
 
-//List<string> uoms = docmanager.ReadUom("inverse henry");
+List<string> list = docmanager.ReadProperties("per Kelvin");
 
-//foreach (string uom in uoms)
-//Console.WriteLine(uom);
+foreach (string entry in list)
+{
+    Console.WriteLine(entry);
+}
 
-//docmanager.EditUnit("inverse henry", "quantitytype" , "test");
 
-Console.WriteLine(docmanager.ReadName("m"));
+
+
+//Console.WriteLine(docmanager.ReadProperties("per Kelvin"));

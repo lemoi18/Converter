@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using static Docmanager.Docmanager;
 
 namespace Docmanager
 {
@@ -165,53 +166,61 @@ namespace Docmanager
 
         public List<string> ReadProperties(string unitName)
         {
+            UOM match = new UOM();
             try
             {
-                UOM match = QueryName(unitName);
-
-                try
-                {
-                    List<string> output = new List<string>();
-
-                    string matchString = JsonConvert.SerializeObject(match, Formatting.Indented);
-                    JObject matchJObject = (JObject)JsonConvert.DeserializeObject(matchString);
-
-                    foreach (var prop in matchJObject)
-                    {
-                        switch (prop.Value.Type.ToString())
-                        {
-                            case "String":
-                                output.Add(prop.Key);
-                                break;
-                            case "Array":
-                                output.Add(prop.Key);
-                                break;
-                            case "Object":
-                                //
-                                break;
-                            default:
-                                break;
-                        }
-
-                    }
-
-                    output.Add("A");
-                    output.Add("B");
-                    output.Add("C");
-                    output.Add("D");
-                    output.Add("IsBaseUnit");
-
-                    return output;
-                }
-                catch (NullReferenceException)
-                {
-                    throw new NullReferenceException("This unit does not have annotation");
-                }
+                match = QueryName(unitName);
             }
             catch (InvalidOperationException)
             {
                 throw;
             }
+
+            bool test;
+            try
+            {
+                test = (bool)match.BaseUnit;
+            }
+            catch (NullReferenceException)
+            {
+                throw new NullReferenceException("This unit does not have BaseUnit property");
+            }
+
+            List<string> output = new List<string>();
+
+            if (test)
+            {
+                output = new List<string>()
+                    {
+                        "ID",
+                        "Annotation",
+                        "Name",
+                        "QuantityType",
+                        "DimensionalClass",
+                        "uom",
+                        "IsBaseUnit"
+                    };
+            }
+            else
+            {
+                output = new List<string>()
+                    {
+                        "ID",
+                        "Annotation",
+                        "Name",
+                        "QuantityType",
+                        "DimensionalClass",
+                        "uom",
+                        "IsBaseUnit",
+                        "A",
+                        "B",
+                        "C",
+                        "D"
+                    };
+            }
+
+            return output;
+
         }
 
         public string ReadAnnotation(string uom)
@@ -234,27 +243,6 @@ namespace Docmanager
             catch (NullReferenceException)
             {
                 throw new Exception("This unit is not in file");
-            }
-        }
-
-        public string ReadBaseUnit(string unitName)
-        {
-            try
-            {
-                UOM houseOnes = Units.First(unit => unit.Name == unitName);
-
-                try
-                {
-                    return houseOnes.ConversionToBaseUnit.baseUnit;
-                }
-                catch (NullReferenceException)
-                {
-                    return "This unit does not have base unit";
-                }
-            }
-            catch (InvalidOperationException)
-            {
-                return "This name is not in file";
             }
         }
 
@@ -395,7 +383,6 @@ namespace Docmanager
             }
         }
 
-        
 
         public string ReadConversion(string uom, ref double A, ref double B, ref double C, ref double D)
         {
@@ -578,9 +565,13 @@ namespace Docmanager
                         case "dimensionalclass":
                             match.DimensionalClass = newValue;
                             break;
-                        //case "uom":
-                        //    match.SameUnit.uom = newValue;
-                        //    break;
+                        case "uom":
+                            JObject SameUnitJObject = new JObject
+                            {
+                                ["uom"] = newValue,
+                            };
+                            match.SameUnit = newValue;
+                            break;
                         case "catalogname":
                             match.CatalogName = newValue;
                             break;
@@ -744,8 +735,9 @@ namespace Docmanager
             List<UOM> houseOnes = Units.FindAll(unit => unit.QuantityType != null && unit.QuantityType.ToString().Contains(quantityClass)).ToList();
 
             foreach (UOM unit in houseOnes)
-            { 
-                foreach(string uom in ReadUom(unit)) {
+            {
+                foreach (string uom in ReadUom(unit))
+                {
 
                     if (uom != null)
                     {
@@ -806,7 +798,7 @@ namespace Docmanager
                 {
                     if (unit.QuantityType != null)
                     {
-                    output.Add(unit.QuantityType.ToString());
+                        output.Add(unit.QuantityType.ToString());
 
                     }
                 }
