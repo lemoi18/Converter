@@ -691,11 +691,17 @@ namespace Docmanager
 
         public string RemoveQuantityType(string unitName, string quantityTypeName)
         {
+            UOM match = new UOM();
             try
             {
-                UOM match = QueryName(unitName);
+                match = QueryName(unitName);
+            }
+            catch (InvalidOperationException)
+            {
+                throw;
+            }
 
-                if (hasQuantityType(match, quantityTypeName))
+            if (hasQuantityType(match, quantityTypeName))
                 {
                     string QuantityTypeString = match.QuantityType.ToString();
 
@@ -709,24 +715,24 @@ namespace Docmanager
 
                         File.WriteAllText(Pathgetter("POSC.json"), output);
                     }
-                    catch (JsonReaderException e)
+                    catch (JsonReaderException)
                     {
                         throw new NullReferenceException("Can not remove a units last quantity type");
-
                     }
                 }
                 else
                 {
                     throw new InvalidOperationException("The unit does not have this quantity type");
                 }
-            }
-            catch (InvalidOperationException)
-            {
-                throw;
-            }
+
 
             return "0";
         }
+
+        //public void EditQuantityType(string oldValue, string newValue)
+        //{
+        //    UOM test = Units.First(unit => ReadQuantityClasses == unitName);
+        //}
 
         public List<string> ReadUomFromQuantityClass(string quantityClass)
         {
@@ -772,20 +778,12 @@ namespace Docmanager
         public List<string> ReadAllQuantityClass()
         {
             List<string> output = new List<string>();
-
-            //Check each unit for spesefied quantityClassName
-
             List<UOM> houseOnes = Units.FindAll(unit => unit.QuantityType != null).ToList();
-
-
-
 
             foreach (UOM unit in houseOnes)
             {
-
                 if (unit.QuantityType.ToString().Contains(","))
                 {
-
                     //var flatten = unit.QuantityType.ToString().Split("[").Split(",").Split("\r\n").ToList();
                     //var flatten = Regex.Replace(unit.QuantityType.ToString(), "[\\[,\\]\"]", "").ToList();
                     var flatten = Regex.Split(unit.QuantityType.ToString(), @"[\[,\r\n"" \t]+|[^ ]")
@@ -850,14 +848,7 @@ namespace Docmanager
             return output;
         }
 
-        public List<string> ReadQuantityType()
-        {
-            List<string> output = new List<string>();
-
-            return output;
-        }
-
-        public List<string> ReadQuantityClasses()
+        public Dictionary<string, List<string>> ReadQuantityTypes()
         {
             throw new NotImplementedException();
         }

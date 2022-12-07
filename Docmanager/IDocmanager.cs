@@ -16,6 +16,7 @@ namespace Docmanager
         public string DeleteUnit(string id);
         public string AddQuantityType(string unitName, string quantityTypeName);
         public string RemoveQuantityType(string unitName, string quantityTypeName);
+        public Dictionary<string, List<string>> ReadQuantityTypes();
         public List<List<string>> ReadDimensions();
         public List<string> ReadDimension(string symbol);
         public List<string> ReadAliases(string input);
