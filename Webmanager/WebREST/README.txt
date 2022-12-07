@@ -29,7 +29,7 @@ Delete {Symbol} - temperary deletes UnitDimension will reset on restart.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ALIAS:
-The UNitDimension functionality contains one functionality: These json keys is Case sensetiv. 
+The Alias functionality contains one functionality: These json keys is Case sensetiv. 
 All values keys are written with uppercase first letter.
 
 Alias{
@@ -41,5 +41,28 @@ Get {Unit} - will list all aliases for one unit
 NB! only implimented aliases for one unit, which is "metre".
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CONVERT:
+The Convert functionality contains one functinality: These json keys is Case sensetiv.
+All values keys are written with uppercase first letter.
+
+Convert{
+Value: double
+Unit1: string
+Unit2: string
+}
+
+Get {Value:{newValue}, Unit1: {newUnit1}, Unit2: {newUnit2}}
+
+NB! unit1 and unit2 will only take in the UOM's UOM as a context in coverting.
+If there is space between two word then & is possible to use instead.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
 
 

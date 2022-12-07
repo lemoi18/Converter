@@ -16,3 +16,10 @@ public class UOM
 
     public string Aliases { get; set; }
 }
+
+public class UOM_Update
+{
+    public string Change { get; set; }
+    public dynamic NewName { get; set; }
+
+}

@@ -3,6 +3,8 @@ using Webmanager.WebREST.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using RequestLib;
+using Microsoft.Extensions.Hosting;
+using System.Xml.Linq;
 
 namespace RESTTEST.Controllers;
 
@@ -37,19 +39,17 @@ public class UOMController : ControllerBase
     [HttpPost]
     public IActionResult Create(UOM uom)
     {
+
         
         UOMService.Add(uom);
         return CreatedAtAction(nameof(Create), new { name = uom.Name }, uom);
     }
     // PUT action
-    [HttpPut("{Name}")]
-    public IActionResult Update(string Name, UOM uom)
+    [HttpPut("{NameOfUnitToChange}")]
+    public IActionResult Update(string NameOfUnitToChange, UOM_Update uom)
     {
-        var existingUOM = UOMService.Get(Name);
-        if (existingUOM is null)
-            return NotFound();
-
-        UOMService.Update(Name, uom);
+        
+        UOMService.Update(NameOfUnitToChange, uom);
 
         return NoContent();
     }

@@ -17,13 +17,27 @@ public static class UOMService
         List<List<string>> UN = request.ListUnits();
         UOMs = new List<UOM>
         {
-
-        };
-        foreach (List<string> element in UN)
+           };
+        UOMs.Add(new UOM
         {
-            UOMs.Add(new UOM { Id = element[0], Annotation = element[1], Name = element[2], Quantitytype = element[3], 
-            Dimensionalclass = element[4], Baseunit = element[5], Uom = element[6], A = Convert.ToDouble(element[7]), B = Convert.ToDouble(element[8]), C = Convert.ToDouble(element[9]), D = Convert.ToDouble(element[10]), Aliases = element[11]  });;
-        }
+            Id = "Id",
+            Annotation = "Annotation",
+            Name = "Name",
+            Quantitytype = "Quantitytype",
+            Dimensionalclass = "Dimensionalclass",
+            Baseunit = "Baseunit",
+            Uom = "Uom",
+            A = Convert.ToDouble("0"),
+            B = Convert.ToDouble("0"),
+            C = Convert.ToDouble("0"),
+            D = Convert.ToDouble("0"),
+            Aliases = "Aliases"
+        });
+        //foreach (List<string> element in UN)
+        //{
+        //    UOMs.Add(new UOM { Id = element[0], Annotation = element[1], Name = element[2], Quantitytype = element[3], 
+        //    Dimensionalclass = element[4], Baseunit = element[5], Uom = element[6], A = Convert.ToDouble(element[7]), B = Convert.ToDouble(element[8]), C = Convert.ToDouble(element[9]), D = Convert.ToDouble(element[10]), Aliases = element[11]  });;
+        //}
     }
 
     public static List<UOM> GetAll() => UOMs;
@@ -47,23 +61,27 @@ public static class UOMService
         UOMs.Remove(Uom);
     }
 
-    public static void Update(string Name, UOM Uom)
+    public static void Update(string Name, UOM_Update Uom)
     {
-        var index = UOMs.FindIndex(p => p.Name == Name);
-        if (index == -1)
-            return;
-        //if (Uom.Id != null) { string NO = request.EditUOM(UOMs[index].Id, "id", Uom.Id); }
-        //if (Uom.Annotation != null) { string NO = request.EditUOM(UOMs[index].Annotation, "annotation", Uom.Annotation); }
-        //if (Uom.Name != null) { string NO = request.EditUOM(UOMs[index].Name, "name", Uom.Name); }
-        //if (Uom.Quantitytype != null) { string NO = request.EditUOM(UOMs[index].Quantitytype, "quantity", Uom.Quantitytype); }
-        //if (Uom.Dimensionalclass != null) { string NO = request.EditUOM(UOMs[index].Dimensionalclass, "dimensionalclass", Uom.Dimensionalclass); }
-        //if (Uom.Baseunit != null) { string NO = request.EditUOM(UOMs[index].Baseunit, "baseunit", Uom.Baseunit); }
-        //if (Uom.Uom != null) { string NO = request.EditUOM(UOMs[index].Uom, "uom", Uom.Uom); }
-        //if (Uom.A != null) { string NO = request.EditUOM(UOMs[index].A.ToString(), "a", Uom.A); }
-        //if (Uom.B != null) { string NO = request.EditUOM(UOMs[index].B.ToString(), "b", Uom.B); }
-        //if (Uom.C != null) { string NO = request.EditUOM(UOMs[index].C.ToString(), "c", Uom.C); }
-        //if (Uom.D != null) { string NO = request.EditUOM(UOMs[index].D.ToString(), "d", Uom.D); }
+        Console.WriteLine("Up_UNIT1");
+        Console.WriteLine(Uom.NewName + " " + Uom.Change );
 
-        UOMs[index] = Uom;
+
+
+       
+        if (Uom.Change == "id" || Uom.Change == "Id") { string NO = request.EditUOM(Name, "id", Uom.NewName.ToString()); }
+        if (Uom.Change == "annotation " || Uom.Change == "Annotation") { string NO = request.EditUOM(Name, "annotation", Uom.NewName.ToString()); }
+        if (Uom.Change == "name" || Uom.Change == "Name") { string NO = request.EditUOM(Name, "name", Uom.NewName.ToString()); }
+        if (Uom.Change == "quantitytype" || Uom.Change == "Quantitytype") { string NO = request.EditUOM(Name, "quantity", Uom.NewName.ToString()); }
+        if (Uom.Change == "dimensionalclass" || Uom.Change == "Dimensionalclass") { string NO = request.EditUOM(Name, "dimensionalclass", Uom.NewName.ToString()); }
+        if (Uom.Change == "baseunit" || Uom.Change == "Baseunit") { string NO = request.EditUOM(Name, "baseunit", Uom.NewName.ToString()); }
+        if (Uom.Change != "uom" || Uom.Change != "Uom") { string NO = request.EditUOM(Name, "uom", Uom.NewName.ToString()); }
+        if (Uom.Change != "a" || Uom.Change != "A") { string NO = request.EditUOM(Name, "a", Uom.NewName.ToString()); }
+        if (Uom.Change != "b" || Uom.Change != "B") { string NO = request.EditUOM(Name, "b", Uom.NewName.ToString()); }
+        if (Uom.Change != "c" || Uom.Change != "C") { string NO = request.EditUOM(Name, "c", Uom.NewName.ToString()); }
+        if (Uom.Change != "d" || Uom.Change != "D") { string NO = request.EditUOM(Name, "d", Uom.NewName.ToString()); }
+
+
+        
     }
 }
