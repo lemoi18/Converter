@@ -4,7 +4,7 @@ namespace Connector
 {
     internal class Conn : IC
     {
-        public Tuple<double, string, string> BaseToConvert(double value, string unitTo)
+        public Tuple<double, string, string> BaseToConvert(double value, string unitfrom)
         {
 
             IDocmanager docmanager;
@@ -16,10 +16,10 @@ namespace Connector
             double C = 0;
             double D = 0;
             double res = 0;
-            docmanager.ReadConversion(unitTo, ref A, ref B, ref C, ref D);
+            docmanager.ReadConversion(unitfrom, ref A, ref B, ref C, ref D);
 
-            string uom = unitTo;
-            string annotation = docmanager.ReadAnnotation(unitTo);
+            string uom = docmanager.ReadUOM(unitfrom);
+            string annotation = docmanager.ReadAnnotation(unitfrom);
 
             try
             {

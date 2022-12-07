@@ -40,12 +40,9 @@ namespace Docmanager
         {
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where unit.Name == unitName
-                     select unit).First();
+                UOM houseOnes = Units.First(unit => unit.Name == unitName);
 
-                return match;
+                return houseOnes;
             }
             catch (InvalidOperationException)
             {
@@ -57,12 +54,10 @@ namespace Docmanager
         {
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where unit.id == ID
-                     select unit).First();
+                UOM houseOnes = Units.First(unit => unit.id == ID);
 
-                return match;
+
+                return houseOnes;
             }
             catch (InvalidOperationException)
             {
@@ -74,12 +69,12 @@ namespace Docmanager
         {
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where ReadUom(unit).Contains(uom)
-                     select unit).First();
+                
 
-                return match;
+                UOM houseOnes = Units.First(unit => ReadUom(unit) == uom);
+
+
+                return houseOnes;
             }
             catch (InvalidOperationException)
             {
@@ -91,10 +86,9 @@ namespace Docmanager
         {
             try
             {
-                Dimension match =
-                    (from dimension in Dimensions
-                     where dimension.Symbol == symbol
-                     select dimension).First();
+
+                Dimension match = Dimensions.First(dim => dim.Symbol == symbol);
+                   
 
                 return match;
             }
@@ -228,12 +222,26 @@ namespace Docmanager
 
         public string ReadAnnotation(string unitName)
         {
+            UOM match = new UOM();
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where unit.Name == unitName
-                     select unit).First();
+                match = QueryName(unitName);
+            }
+            catch (InvalidOperationException)
+            {
+                try
+                {
+                    match = QueryUOM(unitName);
+                }
+                catch (InvalidOperationException)
+                {
+                    throw new InvalidOperationException("There is no unti with this name or uom");
+                }
+            }
+
+            try
+            {
+                
 
                 try
                 {
@@ -254,13 +262,11 @@ namespace Docmanager
         {
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where unit.Name == unitName
-                     select unit).First();
+                UOM houseOnes = Units.First(unit => unit.Name == unitName);
+
                 try
                 {
-                    return match.ConversionToBaseUnit.baseUnit;
+                    return houseOnes.ConversionToBaseUnit.baseUnit;
                 }
                 catch (NullReferenceException)
                 {
@@ -313,12 +319,26 @@ namespace Docmanager
 
         public string ReadIsBase(string unitName)
         {
+            UOM match = new UOM();
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where unit.Name == unitName
-                     select unit).First();
+                match = QueryName(unitName);
+            }
+            catch (InvalidOperationException)
+            {
+                try
+                {
+                    match = QueryUOM(unitName);
+                }
+                catch (InvalidOperationException)
+                {
+                    throw new InvalidOperationException("There is no unti with this name or uom");
+                }
+            }
+
+            try
+            {
+                
 
                 try
                 {
@@ -337,12 +357,29 @@ namespace Docmanager
 
         public bool IsBase(string unitName)
         {
+            UOM match = new UOM();
             try
             {
-                UOM match =
-                 (from unit in Units
-                  where unit.Name == unitName
-                  select unit).First();
+                match = QueryName(unitName);
+            }
+            catch (InvalidOperationException)
+            {
+                try
+                {
+                    match = QueryUOM(unitName);
+                }
+                catch (InvalidOperationException)
+                {
+                    throw new InvalidOperationException("There is no unti with this name or uom");
+                }
+            }
+
+
+
+
+            try
+            {
+               
 
                 try
                 {
@@ -364,14 +401,14 @@ namespace Docmanager
         {
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where unit.annotation == annotationName
-                     select unit).First();
+                
+
+                UOM houseOnes = Units.First(unit => unit.annotation == annotationName);
+
 
                 try
                 {
-                    return match.Name;
+                    return houseOnes.Name;
                 }
                 catch (NullReferenceException)
                 {
@@ -739,10 +776,9 @@ namespace Docmanager
 
             foreach (UOM unit in houseOnes)
             {
-                string sameUnitString = JsonConvert.SerializeObject(unit.SameUnit, Formatting.Indented);
-                JObject sameUnitJObject = (JObject)JsonConvert.DeserializeObject(sameUnitString);
-                string test = sameUnitJObject["uom"].ToString();
-                output.Add(test);
+                
+                
+                output.Add(ReadUom(unit));
             }
 
             return output;
