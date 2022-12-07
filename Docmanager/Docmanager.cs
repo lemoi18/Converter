@@ -753,8 +753,14 @@ namespace Docmanager
 
             foreach (UOM unit in houseOnes)
             { 
-                foreach(string uom in ReadUom(unit))
-                output.Add(uom);
+                foreach(string uom in ReadUom(unit)) {
+
+                    if (uom != null)
+                    {
+
+                    output.Add(uom);
+                    }
+                }
             }
 
             return output;
@@ -807,7 +813,11 @@ namespace Docmanager
                 }
                 else
                 {
+                    if (unit.QuantityType != null)
+                    {
                     output.Add(unit.QuantityType.ToString());
+
+                    }
                 }
 
             }
