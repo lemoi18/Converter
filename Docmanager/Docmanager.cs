@@ -225,27 +225,26 @@ namespace Docmanager
             }
         }
 
-        public string ReadAnnotation(string unitName)
+        public string ReadAnnotation(string uom)
         {
+            UOM match = new UOM();
+
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where unit.Name == unitName
-                     select unit).First();
-
-                try
-                {
-                    return match.annotation;
-                }
-                catch (NullReferenceException)
-                {
-                    return "This unit does not have annotation";
-                }
+                match = QueryUOM(uom);
             }
             catch (InvalidOperationException)
             {
                 return "This name is not in file";
+            }
+
+            try
+            {
+                return match.annotation;
+            }
+            catch (NullReferenceException)
+            {
+                return "This unit does not have annotation";
             }
         }
 
@@ -274,7 +273,16 @@ namespace Docmanager
 
         private List<string> ReadUom(UOM unit)
         {
-            string sameUnitString = unit.SameUnit.ToString();
+            string sameUnitString;
+            try
+            {
+                sameUnitString = unit.SameUnit.ToString();
+            }
+            catch(NullReferenceException)
+            {
+                return new List<string> { null };
+            }
+            
 
             List<string> output = new List<string>();
 
@@ -381,24 +389,19 @@ namespace Docmanager
             }
         }
 
-        public string ReadConversion(string input, ref double A, ref double B, ref double C, ref double D)
+        public string ReadConversion(string uom, ref double A, ref double B, ref double C, ref double D)
         {
             UOM match = new UOM();
+
             try
             {
-                match = QueryName(input);
+                match = QueryUOM(uom);
             }
             catch (InvalidOperationException)
             {
-                try
-                {
-                    match = QueryUOM(input);
-                }
-                catch (InvalidOperationException)
-                {
-                    throw new InvalidOperationException("There is no unti with this name or uom");
-                }
+                throw new InvalidOperationException("There is no unti with this name or uom");
             }
+            
 
             A = B = C = D = 0;
 
