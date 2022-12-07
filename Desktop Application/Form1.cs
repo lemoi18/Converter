@@ -219,7 +219,7 @@ namespace Desktop_Application
 
         private void CreateQTButton_Click(object sender, EventArgs e)
         {
-            request.AddQualityclass(EditQTName.Text, QTNewName.Text);
+            request.EditQualityclass(EditQTName.Text, QTNewName.Text);
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)

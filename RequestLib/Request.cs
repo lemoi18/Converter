@@ -18,6 +18,7 @@ namespace RequestLib
 
         public string AddQualityclass(string name, string uom)
         {
+            Console.WriteLine(name + " " +  uom);
             docmanager = DocFactory.CreateDocmanager("Test");
             docmanager.AddQuantityType(name, uom);
             
@@ -61,7 +62,7 @@ namespace RequestLib
             docmanager = DocFactory.CreateDocmanager("Test");
             var alias = aliases.Split(',').ToList();
             var quantity = quantityType.Split(',').ToList();
-
+            Console.WriteLine("CreateUNIT");
             docmanager.CreateSecondaryUnit(id, annotation, name, quantity, dimensionalclass, uom, baseunit, A, B, C, D, alias);//Aliases needs to be string
             return id;
         }
@@ -84,13 +85,14 @@ namespace RequestLib
         public string EditQualityclass(string name, string newname)
         {
             docmanager = DocFactory.CreateDocmanager("Test");
-            //docmanager.EditQuantityclass(name, newname);
+            docmanager.EditQuantityclass(name, newname);
             return name;
         }
 
         public string EditUOM(string oldName, string keyToChange, dynamic newValue)
         {
-            docmanager = DocFactory.CreateDocmanager("Test");
+            docmanager = DocFactory.CreateDocmanager("Test");  
+            Console.WriteLine(oldName + " " + keyToChange + " " + newValue);
             docmanager.EditUnit(oldName,keyToChange, newValue);
             return newValue;
         }
@@ -186,8 +188,9 @@ namespace RequestLib
             //  }
             //
             //  return result; 
-            throw new NotImplementedException();
-
+            //throw new NotImplementedException();
+            List<List<string>> result = new List<List<string>>();
+            return result;
         }
 
         public string RemoveQualityclass(string unit, string name)
