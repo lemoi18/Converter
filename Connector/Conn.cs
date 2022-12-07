@@ -101,7 +101,7 @@ namespace Connector
 
 
             string base_annotation = docmanager.ReadIsBase(unitFrom);
-            string Base = docmanager.ReadUnitName(base_annotation);
+            string Base = docmanager.ReadName(base_annotation);
 
             try
             {
