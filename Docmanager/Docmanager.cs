@@ -70,7 +70,7 @@ namespace Docmanager
             {
                 
 
-                UOM houseOnes = Units.First(unit => ReadUom(unit) == uom);
+                UOM houseOnes = Units.First(unit => ReadUom(unit).Contains(uom));
 
 
                 return houseOnes;
@@ -350,13 +350,14 @@ namespace Docmanager
 
         public bool IsBase(string uom)
         {
-            try
-            {
+            //try
+            //{
                 UOM match = QueryUOM(uom);
+            //}
+            //catch()
+            //{
 
-
-
-
+            //}
             try
             {
                
@@ -751,10 +752,9 @@ namespace Docmanager
             List<UOM> houseOnes = Units.FindAll(unit => unit.QuantityType != null && unit.QuantityType.ToString().Contains(quantityClass)).ToList(); 
 
             foreach (UOM unit in houseOnes)
-            {
-                
-                
-                output.Add(ReadUom(unit));
+            { 
+                foreach(string uom in ReadUom(unit))
+                output.Add(uom);
             }
 
             return output;
