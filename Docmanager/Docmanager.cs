@@ -10,6 +10,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Globalization;
+using System.IO;
+using System.Numerics;
+using System.Reflection.Metadata;
 using System.Text.RegularExpressions;
 using static Docmanager.Docmanager;
 
@@ -46,9 +49,12 @@ namespace Docmanager
 
                 return match;
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException e)
             {
-                throw new InvalidOperationException("There is no unit with this name");
+                if (e.HResult == -2146233079)
+                {
+                    throw new InvalidOperationException("There is no unit with this name");
+                }
             }
         }
 
@@ -474,7 +480,7 @@ namespace Docmanager
             return "0";
         }
 
-        public string CreateBaseUnit(string id, string annotation, string name, List<string> quantityType, string dimensionalclass, string uom, List<string> aliases)
+        public string CreateBaseUnit(string id, string annotation, string name, List<string> quantityTypes, string dimensionalclass, string uom, List<string> aliases)
         {
             JObject SameUnitJObject = new JObject
             {
@@ -487,9 +493,11 @@ namespace Docmanager
             newUnit.id = id;
             newUnit.annotation = annotation;
             newUnit.Name = name;
-            newUnit.QuantityType = quantityType;
+
+
+            //UOM Units = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(Pathgetter("POSC.json")));
             newUnit.DimensionalClass = dimensionalclass;
-            newUnit.Aliases = aliases;
+            //newUnit.Aliases = aliases;
             newUnit.SameUnit = SameUnitJObject;
 
             Units.Add(newUnit);
@@ -688,23 +696,28 @@ namespace Docmanager
         {
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where unit.Name == unitName
-                     select unit).First();
+                UOM match = QueryName(unitName);
 
                 string QuantityTypeString = match.QuantityType.ToString();
-                JArray QuantityTypeJArray = (JArray)JsonConvert.DeserializeObject(QuantityTypeString);
-                QuantityTypeJArray.Add(quantityTypeName);
 
-                match.QuantityType = QuantityTypeJArray;
+                try
+                {
+                    JArray QuantityTypeJArray = (JArray)JsonConvert.DeserializeObject(QuantityTypeString);
+                    QuantityTypeJArray.Add(quantityTypeName);
+                    match.QuantityType = QuantityTypeJArray;
+                }
+                catch(JsonReaderException)
+                {
+                    List<string>QuantityTypeArray = new List<string>() {QuantityTypeString, quantityTypeName};
+                    match.QuantityType = QuantityTypeArray;
+                }
+
                 string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
-
                 File.WriteAllText(Pathgetter("POSC.json"), output);
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException e)
             {
-                return "This unit name is not in file";
+                throw;
             }
 
             return "0";
@@ -714,28 +727,42 @@ namespace Docmanager
         {
             try
             {
-                UOM match =
-                    (from unit in Units
-                     where unit.Name == unitName
-                     select unit).First();
+                UOM match = QueryName(unitName);
 
-                string QuantityTypeString = match.QuantityType.ToString();
-                JArray QuantityTypeJArray = (JArray)JsonConvert.DeserializeObject(QuantityTypeString);
-                QuantityTypeJArray.Where(i => i.Type == JTokenType.String && (string)i == quantityTypeName).ToList().ForEach(i => i.Remove());
+                if (hasQuantityType(match, quantityTypeName))
+                {
+                    string QuantityTypeString = match.QuantityType.ToString();
 
-                match.QuantityType = QuantityTypeJArray;
-                string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
+                    try
+                    {
+                        JArray QuantityTypeJArray = (JArray)JsonConvert.DeserializeObject(QuantityTypeString);
+                        QuantityTypeJArray.Where(i => (string)i == quantityTypeName).ToList().ForEach(i => i.Remove());
 
-                File.WriteAllText(Pathgetter("POSC.json"), output);
+                        match.QuantityType = QuantityTypeJArray;
+                        string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
+
+                        File.WriteAllText(Pathgetter("POSC.json"), output);
+                }
+                    catch (JsonReaderException e) 
+                    {
+                        if (e.HResult == -2146233088)
+                        {
+                            throw new NullReferenceException("Can not remove a units last quantity type");
+                        }
+                    }
+        }
+                else
+                {
+                    throw new InvalidOperationException("The unit does not have this quantity type");
+                }
             }
             catch (InvalidOperationException)
             {
-                return "This name is not in file";
+                throw;
             }
 
             return "0";
         }
-
 
         public List<string> ReadDimension(string symbol)
         {
