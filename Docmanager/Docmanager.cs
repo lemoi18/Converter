@@ -229,7 +229,7 @@ namespace Docmanager
             }
             catch (InvalidOperationException)
             {
-                return "This name is not in file";
+                throw new Exception("This unit is not in file");
             }
 
             try
@@ -238,7 +238,7 @@ namespace Docmanager
             }
             catch (NullReferenceException)
             {
-                return "This unit does not have annotation";
+                throw new Exception("This unit is not in file");
             }
         }
 
@@ -413,7 +413,7 @@ namespace Docmanager
             }
             catch (InvalidOperationException)
             {
-                throw new InvalidOperationException("There is no unti with this name or uom");
+                throw;
             }
             
 
@@ -746,8 +746,6 @@ namespace Docmanager
         public List<string> ReadUomFromQuantityClass(string quantityClass)
         {
             List<string> output = new List<string>();
-
-            //Check each unit for spesefied quantityClassName
 
             List<UOM> houseOnes = Units.FindAll(unit => unit.QuantityType != null && unit.QuantityType.ToString().Contains(quantityClass)).ToList(); 
 
