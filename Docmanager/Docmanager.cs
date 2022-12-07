@@ -20,7 +20,6 @@ namespace Docmanager
 {
     internal class Docmanager : IDocmanager
     {
-
         List<UOM> Units = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(Pathgetter("POSC.json")));
 
         List<Dimension> Dimensions = JsonConvert.DeserializeObject<List<Dimension>>(File.ReadAllText(Pathgetter("UnitDimensions.json")));
@@ -273,7 +272,7 @@ namespace Docmanager
             }
         }
 
-        public List<string> ReadUom(UOM unit)
+        private List<string> ReadUom(UOM unit)
         {
             string sameUnitString = unit.SameUnit.ToString();
 
@@ -335,14 +334,11 @@ namespace Docmanager
             }
         }
 
-        public bool IsBase(string unitName)
+        public bool IsBase(string uom)
         {
             try
             {
-                UOM match =
-                 (from unit in Units
-                  where unit.Name == unitName
-                  select unit).First();
+                UOM match = QueryUOM(uom);
 
                 try
                 {
@@ -357,6 +353,7 @@ namespace Docmanager
             {
                 throw new InvalidOperationException("This name is not in file");
             }
+
             return true;
         }
 
@@ -748,7 +745,7 @@ namespace Docmanager
             return output;
         }
 
-            public List<string> ReadDimension(string symbol)
+        public List<string> ReadDimension(string symbol)
         {
             try
             {

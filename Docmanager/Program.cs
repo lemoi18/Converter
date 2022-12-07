@@ -5,7 +5,7 @@ using System.Xml.Linq;
 IDocmanager docmanager;
 docmanager = DocFactory.CreateDocmanager("Test");
 
-List<string> uoms = docmanager.ReadUom("milliEuclid");
+List<string> uoms = docmanager.ReadUom("inverse henry");
 
 foreach (string uom in uoms)
 Console.WriteLine(uom);
