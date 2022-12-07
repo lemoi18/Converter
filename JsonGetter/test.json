@@ -1,0 +1,311 @@
+﻿[
+  {
+    "id": "bblPin",
+    "annotation": "bbl/in",
+    "Name": "barrel/inch",
+    "QuantityType": "volume per length",
+    "DimensionalClass": "L2",
+    "SameUnit": {
+      "uom": "bbl/in",
+      "namingSystem": "RP66"
+    },
+    "CatalogName": "POSC",
+    "CatalogSymbol": {
+      "isExplicit": "true",
+      "text": "bbl/in"
+    },
+    "BaseUnit": null,
+    "Deprecated": null,
+    "Aliases": null,
+    "ConversionToBaseUnit": {
+      "baseUnit": "m2",
+      "Factor": null,
+      "Fraction": {
+        "Numerator": "0.1589873",
+        "Denominator": "0.0254"
+      },
+      "Formula": null
+    }
+  },
+  {
+    "id": "bblPk(ft3)",
+    "annotation": "bbl/k(ft3)",
+    "Name": "barrel per thousand cubic feet",
+    "QuantityType": "volume per volume",
+    "DimensionalClass": "1",
+    "SameUnit": null,
+    "CatalogName": "POSC",
+    "CatalogSymbol": {
+      "isExplicit": "true",
+      "text": "bbl/k(ft3)"
+    },
+    "BaseUnit": null,
+    "Deprecated": null,
+    "Aliases": null,
+    "ConversionToBaseUnit": {
+      "baseUnit": "Euc",
+      "Factor": null,
+      "Fraction": {
+        "Numerator": "0.1589873",
+        "Denominator": "28.31685"
+      },
+      "Formula": null
+    }
+  },
+  {
+    "id": "bblPkPaTd",
+    "annotation": "bbl/kPa.d",
+    "Name": "barrel per day per kilopascal",
+    "QuantityType": "productivity index",
+    "DimensionalClass": "L4T/M",
+    "SameUnit": [
+      {
+        "uom": "bbl/kPa.d",
+        "namingSystem": "RP66"
+      },
+      {
+        "uom": "bbl/(d.kPa)",
+        "namingSystem": "RP66"
+      }
+    ],
+    "CatalogName": "POSC",
+    "CatalogSymbol": {
+      "isExplicit": "true",
+      "text": "bbl/kPa.d"
+    },
+    "BaseUnit": null,
+    "Deprecated": null,
+    "Aliases": null,
+    "ConversionToBaseUnit": {
+      "baseUnit": "m3/Pa.s",
+      "Factor": null,
+      "Fraction": {
+        "Numerator": "0.1589873",
+        "Denominator": "86400000"
+      },
+      "Formula": null
+    }
+  },
+  {
+    "id": "bblPM(ft3)",
+    "annotation": "bbl/M(ft3)",
+    "Name": "barrel per million cubic feet",
+    "QuantityType": "volume per volume",
+    "DimensionalClass": "1",
+    "SameUnit": null,
+    "CatalogName": "POSC",
+    "CatalogSymbol": {
+      "isExplicit": "true",
+      "text": "bbl/M(ft3)"
+    },
+    "BaseUnit": null,
+    "Deprecated": null,
+    "Aliases": null,
+    "ConversionToBaseUnit": {
+      "baseUnit": "Euc",
+      "Factor": null,
+      "Fraction": {
+        "Numerator": "0.1589873",
+        "Denominator": "28316.85"
+      },
+      "Formula": null
+    }
+  },
+  {
+    "id": "bblPmi",
+    "annotation": "bbl/mi",
+    "Name": "barrel/mile",
+    "QuantityType": "volume per length",
+    "DimensionalClass": "L2",
+    "SameUnit": {
+      "uom": "bbl/mi",
+      "namingSystem": "RP66"
+    },
+    "CatalogName": "POSC",
+    "CatalogSymbol": {
+      "isExplicit": "true",
+      "text": "bbl/mi"
+    },
+    "BaseUnit": null,
+    "Deprecated": null,
+    "Aliases": null,
+    "ConversionToBaseUnit": {
+      "baseUnit": "m2",
+      "Factor": null,
+      "Fraction": {
+        "Numerator": "0.1589873",
+        "Denominator": "1609.344"
+      },
+      "Formula": null
+    }
+  },
+  {
+    "id": "bblPmin",
+    "annotation": "bbl/min",
+    "Name": "barrel per minute",
+    "QuantityType": "volume flow rate",
+    "DimensionalClass": "L3/T",
+    "SameUnit": {
+      "uom": "bbl/min",
+      "namingSystem": "RP66"
+    },
+    "CatalogName": "POSC",
+    "CatalogSymbol": {
+      "isExplicit": "true",
+      "text": "bbl/min"
+    },
+    "BaseUnit": null,
+    "Deprecated": null,
+    "Aliases": null,
+    "ConversionToBaseUnit": {
+      "baseUnit": "m3/s",
+      "Factor": null,
+      "Fraction": {
+        "Numerator": "0.1589873",
+        "Denominator": "60"
+      },
+      "Formula": null
+    }
+  },
+  {
+    "id": "bblPMMscf(60F)",
+    "annotation": "bbl/MMscf(60F)",
+    "Name": "barrels/million std cubic feet, 60 degF",
+    "QuantityType": "volume per standard volume",
+    "DimensionalClass": "1",
+    "SameUnit": null,
+    "CatalogName": "POSC",
+    "CatalogSymbol": {
+      "isExplicit": "true",
+      "text": "bbl/MMscf(60F)"
+    },
+    "BaseUnit": null,
+    "Deprecated": null,
+    "Aliases": null,
+    "ConversionToBaseUnit": {
+      "baseUnit": "m3/scm(15C)",
+      "Factor": null,
+      "Fraction": {
+        "Numerator": "0.1589873",
+        "Denominator": "28262.357"
+      },
+      "Formula": null
+    }
+  },
+  {
+    "id": "bblPpsiTd",
+    "annotation": "bbl/psi.d",
+    "Name": "barrel per day per psi",
+    "QuantityType": "productivity index",
+    "DimensionalClass": "L4T/M",
+    "SameUnit": [
+      {
+        "uom": "bbl/psi.d",
+        "namingSystem": "RP66"
+      },
+      {
+        "uom": "bbl/(d.psi)",
+        "namingSystem": "RP66"
+      },
+      {
+        "uom": "bbl/d.psi",
+        "namingSystem": "WITSML"
+      }
+    ],
+    "CatalogName": "POSC",
+    "CatalogSymbol": {
+      "isExplicit": "true",
+      "text": "bbl/psi.d"
+    },
+    "BaseUnit": null,
+    "Deprecated": null,
+    "Aliases": null,
+    "ConversionToBaseUnit": {
+      "baseUnit": "m3/Pa.s",
+      "Factor": null,
+      "Fraction": {
+        "Numerator": "0.1589873",
+        "Denominator": "595707004.8"
+      },
+      "Formula": null
+    }
+  },
+  {
+    "id": "bblPstb(60F)",
+    "annotation": "bbl/stb(60F)",
+    "Name": "barrels/stock tank barrel, 60 deg F",
+    "QuantityType": "volume per standard volume",
+    "DimensionalClass": "1",
+    "SameUnit": null,
+    "CatalogName": "POSC",
+    "CatalogSymbol": {
+      "isExplicit": "true",
+      "text": "bbl/stb(60F)"
+    },
+    "BaseUnit": null,
+    "Deprecated": null,
+    "Aliases": null,
+    "ConversionToBaseUnit": {
+      "baseUnit": "m3/scm(15C)",
+      "Factor": "1",
+      "Fraction": null,
+      "Formula": null
+    }
+  },
+  {
+    "id": "bblPtonUK",
+    "annotation": "bbl/tonUK",
+    "Name": "barrel per U.K. ton",
+    "QuantityType": [
+      "specific volume",
+      "massic volume"
+    ],
+    "DimensionalClass": "L3/M",
+    "SameUnit": {
+      "uom": "bbl/tonUK",
+      "namingSystem": "RP66"
+    },
+    "CatalogName": "POSC",
+    "CatalogSymbol": {
+      "isExplicit": "true",
+      "text": "bbl/tonUK"
+    },
+    "BaseUnit": null,
+    "Deprecated": null,
+    "Aliases": null,
+    "ConversionToBaseUnit": {
+      "baseUnit": "m3/kg",
+      "Factor": "156.4763",
+      "Fraction": null,
+      "Formula": null
+    }
+  },
+  {
+    "id": "bblPtonUS",
+    "annotation": "bbl/tonUS",
+    "Name": "barrel per U.S. ton",
+    "QuantityType": [
+      "specific volume",
+      "massic volume"
+    ],
+    "DimensionalClass": "L3/M",
+    "SameUnit": {
+      "uom": "bbl/tonUS",
+      "namingSystem": "RP66"
+    },
+    "CatalogName": "POSC",
+    "CatalogSymbol": {
+      "isExplicit": "true",
+      "text": "bbl/tonUS"
+    },
+    "BaseUnit": null,
+    "Deprecated": null,
+    "Aliases": null,
+    "ConversionToBaseUnit": {
+      "baseUnit": "m3/kg",
+      "Factor": "175.2535",
+      "Fraction": null,
+      "Formula": null
+    }
+  }
+]

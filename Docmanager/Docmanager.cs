@@ -674,24 +674,6 @@ namespace Docmanager
             }
         }
 
-        public List<string> ReadUoms(string quantityClass)
-        {
-            List<string> output = new List<string>();
-
-            //Check each unit for spesefied quantityClassName
-            foreach (UOM unit in Units)
-            {
-                if (hasQuantityType(unit, quantityClass))
-                {
-                    string sameUnitString = JsonConvert.SerializeObject(unit.SameUnit, Formatting.Indented);
-                    JObject sameUnitJObject = (JObject)JsonConvert.DeserializeObject(sameUnitString);
-                    output.Add(sameUnitJObject["uom"].ToString());
-                }
-            }
-
-            return output;
-        }
-
         public string AddQuantityType(string unitName, string quantityTypeName)
         {
             try
@@ -764,7 +746,28 @@ namespace Docmanager
             return "0";
         }
 
-        public List<string> ReadDimension(string symbol)
+        public List<string> ReadUomFromQuantityClass(string quantityClass)
+        {
+            List<string> output = new List<string>();
+
+            //Check each unit for spesefied quantityClassName
+
+            List<UOM> houseOnes = Units.FindAll(unit => unit.QuantityType != null && unit.QuantityType.ToString().Contains(quantityClass)).ToList(); 
+
+            foreach (UOM unit in houseOnes)
+            {
+                
+                    string sameUnitString = JsonConvert.SerializeObject(unit.SameUnit, Formatting.Indented);
+                    JObject sameUnitJObject = (JObject)JsonConvert.DeserializeObject(sameUnitString);
+                    string test = sameUnitJObject["uom"].ToString();
+                    output.Add(test);
+                
+            }
+
+            return output;
+        }
+
+            public List<string> ReadDimension(string symbol)
         {
             try
             {

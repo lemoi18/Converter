@@ -186,6 +186,7 @@
             this.comboBox.FormattingEnabled = true;
             this.comboBox.Items.AddRange(new object[] {
             "unit dimensions",
+            "unit dimension",
             "quantity classes",
             "uom for a given quantity class",
             "aliases for a given uom "});
