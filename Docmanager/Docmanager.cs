@@ -570,7 +570,7 @@ namespace Docmanager
                             {
                                 ["uom"] = newValue,
                             };
-                            match.SameUnit = newValue;
+                            match.SameUnit = SameUnitJObject;
                             break;
                         case "catalogname":
                             match.CatalogName = newValue;
@@ -729,11 +729,6 @@ namespace Docmanager
             return "0";
         }
 
-        //public void EditQuantityType(string oldValue, string newValue)
-        //{
-        //    UOM test = Units.First(unit => ReadQuantityClasses == unitName);
-        //}
-
         public List<string> ReadUomFromQuantityClass(string quantityClass)
         {
             List<string> output = new List<string>();
@@ -855,7 +850,7 @@ namespace Docmanager
             return output;
         }
 
-        public Dictionary<string, List<string>> ReadQuantityTypes()
+        public Dictionary<string, List<string>> ReadQuantityClassesToDict()
         {
             Dictionary<string, List<string>> output = new Dictionary<string, List<string>>();
 
