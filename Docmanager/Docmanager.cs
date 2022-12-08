@@ -280,7 +280,7 @@ namespace Docmanager
             return output;
         }
 
-        public List<String> ReadUom(string unitName)
+        public List<string> ReadUom(string unitName)
         {
             try
             {
@@ -619,11 +619,11 @@ namespace Docmanager
             return "0";
         }
 
-        public string DeleteUnit(string id)
+        public string DeleteUnit(string unitName)
         {
             try
             {
-                UOM match = QueryName(id);
+                UOM match = QueryName(unitName);
 
                 Units.Remove(match);
 
@@ -775,32 +775,39 @@ namespace Docmanager
                 throw;
             }
         }
-        public List<string> ReadAllQuantityClass()
+
+        private List<string> ReadQuantityClass(UOM unit)
+        {
+            List<string> output = new List<string>();
+
+            string quantityTypeString = "none";
+            if (unit.QuantityType != null)
+            {
+                quantityTypeString = unit.QuantityType.ToString();
+            }
+            try
+            {
+                JArray quantityTypeJArray = (JArray)JsonConvert.DeserializeObject(quantityTypeString);
+
+                output = quantityTypeJArray.ToObject<List<string>>();
+            }
+            catch (JsonReaderException)
+            {
+                output.Add(quantityTypeString);
+            }
+
+
+            return output;
+        }
+
+        public List<string> ReadQuantityClasses()
         {
             List<string> output = new List<string>();
             List<UOM> houseOnes = Units.FindAll(unit => unit.QuantityType != null).ToList();
 
             foreach (UOM unit in houseOnes)
             {
-                if (unit.QuantityType.ToString().Contains(","))
-                {
-                    //var flatten = unit.QuantityType.ToString().Split("[").Split(",").Split("\r\n").ToList();
-                    //var flatten = Regex.Replace(unit.QuantityType.ToString(), "[\\[,\\]\"]", "").ToList();
-                    var flatten = Regex.Split(unit.QuantityType.ToString(), @"[\[,\r\n"" \t]+|[^ ]")
-                        .Where(s => !string.IsNullOrEmpty(s))
-                        .ToList();
-
-                    output.AddRange(flatten);
-                }
-                else
-                {
-                    if (unit.QuantityType != null)
-                    {
-                        output.Add(unit.QuantityType.ToString());
-
-                    }
-                }
-
+                output.AddRange(ReadQuantityClass(unit));
             }
 
 
@@ -850,7 +857,21 @@ namespace Docmanager
 
         public Dictionary<string, List<string>> ReadQuantityTypes()
         {
-            throw new NotImplementedException();
+            Dictionary<string, List<string>> output = new Dictionary<string, List<string>>();
+
+            foreach(UOM unit in Units)
+            {
+                try
+                {
+                    if (unit.QuantityType != null)
+                    {
+                        output.Add(unit.Name, ReadQuantityClass(unit));
+                    }
+                }
+                catch (ArgumentException) { }
+            }
+
+            return output;
         }
 
         public class CatalogSymbol

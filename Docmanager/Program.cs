@@ -6,11 +6,13 @@ using System.Runtime.ConstrainedExecution;
 IDocmanager docmanager;
 docmanager = DocFactory.CreateDocmanager("Test");
 
-//List<string> list = docmanager.ReadProperties("per Kelvin");
+Dictionary<string, List<string>> list = docmanager.ReadQuantityTypes();
 
-//foreach (string entry in list)
-//{
-//    Console.WriteLine(entry);
-//}
+foreach (string quantityClass in docmanager.ReadQuantityClasses())
+{
+    Console.WriteLine(quantityClass);
+}
 
-Console.WriteLine(docmanager.EditUnit("inverse henry", "id", "test"));
+//Console.WriteLine(docmanager.EditUnit("inverse henry", "id", "test"));
+
+
