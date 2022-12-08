@@ -51,8 +51,8 @@ namespace RequestLib
         public string CreateQualityclass(string name, string baseunit)
         {
             docmanager = DocFactory.CreateDocmanager("Test");
-            
-            //docmanager.CreateQuantityClass(string name, string baseunit);
+
+            docmanager.AddQuantityType(baseunit, name);
             return name;
 
         }
@@ -194,7 +194,10 @@ namespace RequestLib
 
         public string RemoveQualityclass(string unit, string name)
         {
-            throw new NotImplementedException();
+            docmanager = DocFactory.CreateDocmanager("Test");
+
+            docmanager.RemoveQuantityType(unit, name);
+            return unit;
         }
     }
 }

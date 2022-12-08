@@ -21,11 +21,12 @@ public class QuantityclassController : ControllerBase
 
 
     // POST action
-    [HttpPost("{BaseUnit}")]
-    public IActionResult Create(string BaseUnit, Quantity Q)
+    [HttpPost("{Unit}")]
+    public IActionResult Create(string Unit, Quantity Q)
     {
-        AliasService.Add(BaseUnit.Replace('&', ' '), Q.Name.Replace('&', ' '));
-        return CreatedAtAction(nameof(Create), new { name = Q.Name, baseunit = BaseUnit }, Q);
+        Console.WriteLine(Q.Name);
+        AliasService.Add(Unit.Replace('&', ' '), Q.Name.Replace('&', ' '));
+        return CreatedAtAction(nameof(Create), new { name = Q.Name, baseunit = Unit }, Q);
     }
     // PUT action
     [HttpPut("{UnitToRemoveFrom}")]
