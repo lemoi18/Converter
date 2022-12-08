@@ -61,19 +61,19 @@ public static class QuantitytypeService
     }
     public static void Add(QuantityA qc)
     {
-        string ADD = request.AddQualityclass(qc.Name, qc.Unit);
+        string ADD = request.AddQualityclass(qc.Name.Replace('&', ' '), qc.Unit.Replace('&', ' '));
         
     }
 
     public static void Delete(string Name)
     {
         
-        string DEL = request.DeleteQualityclass(Name);
+        string DEL = request.DeleteQualityclass(Name.Replace('&', ' '));
         
     }
 
     public static void Update(string Name, Quantitytype qt)
     {
-        string EDIT = request.EditQualityclass(Name, qt.Name);
+        string EDIT = request.EditQualityclass(Name.Replace('&', ' '), qt.Name.Replace('&', ' '));
     }
 }

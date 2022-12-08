@@ -34199,33 +34199,5 @@
       "Fraction": null,
       "Formula": null
     }
-  },
-  {
-    "id": "7",
-    "annotation": "A",
-    "Name": "HO",
-    "QuantityType": [
-      "UO"
-    ],
-    "DimensionalClass": "LOL",
-    "SameUnit": null,
-    "CatalogName": null,
-    "CatalogSymbol": null,
-    "BaseUnit": false,
-    "Deprecated": null,
-    "Aliases": [
-      "LOL"
-    ],
-    "ConversionToBaseUnit": {
-      "baseUnit": "lol",
-      "Factor": null,
-      "Fraction": null,
-      "Formula": {
-        "A": "3",
-        "B": "4",
-        "C": "55",
-        "D": "9"
-      }
-    }
   }
 ]
