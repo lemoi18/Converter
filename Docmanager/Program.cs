@@ -1,14 +1,9 @@
 ﻿using Docmanager;
-using static Docmanager.Docmanager;
-using System.Xml.Linq;
-using System.Runtime.ConstrainedExecution;
 
 IDocmanager docmanager;
 docmanager = DocFactory.CreateDocmanager("Test");
 
-Dictionary<string, List<string>> list = docmanager.ReadQuantityTypes();
-
-foreach (string quantityClass in docmanager.ReadQuantityClasses())
+foreach (string quantityClass in docmanager.ReadNames())
 {
     Console.WriteLine(quantityClass);
 }
