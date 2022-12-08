@@ -18,6 +18,8 @@ namespace Connector
 
 			if (name.ToUpper() == "CONNECTOR")
 				connector = new Conn();
+			
+				
 
 			return connector;
 		}

@@ -43,15 +43,12 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.EditComboBox = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.EditTextbox = new System.Windows.Forms.TextBox();
             this.EditButton = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.EditWhat = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.CreateUOMID = new System.Windows.Forms.TextBox();
             this.CreateUOMName = new System.Windows.Forms.TextBox();
@@ -92,22 +89,13 @@
             this.ConfirmAdd = new System.Windows.Forms.Button();
             this.ConfirmRemove = new System.Windows.Forms.Button();
             this.CreateUOM = new System.Windows.Forms.TextBox();
-            this.label26 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
-            this.CreateQTName = new System.Windows.Forms.TextBox();
-            this.CreateQTBase = new System.Windows.Forms.TextBox();
-            this.label28 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
             this.label30 = new System.Windows.Forms.Label();
-            this.label31 = new System.Windows.Forms.Label();
             this.DeleteUnitBox = new System.Windows.Forms.TextBox();
-            this.DeleteQT = new System.Windows.Forms.TextBox();
             this.DeleteUnitButton = new System.Windows.Forms.Button();
-            this.DeleteQTButton = new System.Windows.Forms.Button();
             this.label32 = new System.Windows.Forms.Label();
-            this.label33 = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
+            this.EditTextbox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // UnitFrom
@@ -116,15 +104,13 @@
             this.UnitFrom.Name = "UnitFrom";
             this.UnitFrom.Size = new System.Drawing.Size(112, 23);
             this.UnitFrom.TabIndex = 0;
-            this.UnitFrom.TextChanged += new System.EventHandler(this.UnitFrom_TextChanged);
             // 
             // Value
             // 
-            this.Value.Location = new System.Drawing.Point(199, 126);
+            this.Value.Location = new System.Drawing.Point(109, 126);
             this.Value.Name = "Value";
             this.Value.Size = new System.Drawing.Size(136, 23);
             this.Value.TabIndex = 1;
-            this.Value.TextChanged += new System.EventHandler(this.Value_TextChanged);
             // 
             // UnitTo
             // 
@@ -132,11 +118,10 @@
             this.UnitTo.Name = "UnitTo";
             this.UnitTo.Size = new System.Drawing.Size(136, 23);
             this.UnitTo.TabIndex = 2;
-            this.UnitTo.TextChanged += new System.EventHandler(this.UnitTo_TextChanged);
             // 
             // ConverterButton
             // 
-            this.ConverterButton.Location = new System.Drawing.Point(76, 126);
+            this.ConverterButton.Location = new System.Drawing.Point(260, 125);
             this.ConverterButton.Name = "ConverterButton";
             this.ConverterButton.Size = new System.Drawing.Size(75, 23);
             this.ConverterButton.TabIndex = 3;
@@ -147,7 +132,7 @@
             // ValueLabel
             // 
             this.ValueLabel.AutoSize = true;
-            this.ValueLabel.Location = new System.Drawing.Point(210, 108);
+            this.ValueLabel.Location = new System.Drawing.Point(54, 129);
             this.ValueLabel.Name = "ValueLabel";
             this.ValueLabel.Size = new System.Drawing.Size(35, 15);
             this.ValueLabel.TabIndex = 4;
@@ -156,30 +141,31 @@
             // UnitFromLabel
             // 
             this.UnitFromLabel.AutoSize = true;
-            this.UnitFromLabel.Location = new System.Drawing.Point(94, 44);
+            this.UnitFromLabel.Location = new System.Drawing.Point(39, 44);
             this.UnitFromLabel.Name = "UnitFromLabel";
-            this.UnitFromLabel.Size = new System.Drawing.Size(35, 15);
+            this.UnitFromLabel.Size = new System.Drawing.Size(80, 15);
             this.UnitFromLabel.TabIndex = 5;
-            this.UnitFromLabel.Text = "From";
+            this.UnitFromLabel.Text = "Convert From";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(226, 44);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(19, 15);
+            this.label3.Size = new System.Drawing.Size(64, 15);
             this.label3.TabIndex = 6;
-            this.label3.Text = "To";
+            this.label3.Text = "Convert To";
             // 
             // OutputConsole
             // 
+            this.OutputConsole.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.OutputConsole.FormattingEnabled = true;
-            this.OutputConsole.ItemHeight = 15;
+            this.OutputConsole.HorizontalScrollbar = true;
+            this.OutputConsole.ItemHeight = 21;
             this.OutputConsole.Location = new System.Drawing.Point(39, 169);
             this.OutputConsole.Name = "OutputConsole";
             this.OutputConsole.Size = new System.Drawing.Size(296, 319);
             this.OutputConsole.TabIndex = 8;
-            this.OutputConsole.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // comboBox
             // 
@@ -189,7 +175,8 @@
             "unit dimension",
             "quantity classes",
             "uom for a given quantity class",
-            "aliases for a given uom "});
+            "aliases for a given uom",
+            "names of every unit"});
             this.comboBox.Location = new System.Drawing.Point(428, 62);
             this.comboBox.Name = "comboBox";
             this.comboBox.Size = new System.Drawing.Size(243, 23);
@@ -218,9 +205,10 @@
             // 
             // OutputList
             // 
+            this.OutputList.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.OutputList.FormattingEnabled = true;
             this.OutputList.HorizontalScrollbar = true;
-            this.OutputList.ItemHeight = 15;
+            this.OutputList.ItemHeight = 21;
             this.OutputList.Location = new System.Drawing.Point(428, 169);
             this.OutputList.Name = "OutputList";
             this.OutputList.Size = new System.Drawing.Size(317, 319);
@@ -234,6 +222,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(243, 23);
             this.textBox1.TabIndex = 14;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label2
             // 
@@ -253,23 +242,6 @@
             this.EditComboBox.TabIndex = 16;
             this.EditComboBox.SelectedIndexChanged += new System.EventHandler(this.EditComboBox_SelectedIndexChanged);
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(1101, 44);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(27, 15);
-            this.label4.TabIndex = 17;
-            this.label4.Text = "Edit";
-            // 
-            // EditTextbox
-            // 
-            this.EditTextbox.Location = new System.Drawing.Point(1212, 70);
-            this.EditTextbox.Name = "EditTextbox";
-            this.EditTextbox.Size = new System.Drawing.Size(146, 23);
-            this.EditTextbox.TabIndex = 18;
-            this.EditTextbox.TextChanged += new System.EventHandler(this.EditTextbox_TextChanged);
-            // 
             // EditButton
             // 
             this.EditButton.Location = new System.Drawing.Point(1292, 188);
@@ -283,7 +255,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(1251, 44);
+            this.label5.Location = new System.Drawing.Point(1101, 44);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(66, 15);
             this.label5.TabIndex = 20;
@@ -325,21 +297,9 @@
             this.label8.TabIndex = 24;
             this.label8.Text = "Create Unit/QT";
             // 
-            // EditWhat
-            // 
-            this.EditWhat.FormattingEnabled = true;
-            this.EditWhat.Items.AddRange(new object[] {
-            "Unit",
-            "QuantityType"});
-            this.EditWhat.Location = new System.Drawing.Point(1069, 70);
-            this.EditWhat.Name = "EditWhat";
-            this.EditWhat.Size = new System.Drawing.Size(121, 23);
-            this.EditWhat.TabIndex = 25;
-            this.EditWhat.SelectedIndexChanged += new System.EventHandler(this.EditWhat_SelectedIndexChanged);
-            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1364, 70);
+            this.button1.Location = new System.Drawing.Point(1290, 71);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(37, 23);
             this.button1.TabIndex = 26;
@@ -467,7 +427,7 @@
             // 
             // EditQTButton
             // 
-            this.EditQTButton.Location = new System.Drawing.Point(1261, 567);
+            this.EditQTButton.Location = new System.Drawing.Point(1252, 480);
             this.EditQTButton.Name = "EditQTButton";
             this.EditQTButton.Size = new System.Drawing.Size(75, 23);
             this.EditQTButton.TabIndex = 44;
@@ -477,14 +437,14 @@
             // 
             // EditQTName
             // 
-            this.EditQTName.Location = new System.Drawing.Point(1251, 489);
+            this.EditQTName.Location = new System.Drawing.Point(1242, 402);
             this.EditQTName.Name = "EditQTName";
             this.EditQTName.Size = new System.Drawing.Size(100, 23);
             this.EditQTName.TabIndex = 45;
             // 
             // QTNewName
             // 
-            this.QTNewName.Location = new System.Drawing.Point(1251, 528);
+            this.QTNewName.Location = new System.Drawing.Point(1242, 441);
             this.QTNewName.Name = "QTNewName";
             this.QTNewName.Size = new System.Drawing.Size(100, 23);
             this.QTNewName.TabIndex = 46;
@@ -492,7 +452,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(1183, 490);
+            this.label17.Location = new System.Drawing.Point(1174, 403);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(39, 15);
             this.label17.TabIndex = 47;
@@ -501,7 +461,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(1175, 531);
+            this.label18.Location = new System.Drawing.Point(1166, 444);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(66, 15);
             this.label18.TabIndex = 48;
@@ -610,7 +570,7 @@
             // 
             // AddQTName
             // 
-            this.AddQTName.Location = new System.Drawing.Point(1290, 653);
+            this.AddQTName.Location = new System.Drawing.Point(1275, 595);
             this.AddQTName.Name = "AddQTName";
             this.AddQTName.Size = new System.Drawing.Size(100, 23);
             this.AddQTName.TabIndex = 65;
@@ -618,7 +578,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(1189, 619);
+            this.label23.Location = new System.Drawing.Point(1174, 561);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(212, 15);
             this.label23.TabIndex = 66;
@@ -627,7 +587,7 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(1189, 656);
+            this.label24.Location = new System.Drawing.Point(1174, 598);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(85, 15);
             this.label24.TabIndex = 67;
@@ -635,7 +595,7 @@
             // 
             // AddRemoveQTValue
             // 
-            this.AddRemoveQTValue.Location = new System.Drawing.Point(1290, 692);
+            this.AddRemoveQTValue.Location = new System.Drawing.Point(1275, 634);
             this.AddRemoveQTValue.Name = "AddRemoveQTValue";
             this.AddRemoveQTValue.Size = new System.Drawing.Size(100, 23);
             this.AddRemoveQTValue.TabIndex = 68;
@@ -643,7 +603,7 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(1162, 695);
+            this.label25.Location = new System.Drawing.Point(1147, 637);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(122, 15);
             this.label25.TabIndex = 69;
@@ -651,7 +611,7 @@
             // 
             // ConfirmAdd
             // 
-            this.ConfirmAdd.Location = new System.Drawing.Point(1199, 743);
+            this.ConfirmAdd.Location = new System.Drawing.Point(1184, 685);
             this.ConfirmAdd.Name = "ConfirmAdd";
             this.ConfirmAdd.Size = new System.Drawing.Size(75, 23);
             this.ConfirmAdd.TabIndex = 70;
@@ -661,7 +621,7 @@
             // 
             // ConfirmRemove
             // 
-            this.ConfirmRemove.Location = new System.Drawing.Point(1303, 745);
+            this.ConfirmRemove.Location = new System.Drawing.Point(1288, 687);
             this.ConfirmRemove.Name = "ConfirmRemove";
             this.ConfirmRemove.Size = new System.Drawing.Size(75, 23);
             this.ConfirmRemove.TabIndex = 71;
@@ -676,103 +636,36 @@
             this.CreateUOM.Size = new System.Drawing.Size(100, 23);
             this.CreateUOM.TabIndex = 72;
             // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(841, 653);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(35, 15);
-            this.label26.TabIndex = 73;
-            this.label26.Text = "UOM";
-            // 
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(1248, 470);
+            this.label27.Location = new System.Drawing.Point(1239, 383);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(103, 15);
             this.label27.TabIndex = 74;
             this.label27.Text = "Edit Quantity Type";
             // 
-            // CreateQTName
-            // 
-            this.CreateQTName.Location = new System.Drawing.Point(1243, 372);
-            this.CreateQTName.Name = "CreateQTName";
-            this.CreateQTName.Size = new System.Drawing.Size(100, 23);
-            this.CreateQTName.TabIndex = 75;
-            // 
-            // CreateQTBase
-            // 
-            this.CreateQTBase.Location = new System.Drawing.Point(1243, 407);
-            this.CreateQTBase.Name = "CreateQTBase";
-            this.CreateQTBase.Size = new System.Drawing.Size(100, 23);
-            this.CreateQTBase.TabIndex = 76;
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(1069, 375);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(156, 15);
-            this.label28.TabIndex = 77;
-            this.label28.Text = "Name of New Quantity Type";
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(1131, 410);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(91, 15);
-            this.label29.TabIndex = 78;
-            this.label29.Text = "Assign BaseUnit";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(1251, 436);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 79;
-            this.button2.Text = "Create Quantity Type";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(167, 640);
+            this.label30.Location = new System.Drawing.Point(636, 652);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(65, 15);
             this.label30.TabIndex = 80;
             this.label30.Text = "Delete Unit";
             this.label30.Click += new System.EventHandler(this.label30_Click);
             // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(434, 640);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(116, 15);
-            this.label31.TabIndex = 81;
-            this.label31.Text = "Delete Quantity Type";
-            this.label31.Click += new System.EventHandler(this.label31_Click);
-            // 
             // DeleteUnitBox
             // 
-            this.DeleteUnitBox.Location = new System.Drawing.Point(156, 676);
+            this.DeleteUnitBox.Location = new System.Drawing.Point(625, 688);
             this.DeleteUnitBox.Name = "DeleteUnitBox";
             this.DeleteUnitBox.Size = new System.Drawing.Size(100, 23);
             this.DeleteUnitBox.TabIndex = 82;
             this.DeleteUnitBox.TextChanged += new System.EventHandler(this.DeleteUnitBox_TextChanged);
             // 
-            // DeleteQT
-            // 
-            this.DeleteQT.Location = new System.Drawing.Point(450, 676);
-            this.DeleteQT.Name = "DeleteQT";
-            this.DeleteQT.Size = new System.Drawing.Size(100, 23);
-            this.DeleteQT.TabIndex = 83;
-            // 
             // DeleteUnitButton
             // 
-            this.DeleteUnitButton.Location = new System.Drawing.Point(156, 725);
+            this.DeleteUnitButton.Location = new System.Drawing.Point(625, 737);
             this.DeleteUnitButton.Name = "DeleteUnitButton";
             this.DeleteUnitButton.Size = new System.Drawing.Size(100, 23);
             this.DeleteUnitButton.TabIndex = 84;
@@ -780,34 +673,15 @@
             this.DeleteUnitButton.UseVisualStyleBackColor = true;
             this.DeleteUnitButton.Click += new System.EventHandler(this.DeleteUnitButton_Click);
             // 
-            // DeleteQTButton
-            // 
-            this.DeleteQTButton.Location = new System.Drawing.Point(450, 725);
-            this.DeleteQTButton.Name = "DeleteQTButton";
-            this.DeleteQTButton.Size = new System.Drawing.Size(94, 23);
-            this.DeleteQTButton.TabIndex = 85;
-            this.DeleteQTButton.Text = "Delete";
-            this.DeleteQTButton.UseVisualStyleBackColor = true;
-            this.DeleteQTButton.Click += new System.EventHandler(this.DeleteQTButton_Click);
-            // 
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(54, 679);
+            this.label32.Location = new System.Drawing.Point(523, 691);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(78, 15);
             this.label32.TabIndex = 86;
             this.label32.Text = "Name of Unit";
             this.label32.Click += new System.EventHandler(this.label32_Click);
-            // 
-            // label33
-            // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(308, 677);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(129, 15);
-            this.label33.TabIndex = 87;
-            this.label33.Text = "Name of Quantity Type";
             // 
             // label34
             // 
@@ -819,27 +693,25 @@
             this.label34.Text = "uom";
             this.label34.Click += new System.EventHandler(this.label34_Click);
             // 
+            // EditTextbox
+            // 
+            this.EditTextbox.Location = new System.Drawing.Point(1054, 71);
+            this.EditTextbox.Name = "EditTextbox";
+            this.EditTextbox.Size = new System.Drawing.Size(201, 23);
+            this.EditTextbox.TabIndex = 18;
+            this.EditTextbox.TextChanged += new System.EventHandler(this.EditTextbox_TextChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1437, 810);
             this.Controls.Add(this.label34);
-            this.Controls.Add(this.label33);
             this.Controls.Add(this.label32);
-            this.Controls.Add(this.DeleteQTButton);
             this.Controls.Add(this.DeleteUnitButton);
-            this.Controls.Add(this.DeleteQT);
             this.Controls.Add(this.DeleteUnitBox);
-            this.Controls.Add(this.label31);
             this.Controls.Add(this.label30);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.label29);
-            this.Controls.Add(this.label28);
-            this.Controls.Add(this.CreateQTBase);
-            this.Controls.Add(this.CreateQTName);
             this.Controls.Add(this.label27);
-            this.Controls.Add(this.label26);
             this.Controls.Add(this.CreateUOM);
             this.Controls.Add(this.ConfirmRemove);
             this.Controls.Add(this.ConfirmAdd);
@@ -880,7 +752,6 @@
             this.Controls.Add(this.CreateUOMName);
             this.Controls.Add(this.CreateUOMID);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.EditWhat);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.textBox2);
@@ -888,7 +759,6 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.EditButton);
             this.Controls.Add(this.EditTextbox);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.EditComboBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox1);
@@ -928,15 +798,12 @@
         private TextBox textBox1;
         private Label label2;
         private ComboBox EditComboBox;
-        private Label label4;
-        private TextBox EditTextbox;
         private Button EditButton;
         private Label label5;
         private Label label6;
         private TextBox textBox2;
         private Label label7;
         private Label label8;
-        private ComboBox EditWhat;
         private Button button1;
         private TextBox CreateUOMID;
         private TextBox CreateUOMName;
@@ -977,21 +844,12 @@
         private Button ConfirmAdd;
         private Button ConfirmRemove;
         private TextBox CreateUOM;
-        private Label label26;
         private Label label27;
-        private TextBox CreateQTName;
-        private TextBox CreateQTBase;
-        private Label label28;
-        private Label label29;
-        private Button button2;
         private Label label30;
-        private Label label31;
         private TextBox DeleteUnitBox;
-        private TextBox DeleteQT;
         private Button DeleteUnitButton;
-        private Button DeleteQTButton;
         private Label label32;
-        private Label label33;
         private Label label34;
+        private TextBox EditTextbox;
     }
 }
