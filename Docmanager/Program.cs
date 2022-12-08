@@ -3,11 +3,16 @@
 IDocmanager docmanager;
 docmanager = DocFactory.CreateDocmanager("Test");
 
-foreach (string quantityClass in docmanager.ReadNames())
-{
-    Console.WriteLine(quantityClass);
-}
+//foreach (string quantityClass in docmanager.ReadNames())
+//{
+//    Console.WriteLine(quantityClass);
+//}
 
-//Console.WriteLine(docmanager.EditUnit("inverse henry", "id", "test"));
+Console.WriteLine(docmanager.ReadDimension("A"));
+
+foreach(var x in docmanager.ReadDimension("I"))
+{
+    Console.WriteLine(x);
+}
 
 

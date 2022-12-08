@@ -74,10 +74,8 @@ namespace Docmanager
         private Dimension QueryDimension(string symbol)
         {
             try
-            {
-
+            { 
                 Dimension match = Dimensions.First(dim => dim.Symbol == symbol);
-
 
                 return match;
             }
@@ -690,24 +688,28 @@ namespace Docmanager
 
         public List<string> ReadDimension(string symbol)
         {
+            Dimension match = QueryDimension(symbol);
             try
             {
-                Dimension match = QueryDimension(symbol);
-                try
-                {
-                    List<string> output = new List<string>() { match.Symbol.ToString(), match.Definition, match.SIUnit };
-                    return output;
-                }
-                catch (NullReferenceException)
-                {
-                    throw new Exception("This dimension is missing parameters");
-                }
+                match = QueryDimension(symbol);
             }
             catch (InvalidOperationException)
             {
                 throw;
             }
+
+            try
+            {
+                List<string> output = new List<string>() { match.Symbol.ToString(), match.Definition, match.SIUnit };
+                return output;
+            }
+            catch (NullReferenceException)
+            {
+                throw new Exception("This dimension is missing parameters");
+            }
         }
+
+        
 
         private List<string> ReadQuantityClass(UOM unit)
         {
