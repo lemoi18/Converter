@@ -11,7 +11,7 @@ namespace Webmanager.WebREST.Services;
 
 public static class AliasService
 {
-    static List<Alias> Aliass { get; }
+    static List<Alias> Aliass { get; set; }
     static IRequests request = RequestFactory.CreateRequestsFactory("REQUEST");
 
 
@@ -40,13 +40,8 @@ public static class AliasService
     public static void Add(string Unit, string Alias)
     {
         //string ADD = request.AddAlias(Unit, Alias);
-        Console.WriteLine("ADD ALIAS");
-
+       
     }
 
-    public static void Update(string Unit, string Alias)
-    {
-        //string EDIT = request.RemoveAlias(Unit, Alias);
-        Console.WriteLine("DELETE ALIAS");
-    }
+   
 }

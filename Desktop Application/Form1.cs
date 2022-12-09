@@ -1,4 +1,3 @@
-using Connector;
 using Microsoft.VisualBasic;
 using RequestLib;
 using System;
@@ -9,19 +8,15 @@ namespace Desktop_Application
     public partial class Form1 : Form
     {
 
-        IC converter;
         IRequests request;
-        // Test is only mm to cm
 
 
 
         public Form1()
         {
             InitializeComponent();
-            converter = ConnectorFactory.CreateConnectorFactory("Connector");
             request = RequestFactory.CreateRequestsFactory("Request");
-            this.EditComboBox.Hide();
-            this.label6.Hide();
+            
 
         }
 
@@ -40,17 +35,32 @@ namespace Desktop_Application
 
         }
 
-        private void ConverterButton_Click(object sender, EventArgs e)
+       
+
+        private  void ConverterButton_Click(object sender, EventArgs e)
         {
 
-            //Tuple<double, string, string> Edited = converter.ConverterWrapper(Double.Parse(Value.Text), UnitFrom.Text, UnitTo.Text);
-            Tuple<double, string, string> Edited = request.Convert(Double.Parse(Value.Text), UnitFrom.Text, UnitTo.Text);
             
-            string str = string.Format("{0} {1} {2}", Edited.Item1.ToString(), Edited.Item2, Edited.Item3);
+            try
+            {
+                // Use the "await" keyword to wait for the task to complete
+                var resultList =  request.Convert(double.Parse(ValueText.Text), UnitFromText.Text, UnitToText.Text);
+                string resultString = string.Join(" ", resultList);
 
-            OutputConsole.Items.Add(str);
-
+                OutputConsole.Items.Add(resultString);
+            }
+            catch (System.FormatException)
+            {
+                OutputConsole.Items.Add("Input is not correct format");
+            }
+            finally
+            {
+                ValueText.ResetText();
+                UnitFromText.ResetText();
+                UnitToText.ResetText();
+            }
         }
+
 
 
 
@@ -66,11 +76,12 @@ namespace Desktop_Application
 
         private void ConfimList_Click(object sender, EventArgs e)
         {
-            if (comboBox.Text == "unit dimensions")
+            if (comboBoxList.Text == "unit dimensions")
             {
                 OutputList.Items.Clear();
+                this.ListSpecifyText.ResetText();
 
-                
+
                 foreach (var student in request.ListUnitdimentions())
                 {
 
@@ -80,21 +91,24 @@ namespace Desktop_Application
                     
                 }
             }
-            if (comboBox.Text == "unit dimension")
+            if (comboBoxList.Text == "unit dimension")
             {
+                
                 OutputList.Items.Clear();
 
-               
-                foreach (var student in request.GetUnitdimension(textBox1.Text))
-                {
 
-                    string str2 = string.Format("{0} ", student);
-                    OutputList.Items.Add(str2);
-                }
+
+                var resultList = request.GetUnitdimension(ListSpecifyText.Text);
+                string resultString = string.Join(" ", resultList);
+
+                OutputList.Items.Add(resultString);
+                this.ListSpecifyText.ResetText();
             }
-            if (comboBox.Text == "quantity classes")
+            if (comboBoxList.Text == "quantity classes")
             {
                 OutputList.Items.Clear();
+                this.ListSpecifyText.ResetText();
+
 
                 foreach (var quantity in request.ListQualityclass())
                 {
@@ -102,50 +116,64 @@ namespace Desktop_Application
                     OutputList.Items.Add(str2);
                 }
             }
-            if (comboBox.Text == "aliases for a given uom ")
+            if (comboBoxList.Text == "aliases for a given uom ")
             {
 
                 OutputList.Items.Clear();
 
-                foreach (var aliases in request.ListAlias(textBox1.Text))
+
+                foreach (var aliases in request.ListAlias(ListSpecifyText.Text))
                 {
                     string str2 = string.Format("{0}", aliases);
                     OutputList.Items.Add(str2);
                 }
+                this.ListSpecifyText.ResetText();
+
             }
 
-            if (comboBox.Text == "uom for a given quantity class")
+            if (comboBoxList.Text == "uom for a given quantity class")
             {
                 OutputList.Items.Clear();
 
 
-                foreach (var student in request.GetQualityclass(textBox1.Text))
+
+                foreach (var student in request.GetQualityclass(ListSpecifyText.Text))
                 {
                     string str2 = string.Format("{0}", student);
                     OutputList.Items.Add(str2);
                 }
+                this.ListSpecifyText.ResetText();
+
             }
-            if (comboBox.Text == "uom for a given quantity class(detailed version)")
+
+            if (comboBoxList.Text == "names of every unit")
             {
-                OutputList.Items.Clear();
 
-
-                foreach (var student in request.ListUnits())
+                foreach (var student in request.ListNames())
                 {
+
+
                     string str2 = string.Format("{0}", student);
                     OutputList.Items.Add(str2);
-                }
-            }
 
+                }
+
+
+
+
+
+              //  foreach (var student in request.ListUnits())
+              //  {
+              //      string str2 = string.Format("{0}", student);
+              //      OutputList.Items.Add(str2);
+              //  }
+              //  this.textBox1.ResetText();
+              //
+            }
 
         }
 
         private void listBox1_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
 
         }
@@ -170,25 +198,20 @@ namespace Desktop_Application
         {
 
 
-            if(EditWhat.Text == "UOM")
-            {
+            
                 
-                request.EditUOM(EditTextbox.Text, EditComboBox.Text, textBox2.Text);
-            }
+           request.EditUOM(EditTextbox.Text, EditComboBox.Text, EditValueText.Text);
+            
 
-            if (EditWhat.Text == "QuantityType")
-            {
-                request.EditQualityclass(EditTextbox.Text, textBox2.Text);
+            
                 
-            }
-
+ 
             EditTextbox.Clear();
             EditComboBox.Items.Clear();
             EditComboBox.Text = "";
-            EditWhat.Text = "";
-            textBox2.Clear();
+            EditValueText.Clear();
             this.EditComboBox.Hide();
-            this.label6.Hide();
+            this.AttributeToEditLabel.Hide();
 
         }
 
@@ -204,13 +227,8 @@ namespace Desktop_Application
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (EditWhat.Text == "UOM")
-            {
-                this.EditComboBox.Show();
-                this.label6.Show();
-            }
-
-            foreach (var student in request.ListKeys(EditTextbox.Text))
+          
+            foreach (var student in request.ReadProp(EditTextbox.Text))
             {
                 string str2 = string.Format("{0}", student);
                 EditComboBox.Items.Add(str2);
@@ -219,7 +237,7 @@ namespace Desktop_Application
 
         private void CreateQTButton_Click(object sender, EventArgs e)
         {
-            request.EditQualityclass(EditQTName.Text, QTNewName.Text);
+            //request.EditQualityclass(EditQTName.Text, QTNewName.Text);
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
@@ -235,14 +253,44 @@ namespace Desktop_Application
 
 
 
-
-            if (CreateUOMCheckbox.Checked)
-
-                request.CreateBaseUnit(CreateUOMID.Text, CreateUOMAnnotation.Text, CreateUOMName.Text, CreateUOMQT.Text, CreateUOMDimensional.Text,CreateUOM.Text,CreateUOMAlias.Text);
-            else
+            try
             {
-                request.CreateSecondaryUnit(CreateUOMID.Text, CreateUOMAnnotation.Text, CreateUOMName.Text, CreateUOMQT.Text, CreateUOMDimensional.Text, CreateUOM.Text, CreateUOMBaseUnit.Text, Double.Parse(CreateUOMA.Text), Double.Parse(CreateUOMB.Text), Double.Parse(CreateUOMC.Text), Double.Parse(CreateUOMD.Text), CreateUOMAlias.Text) ; 
-            }        
+                if (CreateUOMCheckbox.Checked)
+                    try
+                    {
+
+                        request.CreateBaseUnit(CreateUOMID.Text, CreateUOMAnnotation.Text, CreateUOMName.Text, CreateUOMQT.Text, CreateUOMDimensional.Text, CreateUOM.Text, CreateUOMAlias.Text);
+                    }
+                    catch { }
+
+                else
+                {
+                    try
+                    {
+                        request.CreateSecondaryUnit(CreateUOMID.Text, CreateUOMAnnotation.Text, CreateUOMName.Text, CreateUOMQT.Text, CreateUOMDimensional.Text, CreateUOM.Text, CreateUOMBaseUnit.Text, Double.Parse(CreateUOMA.Text), Double.Parse(CreateUOMB.Text), Double.Parse(CreateUOMC.Text), Double.Parse(CreateUOMD.Text), CreateUOMAlias.Text);
+                    }
+                    catch { }
+
+
+
+                   
+                }
+            }
+            finally
+            {
+                CreateUOMID.ResetText();
+                CreateUOMAnnotation.ResetText();
+                CreateUOMName.ResetText();
+                CreateUOMQT.ResetText();
+                CreateUOMDimensional.ResetText();
+                CreateUOM.ResetText();
+                CreateUOMBaseUnit.ResetText();
+                CreateUOMA.ResetText();
+                CreateUOMB.ResetText();
+                CreateUOMC.ResetText();
+                CreateUOMD.ResetText();
+                CreateUOMAlias.ResetText();
+            }
         }
 
         private void label19_Click(object sender, EventArgs e)
@@ -260,10 +308,10 @@ namespace Desktop_Application
                 this.CreateUOMC.Hide();
                 this.CreateUOMD.Hide();
 
-                this.label19.Hide();
+                this.BLabel.Hide();
                 this.label20.Hide();
                 this.label21.Hide();
-                this.label22.Hide();
+                this.ALabel.Hide();
             }
             else
             {
@@ -272,10 +320,10 @@ namespace Desktop_Application
                 this.CreateUOMC.Show();
                 this.CreateUOMD.Show();
 
-                this.label19.Show();
+                this.BLabel.Show();
                 this.label20.Show();
                 this.label21.Show();
-                this.label22.Show();
+                this.ALabel.Show();
 
                 
 
@@ -335,8 +383,7 @@ namespace Desktop_Application
 
         private void DeleteQTButton_Click(object sender, EventArgs e)
         {
-            request.DeleteQualityclass(DeleteQT.Text);
-            DeleteQT.Clear();
+            
         }
 
         private void label34_Click(object sender, EventArgs e)
@@ -346,7 +393,12 @@ namespace Desktop_Application
 
         private void OutputList_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            textBox1.Text = OutputList.Text;
+            ListSpecifyText.Text = OutputList.Text;
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

@@ -15,7 +15,6 @@ public static class UOMService
 
     static UOMService()
     {
-        List<List<string>> UN = request.ListUnits();
         UOMs = new List<UOM>
         {
            };
@@ -43,7 +42,6 @@ public static class UOMService
 
     public static List<UOM> GetAll() => UOMs;
 
-    public static UOM? Get(string name) => UOMs.FirstOrDefault(p => p.Name == name);
 
     public static void Add(UOM Uom)
     {

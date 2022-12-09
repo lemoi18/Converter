@@ -1,13 +1,17 @@
-﻿namespace Connector
+﻿using Docmanager;
+
+namespace Connector
 {
     public interface IC
     {
 
-        public Tuple<double, string, string> ConverterWrapper(double value, string unitFrom, string unitTo);
-        public Tuple<double, string, string> ConvertToBase(double value, string unitFrom);
+         double Value { get; set; }
+         string Unit { get; set; }
+         string Annotation { get; set; }
+        public IDocmanager docmanager { get; set; }
 
-        public Tuple<double, string, string> BaseToConvert(double value, string unitFrom);
 
-        public string WriteToConsole(Tuple<double, string, string> tuple);
+        public List<string> Convert(double value, string unit, string annotation);
+
     }
 }

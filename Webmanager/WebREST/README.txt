@@ -2,6 +2,7 @@
 
 TO START the webserver you need in the directory Convert/Webmanager/, then you run the PowerShell command "dotnet run".
 To Connect with to the server you can Example do the code "httprepl https://localhost:{Port}" //As of now the config port is 7285.
+To use httprepl you have to run the commad "dotnet tool install -g Microsoft.dotnet-httprepl".
 
 The Server contains the functionalities of Alias, Quanitiyclass, Quantitiytype, UnitDimension, UOM. Each have their own url point, an example of this
 could be https://localhost:7285/Alias . 

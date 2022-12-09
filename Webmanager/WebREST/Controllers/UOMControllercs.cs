@@ -8,8 +8,7 @@ using System.Xml.Linq;
 
 namespace RESTTEST.Controllers;
 
-[ApiController]
-[Route("[controller]")]
+
 public class UOMController : ControllerBase
 {
     public UOMController()
@@ -23,17 +22,7 @@ public class UOMController : ControllerBase
     public ActionResult<List<UOM>> GetAll() =>
     UOMService.GetAll();
 
-    // GET by Id action
-    [HttpGet("{Name}")]
-    public ActionResult<UOM> Get(string Name)
-    {
-        var uom = UOMService.Get(Name);
-
-        if (uom == null)
-            return NotFound();
-
-        return uom;
-    }
+   
 
     // POST action
     [HttpPost]

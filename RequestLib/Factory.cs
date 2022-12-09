@@ -8,10 +8,7 @@
         {
             IRequests requests = null;
 
-            if (name.ToUpper() == "TEST")
-                requests = new RequestStub();
-
-            else if(name.ToUpper() == "REQUEST")
+             if(name.ToUpper() == "REQUEST")
                 requests = new Request();
 
             return requests;

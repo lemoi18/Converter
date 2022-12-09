@@ -8,15 +8,27 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
+using static Docmanager.Docmanager;
 
 namespace Docmanager
 {
     internal class Docmanager : IDocmanager
     {
-        List<UOM> Units = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(Pathgetter("POSC.json")));
 
-        List<Dimension> Dimensions = JsonConvert.DeserializeObject<List<Dimension>>(File.ReadAllText(Pathgetter("UnitDimensions.json")));
+        List<UOM> Units;
+        List<Dimension> Dimensions;
+
+        public Docmanager()
+        {
+            Units = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(Pathgetter("POSC.json")));
+            Dimensions = JsonConvert.DeserializeObject<List<Dimension>>(File.ReadAllText(Pathgetter("UnitDimensions.json")));
+
+        }
 
         public static string Pathgetter(string filename)
         {
@@ -29,13 +41,14 @@ namespace Docmanager
             path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, projectPath + "/JsonGetter/" + filename);
             return path;
         }
+
         private UOM QueryName(string unitName)
         {
             try
             {
-                UOM match = Units.First(unit => unit.Name == unitName);
+                UOM houseOnes = Units.First(unit => unit.Name == unitName);
 
-                return match;
+                return houseOnes;
             }
             catch (InvalidOperationException)
             {
@@ -43,27 +56,26 @@ namespace Docmanager
             }
         }
 
-        private UOM QueryID(string ID)
+        public List<string> ReadNames()
         {
-            try
+            List<string> output = new List<string>();
+            foreach (UOM unit in Units)
             {
-                UOM match = Units.First(unit => unit.id == ID);
-
-                return match;
+                output.Add(unit.Name);
             }
-            catch (InvalidOperationException)
-            {
-                throw new InvalidOperationException("There is no unit with this ID");
-            }
+            return output;
         }
 
-        private UOM QueryUOM(string unitName)
+        private UOM QueryUOM(string uom)
         {
             try
             {
-                UOM match = Units.First(unit => ReadUom(unit).Contains(unitName));
 
-                return match;
+
+                UOM houseOnes = Units.First(unit => ReadUom(unit).Contains(uom));
+
+
+                return houseOnes;
             }
             catch (InvalidOperationException)
             {
@@ -74,8 +86,10 @@ namespace Docmanager
         private Dimension QueryDimension(string symbol)
         {
             try
-            { 
+            {
+
                 Dimension match = Dimensions.First(dim => dim.Symbol == symbol);
+
 
                 return match;
             }
@@ -84,7 +98,6 @@ namespace Docmanager
                 throw new InvalidOperationException("There is no dimension with this symbol");
             }
         }
-
 
         public bool NameExists(string unitName)
         {
@@ -98,16 +111,6 @@ namespace Docmanager
             }
 
             return true;
-        }
-
-        public List<string> ReadNames()
-        {
-            List<string> output = new List<string>();
-            foreach (UOM unit in Units)
-            {
-                output.Add(unit.Name);
-            }
-            return output;
         }
 
         public List<string> ReadProperties(string unitName)
@@ -169,13 +172,13 @@ namespace Docmanager
 
         }
 
-        public string ReadAnnotation(string unitName)
+        public string ReadAnnotation(string uom)
         {
             UOM match = new UOM();
 
             try
             {
-                match = QueryName(unitName);
+                match = QueryUOM(uom);
             }
             catch (InvalidOperationException)
             {
@@ -203,7 +206,6 @@ namespace Docmanager
             {
                 return new List<string> { null };
             }
-
 
             List<string> output = new List<string>();
 
@@ -239,60 +241,13 @@ namespace Docmanager
             }
         }
 
-        public string ReadIsBase(string unitName)
+        public bool IsBase(string uom)
         {
-            UOM match = new UOM();
-            try
-            {
-                match = QueryName(unitName);
-            }
-            catch (InvalidOperationException)
-            {
-                throw;
-            }
+            // Retrieve the UOM object that corresponds to the input UOM
+            var match = QueryUOM(uom);
 
-
-            try
-            {
-                return match.ConversionToBaseUnit.baseUnit;
-            }
-            catch (NullReferenceException)
-            {
-                return "This unit does not have ConversionToBaseUnit.baseUnit";
-            }
-
-        }
-
-        public bool IsBase(string unitName)
-        {
-            UOM match = new UOM();
-            try
-            {
-                match = QueryName(unitName);
-            }
-            catch (InvalidOperationException)
-            {
-                throw;
-            }
-            try
-            {
-
-
-                try
-                {
-                    return match.BaseUnit != null;
-                }
-                catch (NullReferenceException)
-                {
-                    throw new NullReferenceException("Logfile cannot be read-only");
-                }
-            }
-            catch (InvalidOperationException)
-            {
-                throw new InvalidOperationException("This name is not in file");
-            }
-
-            return true;
+            // Use the null coalescing operator to provide a default value for the BaseUnit property if it is null
+            return match.BaseUnit != null;
         }
 
         public string ReadName(string uom)
@@ -318,99 +273,95 @@ namespace Docmanager
         }
 
 
-        public string ReadConversion(string unitName, ref double A, ref double B, ref double C, ref double D)
+        public string ReadIsBase(string unitName)
+        {
+            UOM match = new UOM();
+            
+                try
+                {
+                    match = QueryUOM(unitName);
+                }
+                catch (InvalidOperationException)
+                {
+                    throw new InvalidOperationException("There is no unti with this name or uom");
+                }
+            
+
+            try
+            {
+                return match.ConversionToBaseUnit.baseUnit;
+            }
+            catch (NullReferenceException)
+            {
+                return "This unit does not have ConversionToBaseUnit.baseUnit";
+            }
+
+        }
+
+        public string ReadConversion(string uom, ref double A, ref double B, ref double C, ref double D)
         {
             UOM match = new UOM();
 
             try
             {
-                match = QueryName(unitName);
+                match = QueryUOM(uom);
             }
             catch (InvalidOperationException)
             {
                 throw;
             }
 
-
             A = B = C = D = 0;
+            CultureInfo culture = CultureInfo.GetCultureInfo("en-US");
 
-            try
+            if (match.ConversionToBaseUnit != null || match.BaseUnit != null)
             {
-                if (match.ConversionToBaseUnit.baseUnit != null)
-                {
-                    C = 1;
-                }
+                C = 1;
+                B = 1;
             }
-            catch (NullReferenceException) { }
 
-            try
+            if (match.ConversionToBaseUnit != null && match.ConversionToBaseUnit.Formula != null && match.ConversionToBaseUnit.Formula.A != null)
             {
-                if (match.ConversionToBaseUnit.Formula.A != null)
-                {
-                    A = double.Parse(match.ConversionToBaseUnit.Formula.A, CultureInfo.GetCultureInfo("en-US"));
-                }
+                A = double.Parse(match.ConversionToBaseUnit.Formula.A, culture);
             }
-            catch (NullReferenceException) { }
 
-            try
+            if (match.ConversionToBaseUnit != null && match.ConversionToBaseUnit.Formula != null && match.ConversionToBaseUnit.Formula.B != null)
             {
-                if (match.ConversionToBaseUnit.Formula.B != null)
-                {
-                    B = double.Parse(match.ConversionToBaseUnit.Formula.B, CultureInfo.GetCultureInfo("en-US"));
-                }
+                B = double.Parse(match.ConversionToBaseUnit.Formula.B, culture);
             }
-            catch (NullReferenceException) { }
 
-            try
+            if (match.ConversionToBaseUnit != null && match.ConversionToBaseUnit.Formula != null && match.ConversionToBaseUnit.Formula.C != null)
             {
-                if (match.ConversionToBaseUnit.Formula.C != null)
-                {
-                    C = double.Parse(match.ConversionToBaseUnit.Formula.C, CultureInfo.GetCultureInfo("en-US"));
-                }
+                C = double.Parse(match.ConversionToBaseUnit.Formula.C, culture);
             }
-            catch (NullReferenceException) { }
 
-            try
+            if (match.ConversionToBaseUnit != null && match.ConversionToBaseUnit.Formula != null && match.ConversionToBaseUnit.Formula.D != null)
             {
-                if (match.ConversionToBaseUnit.Formula.D != null)
-                {
-                    D = double.Parse(match.ConversionToBaseUnit.Formula.D, CultureInfo.GetCultureInfo("en-US"));
-                }
+                D = double.Parse(match.ConversionToBaseUnit.Formula.D, culture);
             }
-            catch (NullReferenceException) { }
 
-            try
+            if (match.ConversionToBaseUnit != null && match.ConversionToBaseUnit.Factor != null)
             {
-                if (match.ConversionToBaseUnit.Factor != null)
-                {
-                    B = double.Parse(match.ConversionToBaseUnit.Factor, CultureInfo.GetCultureInfo("en-US"));
-                }
+                B = double.Parse(match.ConversionToBaseUnit.Factor, culture);
             }
-            catch (NullReferenceException) { }
-
-            try
+            if (match.ConversionToBaseUnit != null && match.ConversionToBaseUnit.Fraction != null && match.ConversionToBaseUnit.Fraction.Numerator != null)
             {
-                if (match.ConversionToBaseUnit.Fraction.Numerator != null)
-                {
-                    B = double.Parse(match.ConversionToBaseUnit.Fraction.Numerator, CultureInfo.GetCultureInfo("en-US"));
-                }
+                B = double.Parse(match.ConversionToBaseUnit.Fraction.Numerator, culture);
             }
-            catch (NullReferenceException) { }
 
-            try
+            if (match.ConversionToBaseUnit != null && match.ConversionToBaseUnit.Fraction != null && match.ConversionToBaseUnit.Fraction.Denominator != null)
             {
-                if (match.ConversionToBaseUnit.Fraction.Denominator != null)
-                {
-                    C = double.Parse(match.ConversionToBaseUnit.Fraction.Denominator, CultureInfo.GetCultureInfo("en-US"));
-                }
+                C = double.Parse(match.ConversionToBaseUnit.Fraction.Denominator, culture);
             }
-            catch (NullReferenceException) { }
-
 
             return "0";
+
+
+
+
         }
 
-        public int CreateBaseUnit(string id, string annotation, string name, List<string> quantityTypes, string dimensionalclass, string uom, List<string> aliases)
+        public string CreateBaseUnit(string id, string annotation, string name, List<string> quantityTypes, string dimensionalclass, string uom, List<string> aliases)
         {
             JObject SameUnitJObject = new JObject
             {
@@ -435,10 +386,10 @@ namespace Docmanager
 
             File.WriteAllText(Pathgetter("POSC.json"), output);
 
-            return 0;
+            return "0";
         }
 
-        public int CreateSecondaryUnit(string id, string annotation, string name, List<string> quantityType, string dimensionalclass, string uom, string baseunit, double A, double B, double C, double D, List<string> Aliases)
+        public string CreateSecondaryUnit(string id, string annotation, string name, List<string> quantityType, string dimensionalclass, string uom, string baseunit, double A, double B, double C, double D, List<string> Aliases)
         {
             Formula formulaformula = new Formula
             {
@@ -470,10 +421,10 @@ namespace Docmanager
 
             File.WriteAllText(Pathgetter("POSC.json"), output);
 
-            return 0;
+            return "0";
         }
 
-        public int EditUnit(string unitName, string propertyToChange, dynamic newValue)
+        public string EditUnit(string unitName, string propertyToChange, dynamic newValue)
         {
             try
             {
@@ -506,15 +457,7 @@ namespace Docmanager
                             };
                             match.SameUnit = SameUnitJObject;
                             break;
-                        case "catalogname":
-                            match.CatalogName = newValue;
-                            break;
-                        case "catalogsymbolisexplicit":
-                            match.CatalogSymbol.isExplicit = newValue;
-                            break;
-                        case "catalogsymboltext":
-                            match.CatalogSymbol.text = newValue;
-                            break;
+                        
                         case "isbaseunit":
                             match.BaseUnit = newValue;
                             break;
@@ -550,10 +493,10 @@ namespace Docmanager
             {
                 throw;
             }
-            return 0;
+            return "Edited " +unitName;
         }
 
-        public int DeleteUnit(string unitName)
+        public string DeleteUnit(string unitName)
         {
             UOM match = new UOM();
             try
@@ -571,7 +514,7 @@ namespace Docmanager
 
             File.WriteAllText(Pathgetter("POSC.json"), output);
 
-            return 0;
+            return "Deleted" + unitName;
         }
 
         private bool hasQuantityType(UOM unit, string quantityType)
@@ -594,7 +537,7 @@ namespace Docmanager
             }
         }
 
-        public int AddQuantityType(string unitName, string quantityTypeName)
+        public string AddQuantityType(string unitName, string quantityTypeName)
         {
             try
             {
@@ -622,54 +565,53 @@ namespace Docmanager
                 throw;
             }
 
-            return 0;
+            return "Added Quantity Type to "+quantityTypeName;
         }
 
-        public int RemoveQuantityType(string unitName, string quantityTypeName)
+        public string RemoveQuantityType(string unitName, string quantityTypeName)
         {
-            UOM match = new UOM();
             try
             {
-                match = QueryName(unitName);
+                UOM match = QueryName(unitName);
+
+                if (hasQuantityType(match, quantityTypeName))
+                {
+                    string QuantityTypeString = match.QuantityType.ToString();
+
+                    try
+                    {
+                        JArray QuantityTypeJArray = (JArray)JsonConvert.DeserializeObject(QuantityTypeString);
+                        QuantityTypeJArray.Where(i => (string)i == quantityTypeName).ToList().ForEach(i => i.Remove());
+
+                        match.QuantityType = QuantityTypeJArray;
+                        string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
+
+                        File.WriteAllText(Pathgetter("POSC.json"), output);
+                    }
+                    catch (JsonReaderException e)
+                    {
+                        throw new NullReferenceException("Can not remove a units last quantity type");
+
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException("The unit does not have this quantity type");
+                }
             }
             catch (InvalidOperationException)
             {
                 throw;
             }
 
-            if (hasQuantityType(match, quantityTypeName))
-            {
-                string QuantityTypeString = match.QuantityType.ToString();
-
-                try
-                {
-                    JArray QuantityTypeJArray = (JArray)JsonConvert.DeserializeObject(QuantityTypeString);
-                    QuantityTypeJArray.Where(i => (string)i == quantityTypeName).ToList().ForEach(i => i.Remove());
-
-                    match.QuantityType = QuantityTypeJArray;
-                    string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
-
-                    File.WriteAllText(Pathgetter("POSC.json"), output);
-                }
-                catch (JsonReaderException)
-                {
-                    throw new NullReferenceException("Can not remove a units last quantity type");
-                }
-            }
-            else
-            {
-                throw new InvalidOperationException("The unit does not have this quantity type");
-            }
-
-
-            return 0;
+            return "Removed "+ quantityTypeName +"from" + unitName;
         }
 
-        public List<string> ReadUomFromQuantityClass(string quantityClass)
+        public List<string> ReadUOMsFromQuantityType(string quantityClass)
         {
             List<string> output = new List<string>();
 
-            List<UOM> houseOnes = Units.FindAll(unit => unit.QuantityType != null && unit.QuantityType.ToString().Contains(quantityClass)).ToList();
+            List<UOM> houseOnes = Units.FindAll(unit => unit.QuantityType != null && unit.QuantityType.ToString() == quantityClass).ToList();
 
             foreach (UOM unit in houseOnes)
             {
@@ -708,41 +650,45 @@ namespace Docmanager
                 throw new Exception("This dimension is missing parameters");
             }
         }
-
-        
-
-        private List<string> ReadQuantityClass(UOM unit)
+        public List<string> ReadAllQuantityClass()
         {
             List<string> output = new List<string>();
 
-            string quantityTypeString = "none";
-            if (unit.QuantityType != null)
-            {
-                quantityTypeString = unit.QuantityType.ToString();
-            }
-            try
-            {
-                JArray quantityTypeJArray = (JArray)JsonConvert.DeserializeObject(quantityTypeString);
+            //Check each unit for spesefied quantityClassName
 
-                output = quantityTypeJArray.ToObject<List<string>>();
-            }
-            catch (JsonReaderException)
-            {
-                output.Add(quantityTypeString);
-            }
-
-
-            return output;
-        }
-
-        public List<string> ReadQuantityClasses()
-        {
-            List<string> output = new List<string>();
             List<UOM> houseOnes = Units.FindAll(unit => unit.QuantityType != null).ToList();
+
 
             foreach (UOM unit in houseOnes)
             {
-                output.AddRange(ReadQuantityClass(unit));
+
+                if (unit.QuantityType.ToString().Contains(","))
+                {
+
+                    var pattern = @"""[^""]*""";
+                    var matches = Regex.Matches(unit.QuantityType.ToString(), pattern);
+
+                    // Output the extracted values
+                    foreach (Match match in matches)
+                    {
+                        var values = matches.Select(m => m.Value.Trim('"')).ToList();
+                        output.AddRange(values);
+                    }
+
+
+
+
+
+                }
+                else
+                {
+                    if (unit.QuantityType != null)
+                    {
+                        output.Add(unit.QuantityType.ToString());
+
+                    }
+                }
+
             }
 
 
@@ -751,7 +697,6 @@ namespace Docmanager
 
             return output;
         }
-
 
         public List<List<string>> ReadDimensions()
         {
@@ -839,29 +784,24 @@ namespace Docmanager
         public List<string> ReadAliases(string unitName)
         {
             List<string> output = new List<string>();
-
             try
             {
-                output = QueryName(unitName).Aliases;
+                output = QueryName(input).Aliases;
             }
             catch (InvalidOperationException)
             {
-                throw new InvalidOperationException("There is no unit with this name");
+                output = QueryUOM(input).Aliases;
             }
-
             if (output == null)
             {
                 throw new NullReferenceException("Unit with this name or uom has no aliases.");
             }
-
             return output;
         }
 
-        public class CatalogSymbol
-        {
-            public string isExplicit { get; set; }
-            public string text { get; set; }
-        }
+
+
+       
 
         public class ConversionToBaseUnit
         {
@@ -894,7 +834,6 @@ namespace Docmanager
             public string DimensionalClass { get; set; }
             public object SameUnit { get; set; }
             public string CatalogName { get; set; }
-            public CatalogSymbol CatalogSymbol { get; set; }
             public object BaseUnit { get; set; }
             public string Deprecated { get; set; }
             public List<string> Aliases { get; set; }
