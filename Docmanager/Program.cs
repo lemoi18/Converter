@@ -1,14 +1,18 @@
 ﻿using Docmanager;
-using static Docmanager.Docmanager;
-using System.Xml.Linq;
 
 IDocmanager docmanager;
 docmanager = DocFactory.CreateDocmanager("Test");
 
-//List<string> uoms = docmanager.ReadUom("inverse henry");
+//foreach (string quantityClass in docmanager.ReadNames())
+//{
+//    Console.WriteLine(quantityClass);
+//}
 
-//foreach (string uom in uoms)
-//Console.WriteLine(uom);
+Console.WriteLine(docmanager.ReadDimension("A"));
 
-//docmanager.EditUnit("inverse henry", "quantitytype" , "test");
+foreach(var x in docmanager.ReadDimension("I"))
+{
+    Console.WriteLine(x);
+}
+
 

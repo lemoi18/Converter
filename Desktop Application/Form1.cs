@@ -44,7 +44,7 @@ namespace Desktop_Application
             try
             {
                 // Use the "await" keyword to wait for the task to complete
-                var resultList =  request.Convert(double.Parse(Value.Text), UnitFrom.Text, UnitTo.Text);
+                var resultList =  request.Convert(double.Parse(ValueText.Text), UnitFromText.Text, UnitToText.Text);
                 string resultString = string.Join(" ", resultList);
 
                 OutputConsole.Items.Add(resultString);
@@ -55,9 +55,9 @@ namespace Desktop_Application
             }
             finally
             {
-                Value.ResetText();
-                UnitFrom.ResetText();
-                UnitTo.ResetText();
+                ValueText.ResetText();
+                UnitFromText.ResetText();
+                UnitToText.ResetText();
             }
         }
 
@@ -76,10 +76,10 @@ namespace Desktop_Application
 
         private void ConfimList_Click(object sender, EventArgs e)
         {
-            if (comboBox.Text == "unit dimensions")
+            if (comboBoxList.Text == "unit dimensions")
             {
                 OutputList.Items.Clear();
-                this.textBox1.ResetText();
+                this.ListSpecifyText.ResetText();
 
 
                 foreach (var student in request.ListUnitdimentions())
@@ -91,23 +91,23 @@ namespace Desktop_Application
                     
                 }
             }
-            if (comboBox.Text == "unit dimension")
+            if (comboBoxList.Text == "unit dimension")
             {
                 
                 OutputList.Items.Clear();
 
 
 
-                var resultList = request.GetUnitdimension(textBox1.Text);
+                var resultList = request.GetUnitdimension(ListSpecifyText.Text);
                 string resultString = string.Join(" ", resultList);
 
                 OutputList.Items.Add(resultString);
-                this.textBox1.ResetText();
+                this.ListSpecifyText.ResetText();
             }
-            if (comboBox.Text == "quantity classes")
+            if (comboBoxList.Text == "quantity classes")
             {
                 OutputList.Items.Clear();
-                this.textBox1.ResetText();
+                this.ListSpecifyText.ResetText();
 
 
                 foreach (var quantity in request.ListQualityclass())
@@ -116,39 +116,49 @@ namespace Desktop_Application
                     OutputList.Items.Add(str2);
                 }
             }
-            if (comboBox.Text == "aliases for a given uom ")
+            if (comboBoxList.Text == "aliases for a given uom ")
             {
 
                 OutputList.Items.Clear();
 
 
-                foreach (var aliases in request.ListAlias(textBox1.Text))
+                foreach (var aliases in request.ListAlias(ListSpecifyText.Text))
                 {
                     string str2 = string.Format("{0}", aliases);
                     OutputList.Items.Add(str2);
                 }
-                this.textBox1.ResetText();
+                this.ListSpecifyText.ResetText();
 
             }
 
-            if (comboBox.Text == "uom for a given quantity class")
+            if (comboBoxList.Text == "uom for a given quantity class")
             {
                 OutputList.Items.Clear();
 
 
 
-                foreach (var student in request.GetQualityclass(textBox1.Text))
+                foreach (var student in request.GetQualityclass(ListSpecifyText.Text))
                 {
                     string str2 = string.Format("{0}", student);
                     OutputList.Items.Add(str2);
                 }
-                this.textBox1.ResetText();
+                this.ListSpecifyText.ResetText();
 
             }
 
-            if (comboBox.Text == "names of every unit")
+            if (comboBoxList.Text == "names of every unit")
             {
-                OutputList.Items.Clear();
+
+                foreach (var student in request.ListNames())
+                {
+
+
+                    string str2 = string.Format("{0}", student);
+                    OutputList.Items.Add(str2);
+
+                }
+
+
 
 
 
@@ -190,7 +200,7 @@ namespace Desktop_Application
 
             
                 
-           request.EditUOM(EditTextbox.Text, EditComboBox.Text, textBox2.Text);
+           request.EditUOM(EditTextbox.Text, EditComboBox.Text, EditValueText.Text);
             
 
             
@@ -199,9 +209,9 @@ namespace Desktop_Application
             EditTextbox.Clear();
             EditComboBox.Items.Clear();
             EditComboBox.Text = "";
-            textBox2.Clear();
+            EditValueText.Clear();
             this.EditComboBox.Hide();
-            this.label6.Hide();
+            this.AttributeToEditLabel.Hide();
 
         }
 
@@ -227,7 +237,7 @@ namespace Desktop_Application
 
         private void CreateQTButton_Click(object sender, EventArgs e)
         {
-            request.EditQualityclass(EditQTName.Text, QTNewName.Text);
+            //request.EditQualityclass(EditQTName.Text, QTNewName.Text);
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
@@ -298,10 +308,10 @@ namespace Desktop_Application
                 this.CreateUOMC.Hide();
                 this.CreateUOMD.Hide();
 
-                this.label19.Hide();
+                this.BLabel.Hide();
                 this.label20.Hide();
                 this.label21.Hide();
-                this.label22.Hide();
+                this.ALabel.Hide();
             }
             else
             {
@@ -310,10 +320,10 @@ namespace Desktop_Application
                 this.CreateUOMC.Show();
                 this.CreateUOMD.Show();
 
-                this.label19.Show();
+                this.BLabel.Show();
                 this.label20.Show();
                 this.label21.Show();
-                this.label22.Show();
+                this.ALabel.Show();
 
                 
 
@@ -383,7 +393,7 @@ namespace Desktop_Application
 
         private void OutputList_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            textBox1.Text = OutputList.Text;
+            ListSpecifyText.Text = OutputList.Text;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

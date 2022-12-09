@@ -40,23 +40,16 @@ public class QuantitytypeController : ControllerBase
         QuantitytypeService.Add(qa);
         return CreatedAtAction(nameof(Create), new { name = qa.Name }, qa);
     }
-    // PUT action
-    [HttpPut("{Name}")]
-    public IActionResult Update(string Name, Quantitytype qt)
+
+    [HttpPut("{UnitToRemoveFrom}")]
+    public IActionResult Update(string UnitToRemoveFrom, Quantity Q)
     {
 
 
-        QuantitytypeService.Update(Name, qt);
+        QuantitytypeService.Update(UnitToRemoveFrom.Replace('&', ' '), Q.Name.Replace('&', ' '));
 
         return NoContent();
     }
-    // DELETE action
-    
-    [HttpDelete("{Name}")]
-    public IActionResult Delete(string Name)
-    {
-        QuantitytypeService.Delete(Name);
 
-        return NoContent();
-    }
+
 }

@@ -109,7 +109,7 @@ namespace Connector
             string Base = docmanager.ReadName(base_annotation);
             string test = "(" + value.ToString() + unitFrom + ")";
 
-
+            
             try
             {
                 res = (A + B * x) / (C + D * x);

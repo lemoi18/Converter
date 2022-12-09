@@ -1,4 +1,6 @@
-﻿namespace RequestLib
+﻿using Connector;
+
+namespace RequestLib
 {
     public interface IRequests
     {
@@ -34,15 +36,18 @@
         // Edit Unit
         public string EditUOM(string oldName, string keyToChange, dynamic newValue); //
         // Edit Quantity Type(Name of)
-        public string EditQualityclass(string name, string newname);
 
         // Delete Unit or Quantity Type
         public string DeleteUOM(string name); //
-        public string DeleteQualityclass(string name);
 
         // Add or Remove a Quantity type from a Unit
         public string AddQualityclass(string name, string uom);
         public string RemoveQualityclass(string unit, string name);
+
+
+        public List<string> ListNames();
         
+
+
     }
 }

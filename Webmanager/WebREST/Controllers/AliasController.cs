@@ -6,48 +6,38 @@ using RequestLib;
 
 namespace RESTTEST.Controllers;
 
-[ApiController]
-[Route("[controller]")]
-public class AliasController : ControllerBase
-{
-    public AliasController()
+
+    [ApiController]
+    [Route("[controller]")]
+    public class AliasController : ControllerBase
     {
-        RequestLib.IRequests request;
-        request = RequestFactory.CreateRequestsFactory("REQUEST");
+        public AliasController()
+        {
+            RequestLib.IRequests request;
+            request = RequestFactory.CreateRequestsFactory("REQUEST");
+        }
+
+
+
+        // GET by Id action
+        [HttpGet("{Name}")]
+        public ActionResult<List<Alias>> Get(string Name)
+        {
+            var Al = AliasService.Get(Name);
+
+            if (Al == null)
+                return NotFound();
+
+            return Al;
+        }
+
+        // POST action
+        [HttpPost("{Unit}")]
+        public IActionResult Create(string Unit, Alias al)
+        {
+            AliasService.Add(Unit, al.Name);
+            return CreatedAtAction(nameof(Create), new { name = al.Name }, al);
+        }
+
+
     }
-
-    
-
-    // GET by Id action
-    [HttpGet("{Name}")]
-    public ActionResult<List<Alias>> Get(string Name)
-    {
-        var Al = AliasService.Get(Name);
-
-        if (Al == null)
-            return NotFound();
-
-        return Al;
-    }
-
-    // POST action
-    [HttpPost("{Unit}")]
-    public IActionResult Create(string Unit, Alias al)
-    {
-        AliasService.Add(Unit, al.Name);
-        return CreatedAtAction(nameof(Create), new { name = al.Name }, al);
-    }
-    // PUT action
-    [HttpPut("{Unit}")]
-    public IActionResult Update(string Unit, Alias al)
-    {
-
-
-        AliasService.Update(Unit, al.Name);
-
-        return NoContent();
-    }
-    // DELETE action
-
-   
-}

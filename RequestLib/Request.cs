@@ -22,22 +22,20 @@ namespace RequestLib
 
         public IDocmanager docmanager { get; set; }
 
-        public string AddQualityclass(string name, string uom)
+        public string AddQualityclass(string unit, string name)
         {
-            docmanager.AddQuantityType(name, uom);
+
+            return docmanager.AddQuantityType(unit, name);
             
-            return name;
 
         }
 
         public  List<string> Convert(double number, string uom1, string uom2)
         {
             IC converter;
-            // Test is only mm to cm
             converter = ConnectorFactory.CreateConnectorFactory("CONNECTOR");
             
 
-           //My_Tuple1= converter.ConverterWrapper(My_Tuple1.Item1, My_Tuple1.Item2, My_Tuple1.Item3);
             return  converter.Convert(number, uom1.Trim(), uom2.Trim()); 
 
         }
@@ -63,7 +61,7 @@ namespace RequestLib
         {
             var alias = aliases.Split(',').ToList();
             var quantity = quantityType.Split(',').ToList();
-
+            Console.WriteLine("CreateUNIT");
             docmanager.CreateSecondaryUnit(id, annotation, name, quantity, dimensionalclass, uom, baseunit, A, B, C, D, alias);//Aliases needs to be string
             return id;
         }
@@ -77,11 +75,7 @@ namespace RequestLib
 
         }
 
-        public string EditQualityclass(string name, string newname)
-        {
-            //docmanager.EditQuantityclass(name, newname);
-            return name;
-        }
+       
 
         public string EditUOM(string oldName, string keyToChange, dynamic newValue)
         {
@@ -154,11 +148,10 @@ namespace RequestLib
             return docmanager.RemoveQuantityType(unit, name);
         }
 
-        public string DeleteQualityclass(string name)
+        public List<string> ListNames()
         {
-            throw new NotImplementedException();
-        }
 
-       
+            return docmanager.ReadNames();
+        }
     }
 }
