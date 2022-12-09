@@ -772,6 +772,54 @@ namespace Docmanager
             return output;
         }
 
+        private string DimensionSymbolsToDefinition(string symbols)
+        {
+            List<string> symbolsList = new List<string>();
+
+            char[] symbolArray = symbols.ToCharArray();
+
+            foreach (char character in symbolArray)
+            {
+                if (character.Equals('1'))
+                {
+                    symbolsList.Add("1");
+                    continue;
+                }
+                else if (Char.IsDigit(character))
+                {
+                    symbolsList.Add("^" + character);
+                    continue;
+                }
+                foreach(Dimension dimension in Dimensions)
+                {
+                    if(dimension.Symbol == character.ToString())
+                    {
+                        symbolsList.Add(dimension.Definition);
+                        break;
+                    }
+                }
+                symbolsList.Add("none");
+            }
+
+            string output = string.Join(" ", symbolsList);
+
+            return output;
+        }
+
+        public string ReadUOMAnnotation(string uom)
+        { UOM match = new UOM();
+            try
+            {
+                match = QueryUOM(uom);
+            }
+            catch (InvalidOperationException)
+            {
+                throw;
+            }
+
+            return DimensionSymbolsToDefinition(match.DimensionalClass);
+        }
+
         public List<string> ReadAliases(string unitName)
         {
             List<string> output = new List<string>();

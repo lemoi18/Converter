@@ -1,4 +1,5 @@
 ﻿using Docmanager;
+using static Docmanager.Docmanager;
 
 IDocmanager docmanager;
 docmanager = DocFactory.CreateDocmanager("Test");
@@ -8,11 +9,12 @@ docmanager = DocFactory.CreateDocmanager("Test");
 //    Console.WriteLine(quantityClass);
 //}
 
-Console.WriteLine(docmanager.ReadDimension("A"));
 
-foreach(var x in docmanager.ReadDimension("I"))
-{
-    Console.WriteLine(x);
-}
+Console.WriteLine(docmanager.ReadUOMAnnotation("1/H"));
+
+//foreach(var x in docmanager.ReadDimension("I"))
+//{
+//    Console.WriteLine(x);
+//}
 
 
