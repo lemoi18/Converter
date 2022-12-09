@@ -778,11 +778,20 @@ namespace Docmanager
 
             char[] symbolArray = symbols.ToCharArray();
 
+            string whitespace = "";
+
             foreach (char character in symbolArray)
             {
+                bool addedSymbol = false;
+
                 if (character.Equals('1'))
                 {
-                    symbolsList.Add("1");
+                    symbolsList.Add(whitespace + "1");
+                    continue;
+                }
+                else if (character.Equals('/'))
+                {
+                    symbolsList.Add(whitespace + "/");
                     continue;
                 }
                 else if (Char.IsDigit(character))
@@ -790,18 +799,25 @@ namespace Docmanager
                     symbolsList.Add("^" + character);
                     continue;
                 }
-                foreach(Dimension dimension in Dimensions)
+                else
                 {
-                    if(dimension.Symbol == character.ToString())
+                    foreach (Dimension dimension in Dimensions)
                     {
-                        symbolsList.Add(dimension.Definition);
-                        break;
+                        if (dimension.Symbol == character.ToString())
+                        {
+                            symbolsList.Add(whitespace + dimension.Definition);
+                            addedSymbol = true;
+                            break;
+                        }
                     }
                 }
-                symbolsList.Add("none");
+
+                if(!addedSymbol)
+                    symbolsList.Add(whitespace + "none");
+                whitespace = " ";
             }
 
-            string output = string.Join(" ", symbolsList);
+            string output = string.Join("", symbolsList);
 
             return output;
         }
