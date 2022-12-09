@@ -31,7 +31,6 @@ namespace Docmanager
 
         public List<string> ReadUOMsFromQuantityType(string quantityClass);
         public List<string> ReadAllQuantityClass();
-        public List<string> R2eadAllQuantityClass(string quantityClass);
 
 
 
