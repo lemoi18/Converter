@@ -467,7 +467,6 @@ namespace Docmanager
                             };
                             match.SameUnit = SameUnitJObject;
                             break;
-
                         case "isbaseunit":
                             match.BaseUnit = newValue;
                             break;
@@ -547,7 +546,7 @@ namespace Docmanager
             }
         }
 
-        public string AddQuantityType(string unitName, string quantityTypeName)
+        public string AddQuantityType(string unitName, string quantityTypeName) 
         {
             UOM match = new UOM();
             try
@@ -559,17 +558,29 @@ namespace Docmanager
                 throw;
             }
 
-            string QuantityTypeString = match.QuantityType.ToString();
+            List<string> quantityList = ReadQuantityClass(match);
+            string QuantityString = match.QuantityType.ToString();
+
+            foreach (UOM unit in Units)
+            {
+                if (unit.QuantityType != null)
+                {
+                    if (unit != match && quantityList.Intersect(ReadQuantityClass(unit)).Any() && match.DimensionalClass != unit.DimensionalClass)
+                    {
+                        throw new Exception("It is only allowed to add UOMs from the same unit dimention.");
+                    }
+                }
+            }
 
             try
             {
-                JArray QuantityTypeJArray = (JArray)JsonConvert.DeserializeObject(QuantityTypeString);
+                JArray QuantityTypeJArray = (JArray)JsonConvert.DeserializeObject(QuantityString);
                 QuantityTypeJArray.Add(quantityTypeName);
                 match.QuantityType = QuantityTypeJArray;
             }
             catch (JsonReaderException)
             {
-                List<string> QuantityTypeArray = new List<string>() { QuantityTypeString, quantityTypeName };
+                List<string> QuantityTypeArray = new List<string>() { QuantityString, quantityTypeName };
                 match.QuantityType = QuantityTypeArray;
             }
 
@@ -663,45 +674,50 @@ namespace Docmanager
                 throw new Exception("This dimension is missing parameters");
             }
         }
+
+        private List<string> ReadQuantityClass(UOM unit)
+        {
+            List<string> output = new List<string>();
+
+            if (unit.QuantityType == null)
+                return null;
+            if (unit.QuantityType.ToString().Contains(","))
+            {
+
+                var pattern = @"""[^""]*""";
+                var matches = Regex.Matches(unit.QuantityType.ToString(), pattern);
+
+                // Output the extracted values
+                foreach (Match match in matches)
+                {
+                    var values = matches.Select(m => m.Value.Trim('"')).ToList();
+                    output.AddRange(values);
+                }
+            }
+            else
+            {
+                if (unit.QuantityType != null)
+                {
+                    output.Add(unit.QuantityType.ToString());
+                }
+            }
+
+            return output;
+        }
+
         public List<string> ReadAllQuantityClass()
         {
             List<string> output = new List<string>();
 
             //Check each unit for spesefied quantityClassName
 
-            List<UOM> houseOnes = Units.FindAll(unit => unit.QuantityType != null).ToList();
+            List<UOM> matches = Units.FindAll(unit => unit.QuantityType != null).ToList();
 
 
-            foreach (UOM unit in houseOnes)
+            foreach (UOM unit in matches)
             {
-
-                if (unit.QuantityType.ToString().Contains(","))
-                {
-
-                    var pattern = @"""[^""]*""";
-                    var matches = Regex.Matches(unit.QuantityType.ToString(), pattern);
-
-                    // Output the extracted values
-                    foreach (Match match in matches)
-                    {
-                        var values = matches.Select(m => m.Value.Trim('"')).ToList();
-                        output.AddRange(values);
-                    }
-
-
-
-
-
-                }
-                else
-                {
-                    if (unit.QuantityType != null)
-                    {
-                        output.Add(unit.QuantityType.ToString());
-
-                    }
-                }
-
+                foreach (string quantityClass in ReadQuantityClass(unit))
+                output.Add(quantityClass);
             }
 
 
@@ -795,12 +811,12 @@ namespace Docmanager
             return DimensionSymbolsToDefinition(match.DimensionalClass);
         }
 
-        public List<string> ReadAliases(string unitName)
+        public List<string> ReadAliases(string uom)
         {
             List<string> output = new List<string>();
             try
             {
-                output = QueryName(unitName).Aliases;
+                output = QueryUOM(uom).Aliases;
             }
             catch (InvalidOperationException)
             {
