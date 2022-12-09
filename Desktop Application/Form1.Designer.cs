@@ -64,11 +64,6 @@
             this.CreateUOMConfirm = new System.Windows.Forms.Button();
             this.UnitLabel = new System.Windows.Forms.Label();
             this.QuantityTypeLabel = new System.Windows.Forms.Label();
-            this.EditQTButton = new System.Windows.Forms.Button();
-            this.EditQTName = new System.Windows.Forms.TextBox();
-            this.QTNewName = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
             this.CreateUOMA = new System.Windows.Forms.TextBox();
             this.ALabel = new System.Windows.Forms.Label();
             this.CreateUOMB = new System.Windows.Forms.TextBox();
@@ -89,7 +84,6 @@
             this.ConfirmAdd = new System.Windows.Forms.Button();
             this.ConfirmRemove = new System.Windows.Forms.Button();
             this.CreateUOM = new System.Windows.Forms.TextBox();
-            this.EditQuantityTypeLabel = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
             this.DeleteUnitBox = new System.Windows.Forms.TextBox();
             this.DeleteUnitButton = new System.Windows.Forms.Button();
@@ -425,47 +419,6 @@
             this.QuantityTypeLabel.TabIndex = 43;
             this.QuantityTypeLabel.Text = "Quantity Type";
             // 
-            // EditQTButton
-            // 
-            this.EditQTButton.Location = new System.Drawing.Point(1252, 480);
-            this.EditQTButton.Name = "EditQTButton";
-            this.EditQTButton.Size = new System.Drawing.Size(75, 23);
-            this.EditQTButton.TabIndex = 44;
-            this.EditQTButton.Text = "Confirm";
-            this.EditQTButton.UseVisualStyleBackColor = true;
-            // 
-            // EditQTName
-            // 
-            this.EditQTName.Location = new System.Drawing.Point(1242, 402);
-            this.EditQTName.Name = "EditQTName";
-            this.EditQTName.Size = new System.Drawing.Size(100, 23);
-            this.EditQTName.TabIndex = 45;
-            // 
-            // QTNewName
-            // 
-            this.QTNewName.Location = new System.Drawing.Point(1242, 441);
-            this.QTNewName.Name = "QTNewName";
-            this.QTNewName.Size = new System.Drawing.Size(100, 23);
-            this.QTNewName.TabIndex = 46;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(1174, 403);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(39, 15);
-            this.label17.TabIndex = 47;
-            this.label17.Text = "Name";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(1166, 444);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(66, 15);
-            this.label18.TabIndex = 48;
-            this.label18.Text = "New Name";
-            // 
             // CreateUOMA
             // 
             this.CreateUOMA.Location = new System.Drawing.Point(934, 619);
@@ -569,15 +522,16 @@
             // 
             // AddQTName
             // 
-            this.AddQTName.Location = new System.Drawing.Point(1275, 595);
+            this.AddQTName.Location = new System.Drawing.Point(1275, 407);
             this.AddQTName.Name = "AddQTName";
-            this.AddQTName.Size = new System.Drawing.Size(100, 23);
+            this.AddQTName.PlaceholderText = "Eg : metre";
+            this.AddQTName.Size = new System.Drawing.Size(134, 23);
             this.AddQTName.TabIndex = 65;
             // 
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(1174, 561);
+            this.label23.Location = new System.Drawing.Point(1163, 362);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(212, 15);
             this.label23.TabIndex = 66;
@@ -586,23 +540,24 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(1174, 598);
+            this.label24.Location = new System.Drawing.Point(1114, 412);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(85, 15);
+            this.label24.Size = new System.Drawing.Size(120, 15);
             this.label24.TabIndex = 67;
-            this.label24.Text = "Unit to change";
+            this.label24.Text = "Name Unit to change";
             // 
             // AddRemoveQTValue
             // 
-            this.AddRemoveQTValue.Location = new System.Drawing.Point(1275, 634);
+            this.AddRemoveQTValue.Location = new System.Drawing.Point(1275, 473);
             this.AddRemoveQTValue.Name = "AddRemoveQTValue";
-            this.AddRemoveQTValue.Size = new System.Drawing.Size(100, 23);
+            this.AddRemoveQTValue.PlaceholderText = "Eg: Length";
+            this.AddRemoveQTValue.Size = new System.Drawing.Size(134, 23);
             this.AddRemoveQTValue.TabIndex = 68;
             // 
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(1147, 637);
+            this.label25.Location = new System.Drawing.Point(1137, 473);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(122, 15);
             this.label25.TabIndex = 69;
@@ -610,7 +565,7 @@
             // 
             // ConfirmAdd
             // 
-            this.ConfirmAdd.Location = new System.Drawing.Point(1184, 685);
+            this.ConfirmAdd.Location = new System.Drawing.Point(1163, 532);
             this.ConfirmAdd.Name = "ConfirmAdd";
             this.ConfirmAdd.Size = new System.Drawing.Size(75, 23);
             this.ConfirmAdd.TabIndex = 70;
@@ -620,7 +575,7 @@
             // 
             // ConfirmRemove
             // 
-            this.ConfirmRemove.Location = new System.Drawing.Point(1288, 687);
+            this.ConfirmRemove.Location = new System.Drawing.Point(1292, 532);
             this.ConfirmRemove.Name = "ConfirmRemove";
             this.ConfirmRemove.Size = new System.Drawing.Size(75, 23);
             this.ConfirmRemove.TabIndex = 71;
@@ -635,19 +590,10 @@
             this.CreateUOM.Size = new System.Drawing.Size(100, 23);
             this.CreateUOM.TabIndex = 72;
             // 
-            // EditQuantityTypeLabel
-            // 
-            this.EditQuantityTypeLabel.AutoSize = true;
-            this.EditQuantityTypeLabel.Location = new System.Drawing.Point(1239, 383);
-            this.EditQuantityTypeLabel.Name = "EditQuantityTypeLabel";
-            this.EditQuantityTypeLabel.Size = new System.Drawing.Size(103, 15);
-            this.EditQuantityTypeLabel.TabIndex = 74;
-            this.EditQuantityTypeLabel.Text = "Edit Quantity Type";
-            // 
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(636, 652);
+            this.label30.Location = new System.Drawing.Point(1237, 648);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(65, 15);
             this.label30.TabIndex = 80;
@@ -656,7 +602,7 @@
             // 
             // DeleteUnitBox
             // 
-            this.DeleteUnitBox.Location = new System.Drawing.Point(625, 688);
+            this.DeleteUnitBox.Location = new System.Drawing.Point(1227, 691);
             this.DeleteUnitBox.Name = "DeleteUnitBox";
             this.DeleteUnitBox.Size = new System.Drawing.Size(100, 23);
             this.DeleteUnitBox.TabIndex = 82;
@@ -664,7 +610,7 @@
             // 
             // DeleteUnitButton
             // 
-            this.DeleteUnitButton.Location = new System.Drawing.Point(625, 737);
+            this.DeleteUnitButton.Location = new System.Drawing.Point(1227, 738);
             this.DeleteUnitButton.Name = "DeleteUnitButton";
             this.DeleteUnitButton.Size = new System.Drawing.Size(100, 23);
             this.DeleteUnitButton.TabIndex = 84;
@@ -675,7 +621,7 @@
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(523, 691);
+            this.label32.Location = new System.Drawing.Point(1114, 694);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(78, 15);
             this.label32.TabIndex = 86;
@@ -696,6 +642,7 @@
             // 
             this.EditTextbox.Location = new System.Drawing.Point(1054, 71);
             this.EditTextbox.Name = "EditTextbox";
+            this.EditTextbox.PlaceholderText = "Name of the unit";
             this.EditTextbox.Size = new System.Drawing.Size(201, 23);
             this.EditTextbox.TabIndex = 18;
             this.EditTextbox.TextChanged += new System.EventHandler(this.EditTextbox_TextChanged);
@@ -705,13 +652,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1437, 810);
-            this.Controls.Add(this.EditQTButton);
             this.Controls.Add(this.UOMlabel);
             this.Controls.Add(this.label32);
             this.Controls.Add(this.DeleteUnitButton);
             this.Controls.Add(this.DeleteUnitBox);
             this.Controls.Add(this.label30);
-            this.Controls.Add(this.EditQuantityTypeLabel);
             this.Controls.Add(this.CreateUOM);
             this.Controls.Add(this.ConfirmRemove);
             this.Controls.Add(this.ConfirmAdd);
@@ -732,10 +677,6 @@
             this.Controls.Add(this.CreateUOMB);
             this.Controls.Add(this.ALabel);
             this.Controls.Add(this.CreateUOMA);
-            this.Controls.Add(this.label18);
-            this.Controls.Add(this.label17);
-            this.Controls.Add(this.QTNewName);
-            this.Controls.Add(this.EditQTName);
             this.Controls.Add(this.QuantityTypeLabel);
             this.Controls.Add(this.UnitLabel);
             this.Controls.Add(this.CreateUOMConfirm);
@@ -818,11 +759,7 @@
         private Button CreateUOMConfirm;
         private Label UnitLabel;
         private Label QuantityTypeLabel;
-        private Button EditQTButton;
-        private TextBox EditQTName;
-        private TextBox QTNewName;
-        private Label label17;
-        private Label label18;
+        
         private TextBox CreateUOMA;
         private Label ALabel;
         private TextBox CreateUOMB;
@@ -843,7 +780,6 @@
         private Button ConfirmAdd;
         private Button ConfirmRemove;
         private TextBox CreateUOM;
-        private Label EditQuantityTypeLabel;
         private Label label30;
         private TextBox DeleteUnitBox;
         private Button DeleteUnitButton;

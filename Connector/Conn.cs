@@ -23,7 +23,7 @@ namespace Connector
 
 
 
-        public List<string> Convert(double value, string unitFrom, string unitTo)
+        public List<string> GetConvertion(double value, string unitFrom, string unitTo)
         {
             var converter = new Conn();
 
@@ -41,7 +41,7 @@ namespace Connector
         }
 
 
-        public Conn BaseToConvert(double value, string unitfrom)
+        private Conn BaseToConvert(double value, string unitfrom)
         {
             double y = value;
             double A = 0;
@@ -52,8 +52,7 @@ namespace Connector
             docmanager.ReadConversion(unitfrom, ref A, ref B, ref C, ref D);
 
             string uom = unitfrom;
-            string annotation = docmanager.ReadAnnotation(unitfrom);
-            string test = "(" + value.ToString()+ unitfrom +")";
+            string uom_annotation = docmanager.ReadUOMAnnotation(uom);
 
             try
             {
@@ -67,18 +66,17 @@ namespace Connector
             var result = new Conn();
             result.Value = res;
             result.Unit = unitfrom;
-            result.Annotation = test;
+            result.Annotation = uom_annotation;
             return result;
         }
 
-        public Conn ConverterWrapper(double value, string unitFrom, string unitTo)
+        private Conn ConverterWrapper(double value, string unitFrom, string unitTo)
         {
             var result = new Conn();
 
             if (docmanager.IsBase(unitFrom))
             {
                 result = BaseToConvert(value, unitTo);
-                result.Annotation = "(" + value.ToString() + unitFrom + ")";
             }
             else
             {
@@ -94,7 +92,7 @@ namespace Connector
         }
        
 
-        public Conn ConvertToBase(double value, string unitFrom)
+        private Conn ConvertToBase(double value, string unitFrom)
         {
             double x = value;
             double A = 0;
@@ -106,10 +104,9 @@ namespace Connector
             docmanager.ReadConversion(unitFrom, ref A, ref B, ref C, ref D);
 
             string base_annotation = docmanager.ReadIsBase(unitFrom);
-            string Base = docmanager.ReadName(base_annotation);
-            string test = "(" + value.ToString() + unitFrom + ")";
+            string uom_annotation = docmanager.ReadUOMAnnotation(unitFrom);
 
-            
+
             try
             {
                 res = (A + B * x) / (C + D * x);
@@ -122,7 +119,7 @@ namespace Connector
             var result = new Conn();
             result.Value = res;
             result.Unit = base_annotation;
-            result.Annotation = test;
+            result.Annotation = uom_annotation;
             return result;
         }
 
