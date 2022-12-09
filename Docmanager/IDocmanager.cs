@@ -20,6 +20,7 @@ namespace Docmanager
         public string CreateSecondaryUnit(string id, string annotation, string name, List<string> quantityType, string dimensionalclass, string uom, string baseunit, double A, double B, double C, double D, List<string> Aliases);
         public string EditUnit(string oldName, string porpToChange, dynamic newValue);
         public string DeleteUnit(string id);
+        public List<string> ReadAllQuantityClass();
         public string AddQuantityType(string unitName, string quantityTypeName);
         public string RemoveQuantityType(string unitName, string quantityTypeName);
         public List<List<string>> ReadDimensions();
