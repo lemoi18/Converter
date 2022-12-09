@@ -19,14 +19,14 @@ namespace Docmanager
     {
 
         List<UOM> Units;
-        List<Dimension> Dimensions;
-        Dictionary<string, Dimension> Dictdimensions;
+        List<Dimension> ListDimensions;
+        Dictionary<string, Dimension> Dimensions;
 
         public Docmanager()
         {
             Units = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(Pathgetter("POSC.json")));
-            Dimensions = JsonConvert.DeserializeObject<List<Dimension>>(File.ReadAllText(Pathgetter("UnitDimensions.json")));
-            Dictdimensions = Dimensions.ToDictionary(d => d.Symbol, d => d);
+            ListDimensions = JsonConvert.DeserializeObject<List<Dimension>>(File.ReadAllText(Pathgetter("UnitDimensions.json")));
+            Dimensions = ListDimensions.ToDictionary(d => d.Symbol, d => d);
 
         }
 
@@ -88,13 +88,13 @@ namespace Docmanager
 
         private Dimension QueryDimension(string symbol)
         {
-            if (Dictdimensions.ContainsKey(symbol))
+            if (Dimensions.ContainsKey(symbol))
             {
-                return Dictdimensions[symbol];
+                return Dimensions[symbol];
             }
             else
             {
-                return Dictdimensions["none"];
+                return Dimensions["none"];
             }
         }
 
@@ -655,6 +655,8 @@ namespace Docmanager
                 }
             }
 
+            output = output.Distinct().ToList();
+            output.Sort();
             return output;
         }
 
@@ -736,17 +738,12 @@ namespace Docmanager
                             output.AddRange(values);
                         }
 
-
-
-
-
                     }
                     else
                     {
                         if (unit.QuantityType != null)
                         {
                             output.Add(unit.QuantityType.ToString());
-
                         }
                     }
 
@@ -763,7 +760,7 @@ namespace Docmanager
         {
             List<List<string>> output = new List<List<string>>();
 
-            foreach (var dimension in Dimensions)
+            foreach (var dimension in ListDimensions)
             {
                 List<string> dimensionList = new List<string>()
                     {
