@@ -23,7 +23,7 @@ namespace Connector
 
 
 
-        public List<string> Convert(double value, string unitFrom, string unitTo)
+        public List<string> GetConvertion(double value, string unitFrom, string unitTo)
         {
             var converter = new Conn();
 
@@ -41,7 +41,7 @@ namespace Connector
         }
 
 
-        public Conn BaseToConvert(double value, string unitfrom)
+        private Conn BaseToConvert(double value, string unitfrom)
         {
             double y = value;
             double A = 0;
@@ -71,7 +71,7 @@ namespace Connector
             return result;
         }
 
-        public Conn ConverterWrapper(double value, string unitFrom, string unitTo)
+        private Conn ConverterWrapper(double value, string unitFrom, string unitTo)
         {
             var result = new Conn();
 
@@ -94,7 +94,7 @@ namespace Connector
         }
        
 
-        public Conn ConvertToBase(double value, string unitFrom)
+        private Conn ConvertToBase(double value, string unitFrom)
         {
             double x = value;
             double A = 0;

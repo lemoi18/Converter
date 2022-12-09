@@ -11,7 +11,7 @@ namespace Connector
         public IDocmanager docmanager { get; set; }
 
 
-        public List<string> Convert(double value, string unit, string annotation);
+        public List<string> GetConvertion(double value, string unit, string annotation);
 
     }
 }

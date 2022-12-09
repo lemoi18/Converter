@@ -32,11 +32,27 @@ namespace RequestLib
 
         public  List<string> Convert(double number, string uom1, string uom2)
         {
+            string base_annotation1 = docmanager.ReadIsBase(uom1);
+            string Base1 = docmanager.ReadName(base_annotation1);
+
+            string base_annotation2 = docmanager.ReadIsBase(uom2);
+
+            string Base2 = docmanager.ReadName(base_annotation1);
+
+
+            if (Base1 == Base2)
+            {
             IC converter;
             converter = ConnectorFactory.CreateConnectorFactory("CONNECTOR");
             
 
-            return  converter.Convert(number, uom1.Trim(), uom2.Trim()); 
+            return  converter.GetConvertion(number, uom1.Trim(), uom2.Trim()); 
+                
+            }
+            else
+            {
+                return new List<string> { base_annotation1, base_annotation2 };
+            }
 
         }
 
