@@ -1,5 +1,4 @@
 ﻿using Docmanager;
-using static Docmanager.Docmanager;
 
 IDocmanager docmanager;
 docmanager = DocFactory.CreateDocmanager("Test");
@@ -10,11 +9,10 @@ docmanager = DocFactory.CreateDocmanager("Test");
 //}
 
 
-Console.WriteLine(docmanager.ReadBaseUnit("pu"));
+List<string> uomList = docmanager.ReadUOMsFromQuantityType("admittance");
 
-//foreach(var x in docmanager.ReadDimension("I"))
-//{
-//    Console.WriteLine(x);
-//}
-
-
+// Iterate over the list and print each string
+foreach (string uom in uomList)
+{
+    Console.WriteLine(uom);
+}
