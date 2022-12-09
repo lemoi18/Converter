@@ -8,12 +8,8 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text.RegularExpressions;
-using static Docmanager.Docmanager;
 
 namespace Docmanager
 {
@@ -276,16 +272,16 @@ namespace Docmanager
         public string ReadIsBase(string unitName)
         {
             UOM match = new UOM();
-            
-                try
-                {
-                    match = QueryUOM(unitName);
-                }
-                catch (InvalidOperationException)
-                {
-                    throw new InvalidOperationException("There is no unti with this name or uom");
-                }
-            
+
+            try
+            {
+                match = QueryUOM(unitName);
+            }
+            catch (InvalidOperationException)
+            {
+                throw new InvalidOperationException("There is no unti with this name or uom");
+            }
+
 
             try
             {
@@ -457,7 +453,7 @@ namespace Docmanager
                             };
                             match.SameUnit = SameUnitJObject;
                             break;
-                        
+
                         case "isbaseunit":
                             match.BaseUnit = newValue;
                             break;
@@ -493,7 +489,7 @@ namespace Docmanager
             {
                 throw;
             }
-            return "Edited " +unitName;
+            return "Edited " + unitName;
         }
 
         public string DeleteUnit(string unitName)
@@ -539,72 +535,75 @@ namespace Docmanager
 
         public string AddQuantityType(string unitName, string quantityTypeName)
         {
+            UOM match = new UOM();
             try
             {
-                UOM match = QueryName(unitName);
+                match = QueryName(unitName);
+            }
+            catch (InvalidOperationException)
+            {
+                throw;
+            }
 
+            string QuantityTypeString = match.QuantityType.ToString();
+
+            try
+            {
+                JArray QuantityTypeJArray = (JArray)JsonConvert.DeserializeObject(QuantityTypeString);
+                QuantityTypeJArray.Add(quantityTypeName);
+                match.QuantityType = QuantityTypeJArray;
+            }
+            catch (JsonReaderException)
+            {
+                List<string> QuantityTypeArray = new List<string>() { QuantityTypeString, quantityTypeName };
+                match.QuantityType = QuantityTypeArray;
+            }
+
+            string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
+            File.WriteAllText(Pathgetter("POSC.json"), output);
+
+            return "Added Quantity Type to " + quantityTypeName;
+        }
+
+        public string RemoveQuantityType(string unitName, string quantityTypeName)
+        {
+            UOM match = new UOM();
+            try
+            {
+                match = QueryName(unitName);
+            }
+            catch (InvalidOperationException)
+            {
+                throw;
+            }
+
+            if (hasQuantityType(match, quantityTypeName))
+            {
                 string QuantityTypeString = match.QuantityType.ToString();
 
                 try
                 {
                     JArray QuantityTypeJArray = (JArray)JsonConvert.DeserializeObject(QuantityTypeString);
-                    QuantityTypeJArray.Add(quantityTypeName);
+                    QuantityTypeJArray.Where(i => (string)i == quantityTypeName).ToList().ForEach(i => i.Remove());
+
                     match.QuantityType = QuantityTypeJArray;
+                    string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
+
+                    File.WriteAllText(Pathgetter("POSC.json"), output);
                 }
                 catch (JsonReaderException)
                 {
-                    List<string> QuantityTypeArray = new List<string>() { QuantityTypeString, quantityTypeName };
-                    match.QuantityType = QuantityTypeArray;
-                }
+                    throw new NullReferenceException("Can not remove a units last quantity type");
 
-                string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
-                File.WriteAllText(Pathgetter("POSC.json"), output);
-            }
-            catch (InvalidOperationException)
-            {
-                throw;
-            }
-
-            return "Added Quantity Type to "+quantityTypeName;
-        }
-
-        public string RemoveQuantityType(string unitName, string quantityTypeName)
-        {
-            try
-            {
-                UOM match = QueryName(unitName);
-
-                if (hasQuantityType(match, quantityTypeName))
-                {
-                    string QuantityTypeString = match.QuantityType.ToString();
-
-                    try
-                    {
-                        JArray QuantityTypeJArray = (JArray)JsonConvert.DeserializeObject(QuantityTypeString);
-                        QuantityTypeJArray.Where(i => (string)i == quantityTypeName).ToList().ForEach(i => i.Remove());
-
-                        match.QuantityType = QuantityTypeJArray;
-                        string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
-
-                        File.WriteAllText(Pathgetter("POSC.json"), output);
-                    }
-                    catch (JsonReaderException e)
-                    {
-                        throw new NullReferenceException("Can not remove a units last quantity type");
-
-                    }
-                }
-                else
-                {
-                    throw new InvalidOperationException("The unit does not have this quantity type");
                 }
             }
-            catch (InvalidOperationException)
+            else
             {
-                throw;
+                throw new InvalidOperationException("The unit does not have this quantity type");
             }
 
-            return "Removed "+ quantityTypeName +"from" + unitName;
+
+            return "Removed " + quantityTypeName + "from" + unitName;
         }
 
         public List<string> ReadUOMsFromQuantityType(string quantityClass)
@@ -757,7 +756,7 @@ namespace Docmanager
                     }
                 }
 
-                if(!addedSymbol)
+                if (!addedSymbol)
                     symbolsList.Add(whitespace + "none");
                 whitespace = " ";
             }
@@ -768,7 +767,8 @@ namespace Docmanager
         }
 
         public string ReadUOMAnnotation(string uom)
-        { UOM match = new UOM();
+        {
+            UOM match = new UOM();
             try
             {
                 match = QueryUOM(uom);
@@ -786,11 +786,11 @@ namespace Docmanager
             List<string> output = new List<string>();
             try
             {
-                output = QueryName(input).Aliases;
+                output = QueryName(unitName).Aliases;
             }
             catch (InvalidOperationException)
             {
-                output = QueryUOM(input).Aliases;
+                throw;
             }
             if (output == null)
             {
@@ -799,9 +799,50 @@ namespace Docmanager
             return output;
         }
 
+        public string AddAlias(string unitName, string aliasName)
+        {
+            UOM match = new UOM();
 
+            try
+            {
+                match = QueryName(unitName);
+            }
+            catch (InvalidOperationException)
+            {
+                throw;
+            }
 
-       
+            match.Aliases ??= new List<string>();
+            match.Aliases.Add(aliasName);
+
+            string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
+            File.WriteAllText(Pathgetter("POSC.json"), output);
+
+            return "Added alias " + aliasName + " to " + unitName;
+        }
+
+        public string RemoveAlias(string unitName, string aliasName)
+        {
+            UOM match = new UOM();
+
+            try
+            {
+                match = QueryName(unitName);
+            }
+            catch (InvalidOperationException)
+            {
+                throw;
+            }
+
+            bool aliasFound = match.Aliases.Remove(aliasName);
+
+            string output = JsonConvert.SerializeObject(Units, Formatting.Indented);
+            File.WriteAllText(Pathgetter("POSC.json"), output);
+
+            if (aliasFound)
+                return "Removed alias " + aliasName + " from " + unitName;
+            return "Could not remove alias " + aliasName + " from " + unitName + ". Are you shure " + unitName + " has this alias?";
+        }
 
         public class ConversionToBaseUnit
         {

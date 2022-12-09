@@ -24,9 +24,9 @@ namespace Docmanager
         public List<List<string>> ReadDimensions();
         public List<string> ReadDimension(string symbol);
         public List<string> ReadAliases(string input);
-        public List<string> ReadUomFromQuantityClass(string quantityClass);
-        public List<string> ReadQuantityClasses();
+        public string AddAlias(string unitName, string aliasName);
         public string ReadUOMAnnotation(string uom);
+        public string RemoveAlias(string unitName, string aliasName);
 
     }
 
