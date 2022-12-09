@@ -12,7 +12,7 @@
     "CatalogName": "POSC",
     "BaseUnit": true,
     "Deprecated": null,
-    "Aliases": null,
+    "Aliases": [],
     "ConversionToBaseUnit": null
   },
   {
