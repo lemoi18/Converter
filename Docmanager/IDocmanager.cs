@@ -29,6 +29,10 @@ namespace Docmanager
         public string ReadUOMAnnotation(string uom);
         public string RemoveAlias(string unitName, string aliasName);
 
+        public List<string> ReadUOMsFromQuantityType(string quantityClass);
+        public List<string> ReadAllQuantityClass();
+
+
     }
 
 }

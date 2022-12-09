@@ -14,47 +14,77 @@ namespace RequestLib
 
         public Request()
         {
+            IC converters;
+            converters = ConnectorFactory.CreateConnectorFactory("CONNECTOR");
+            converter = converters;
+
             IDocmanager docmanagers;
             docmanagers = DocFactory.CreateDocmanager("Test");
 
             docmanager = docmanagers;
+            
         }
 
+        public IC converter { get; set; }
         public IDocmanager docmanager { get; set; }
 
         public string AddQualityclass(string unit, string name)
         {
-
             return docmanager.AddQuantityType(unit, name);
-            
-
         }
 
-        public  List<string> Convert(double number, string uom1, string uom2)
+        private bool canConvert(double number, string uom1, string uom2)
         {
-            string base_annotation1 = docmanager.ReadIsBase(uom1);
-            string Base1 = docmanager.ReadName(base_annotation1);
-
-            string base_annotation2 = docmanager.ReadIsBase(uom2);
-
-            string Base2 = docmanager.ReadName(base_annotation1);
+            bool unit1IsBase = docmanager.IsBase(uom1);
+            bool unit2IsBase = docmanager.IsBase(uom2);
 
 
-            if (Base1 == Base2)
+            if (unit1IsBase)
             {
-            IC converter;
-            converter = ConnectorFactory.CreateConnectorFactory("CONNECTOR");
-            
 
-            return  converter.GetConvertion(number, uom1.Trim(), uom2.Trim()); 
-                
+                if (uom1 != docmanager.ReadBaseUnit(uom2))
+                {
+                    return false;
+                }   
+            }
+            else if (unit2IsBase)
+            {
+                if (uom2 != docmanager.ReadBaseUnit(uom1))
+                {
+                    return false;
+                }
             }
             else
             {
-                return new List<string> { base_annotation1, base_annotation2 };
+                if (docmanager.ReadBaseUnit(uom1) != docmanager.ReadBaseUnit(uom2))
+                {
+                    return false;
+                }
             }
 
+            return true;
         }
+        public List<string> Convert(double number, string uom1, string uom2)
+        {
+            if (uom1 == uom2)
+            {
+                return new List<string>() { number.ToString() + uom1 };
+            }
+
+            if (canConvert(number, uom1, uom2))
+            {
+
+                
+                return converter.GetConvertion(number, uom1.Trim(), uom2.Trim());
+            }
+            else
+            {
+                throw new Exception("Units dont have the same base unit.");
+            }
+        }
+            
+
+        
 
         public string CreateBaseUnit(string id, string annotation, string name, string quantityType, string dimensionalclass, string uom, string aliases)
         {

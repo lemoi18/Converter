@@ -9,6 +9,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
+using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 
 namespace Docmanager
@@ -18,11 +19,13 @@ namespace Docmanager
 
         List<UOM> Units;
         List<Dimension> Dimensions;
+        Dictionary<string, Dimension> Dictdimensions;
 
         public Docmanager()
         {
             Units = JsonConvert.DeserializeObject<List<UOM>>(File.ReadAllText(Pathgetter("POSC.json")));
             Dimensions = JsonConvert.DeserializeObject<List<Dimension>>(File.ReadAllText(Pathgetter("UnitDimensions.json")));
+            Dictdimensions = Dimensions.ToDictionary(d => d.Symbol, d => d);
 
         }
 
@@ -59,6 +62,9 @@ namespace Docmanager
             {
                 output.Add(unit.Name);
             }
+
+            output.Sort();
+            output.RemoveAll(x => x == null);
             return output;
         }
 
@@ -81,17 +87,13 @@ namespace Docmanager
 
         private Dimension QueryDimension(string symbol)
         {
-            try
+            if (Dictdimensions.ContainsKey(symbol))
             {
-
-                Dimension match = Dimensions.First(dim => dim.Symbol == symbol);
-
-
-                return match;
+                return Dictdimensions[symbol];
             }
-            catch (InvalidOperationException)
+            else
             {
-                throw new InvalidOperationException("There is no dimension with this symbol");
+                return Dictdimensions["none"];
             }
         }
 
@@ -280,7 +282,6 @@ namespace Docmanager
             {
                 throw new InvalidOperationException("There is no unti with this name or uom");
             }
-
 
             try
             {
@@ -675,7 +676,7 @@ namespace Docmanager
             foreach (UOM unit in houseOnes)
             {
 
-                if (unit.QuantityType.ToString().Contains(","))
+                if (unit.QuantityType.ToString().Contains("["))
                 {
 
                     var pattern = @"""[^""]*""";
@@ -706,7 +707,7 @@ namespace Docmanager
 
 
             output = output.Distinct().ToList();
-            output.Sort();
+                output.Sort();
 
             return output;
         }
@@ -733,51 +734,40 @@ namespace Docmanager
         private string DimensionSymbolsToDefinition(string symbols)
         {
             List<string> symbolsList = new List<string>();
-
-            char[] symbolArray = symbols.ToCharArray();
-
+            Dictionary<char, string> conversions = new Dictionary<char, string>
+            {
+                { '1', "1" },
+                { '/', "/" }
+            };
             string whitespace = "";
 
-            foreach (char character in symbolArray)
+            foreach (char symbol in symbols)
             {
-                bool addedSymbol = false;
-
-                if (character.Equals('1'))
+                string definition;
+                if (conversions.TryGetValue(symbol, out definition))
                 {
-                    symbolsList.Add(whitespace + "1");
-                    continue;
+                    symbolsList.Add(whitespace + definition);
                 }
-                else if (character.Equals('/'))
+                else if (Char.IsDigit(symbol))
                 {
-                    symbolsList.Add(whitespace + "/");
-                    continue;
-                }
-                else if (Char.IsDigit(character))
-                {
-                    symbolsList.Add("^" + character);
-                    continue;
+                    symbolsList.Add("^" + symbol);
                 }
                 else
                 {
-                    foreach (Dimension dimension in Dimensions)
+                    Dimension dimension = QueryDimension(symbol.ToString());
+                    if (dimension.Symbol.ToString() == "none")
                     {
-                        if (dimension.Symbol == character.ToString())
-                        {
-                            symbolsList.Add(whitespace + dimension.Definition);
-                            addedSymbol = true;
-                            break;
-                        }
+                        symbolsList.Add(whitespace + "none");
+                    }
+                    else
+                    {
+                        symbolsList.Add(whitespace + dimension.Definition);
                     }
                 }
-
-                if (!addedSymbol)
-                    symbolsList.Add(whitespace + "none");
                 whitespace = " ";
             }
 
-            string output = string.Join("", symbolsList);
-
-            return output;
+            return string.Join("", symbolsList);
         }
 
         public string ReadUOMAnnotation(string uom)

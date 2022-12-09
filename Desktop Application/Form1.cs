@@ -56,8 +56,7 @@ namespace Desktop_Application
             finally
             {
                 ValueText.ResetText();
-                UnitFromText.ResetText();
-                UnitToText.ResetText();
+
             }
         }
 
@@ -116,7 +115,7 @@ namespace Desktop_Application
                     OutputList.Items.Add(str2);
                 }
             }
-            if (comboBoxList.Text == "aliases for a given uom ")
+            if (comboBoxList.Text == "aliases for a given uom")
             {
 
                 OutputList.Items.Clear();
@@ -148,7 +147,7 @@ namespace Desktop_Application
 
             if (comboBoxList.Text == "names of every unit")
             {
-
+                OutputList.Items.Clear();
                 foreach (var student in request.ListNames())
                 {
 
@@ -210,8 +209,6 @@ namespace Desktop_Application
             EditComboBox.Items.Clear();
             EditComboBox.Text = "";
             EditValueText.Clear();
-            this.EditComboBox.Hide();
-            this.AttributeToEditLabel.Hide();
 
         }
 
@@ -338,11 +335,16 @@ namespace Desktop_Application
         private void ConfirmAdd_Click(object sender, EventArgs e)
         {
             request.AddQualityclass(AddQTName.Text, AddRemoveQTValue.Text);
+            AddRemoveQTValue.ResetText();
+            AddQTName.ResetText();  
         }
 
         private void ConfirmRemove_Click(object sender, EventArgs e)
         {
             request.RemoveQualityclass(AddQTName.Text, AddRemoveQTValue.Text);
+
+              AddRemoveQTValue.ResetText();
+              AddQTName.ResetText();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
