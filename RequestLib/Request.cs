@@ -135,7 +135,7 @@ namespace RequestLib
             List<string> result = new List<string>();
 
 
-            foreach (var quantity in docmanager.ReadUOMsFromQuantityType(description))
+            foreach (var quantity in docmanager.R2eadAllQuantityClass(description))
             {
                 result.Add(quantity);
             }
@@ -186,7 +186,18 @@ namespace RequestLib
             return docmanager.ReadDimensions();
         }
 
-      
+
+        public string RemoveAlias(string unitName, string aliasName)
+        {
+            return docmanager.RemoveAlias(unitName, aliasName);
+        }
+
+        public string AddAlias(string unitName, string aliasName)
+        {
+
+            return docmanager.AddAlias(unitName, aliasName);
+
+        }
 
         public string RemoveQualityclass(string unit, string name)
         {

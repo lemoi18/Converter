@@ -46,7 +46,12 @@ namespace RequestLib
 
 
         public List<string> ListNames();
-        
+
+        public string AddAlias(string UnitName, string AliasName);
+
+
+        public string RemoveAlias(string unitName, string aliasName);
+
 
 
     }

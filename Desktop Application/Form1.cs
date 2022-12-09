@@ -85,7 +85,7 @@ namespace Desktop_Application
                 {
 
                 
-                    string str2 = string.Format("{0} {1} {2} ", student[0], student[1], student[2]);
+                    string str2 = string.Format("{0}, {1}, {2} ", student[0], student[1], student[2]);
                     OutputList.Items.Add(str2);
                     
                 }
@@ -98,7 +98,7 @@ namespace Desktop_Application
 
 
                 var resultList = request.GetUnitdimension(ListSpecifyText.Text);
-                string resultString = string.Join(" ", resultList);
+                string resultString = string.Join(", ", resultList);
 
                 OutputList.Items.Add(resultString);
                 this.ListSpecifyText.ResetText();
@@ -401,6 +401,20 @@ namespace Desktop_Application
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void AliasButtonAdd_Click(object sender, EventArgs e)
+        {
+            request.AddAlias(AliasNameofUnitText.Text, AliasNameText.Text);
+            AliasNameofUnitText.ResetText();
+            AliasNameText.ResetText();
+        }
+
+        private void AliasButtonRemove_Click(object sender, EventArgs e)
+        {
+            request.RemoveAlias(AliasNameofUnitText.Text, AliasNameText.Text);
+            AliasNameofUnitText.ResetText();
+            AliasNameText.ResetText();
         }
     }
 

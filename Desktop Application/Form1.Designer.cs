@@ -90,6 +90,13 @@
             this.label32 = new System.Windows.Forms.Label();
             this.UOMlabel = new System.Windows.Forms.Label();
             this.EditTextbox = new System.Windows.Forms.TextBox();
+            this.AliasNameofUnitText = new System.Windows.Forms.TextBox();
+            this.AliasNameText = new System.Windows.Forms.TextBox();
+            this.AliasButtonAdd = new System.Windows.Forms.Button();
+            this.AliasButtonRemove = new System.Windows.Forms.Button();
+            this.AliasUnitLabel = new System.Windows.Forms.Label();
+            this.AliasNameLabel = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // UnitFromText
@@ -533,9 +540,9 @@
             this.label23.AutoSize = true;
             this.label23.Location = new System.Drawing.Point(1163, 362);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(212, 15);
+            this.label23.Size = new System.Drawing.Size(198, 15);
             this.label23.TabIndex = 66;
-            this.label23.Text = "Quantity Type Add/Remove from Units";
+            this.label23.Text = "Add/Remove Quantity Type To Units";
             // 
             // label24
             // 
@@ -647,11 +654,81 @@
             this.EditTextbox.TabIndex = 18;
             this.EditTextbox.TextChanged += new System.EventHandler(this.EditTextbox_TextChanged);
             // 
+            // AliasNameofUnitText
+            // 
+            this.AliasNameofUnitText.Location = new System.Drawing.Point(336, 619);
+            this.AliasNameofUnitText.Name = "AliasNameofUnitText";
+            this.AliasNameofUnitText.PlaceholderText = "Eg: metre";
+            this.AliasNameofUnitText.Size = new System.Drawing.Size(184, 23);
+            this.AliasNameofUnitText.TabIndex = 89;
+            // 
+            // AliasNameText
+            // 
+            this.AliasNameText.Location = new System.Drawing.Point(336, 673);
+            this.AliasNameText.Name = "AliasNameText";
+            this.AliasNameText.PlaceholderText = "Eg: M";
+            this.AliasNameText.Size = new System.Drawing.Size(184, 23);
+            this.AliasNameText.TabIndex = 90;
+            // 
+            // AliasButtonAdd
+            // 
+            this.AliasButtonAdd.Location = new System.Drawing.Point(336, 733);
+            this.AliasButtonAdd.Name = "AliasButtonAdd";
+            this.AliasButtonAdd.Size = new System.Drawing.Size(75, 23);
+            this.AliasButtonAdd.TabIndex = 91;
+            this.AliasButtonAdd.Text = "Add";
+            this.AliasButtonAdd.UseVisualStyleBackColor = true;
+            this.AliasButtonAdd.Click += new System.EventHandler(this.AliasButtonAdd_Click);
+            // 
+            // AliasButtonRemove
+            // 
+            this.AliasButtonRemove.Location = new System.Drawing.Point(445, 733);
+            this.AliasButtonRemove.Name = "AliasButtonRemove";
+            this.AliasButtonRemove.Size = new System.Drawing.Size(75, 23);
+            this.AliasButtonRemove.TabIndex = 92;
+            this.AliasButtonRemove.Text = "Remove";
+            this.AliasButtonRemove.UseVisualStyleBackColor = true;
+            this.AliasButtonRemove.Click += new System.EventHandler(this.AliasButtonRemove_Click);
+            // 
+            // AliasUnitLabel
+            // 
+            this.AliasUnitLabel.AutoSize = true;
+            this.AliasUnitLabel.Location = new System.Drawing.Point(207, 622);
+            this.AliasUnitLabel.Name = "AliasUnitLabel";
+            this.AliasUnitLabel.Size = new System.Drawing.Size(78, 15);
+            this.AliasUnitLabel.TabIndex = 93;
+            this.AliasUnitLabel.Text = "Name of Unit";
+            // 
+            // AliasNameLabel
+            // 
+            this.AliasNameLabel.AutoSize = true;
+            this.AliasNameLabel.Location = new System.Drawing.Point(207, 680);
+            this.AliasNameLabel.Name = "AliasNameLabel";
+            this.AliasNameLabel.Size = new System.Drawing.Size(102, 15);
+            this.AliasNameLabel.TabIndex = 94;
+            this.AliasNameLabel.Text = "AliasName To add";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(363, 569);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(108, 15);
+            this.label5.TabIndex = 95;
+            this.label5.Text = "Add Alias To A Unit";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1437, 810);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.AliasNameLabel);
+            this.Controls.Add(this.AliasUnitLabel);
+            this.Controls.Add(this.AliasButtonRemove);
+            this.Controls.Add(this.AliasButtonAdd);
+            this.Controls.Add(this.AliasNameText);
+            this.Controls.Add(this.AliasNameofUnitText);
             this.Controls.Add(this.UOMlabel);
             this.Controls.Add(this.label32);
             this.Controls.Add(this.DeleteUnitButton);
@@ -786,5 +863,12 @@
         private Label label32;
         private Label UOMlabel;
         private TextBox EditTextbox;
+        private TextBox AliasNameofUnitText;
+        private TextBox AliasNameText;
+        private Button AliasButtonAdd;
+        private Button AliasButtonRemove;
+        private Label AliasUnitLabel;
+        private Label AliasNameLabel;
+        private Label label5;
     }
 }

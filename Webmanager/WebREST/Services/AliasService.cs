@@ -39,7 +39,7 @@ public static class AliasService
   
     public static void Add(string Unit, string Alias)
     {
-        //string ADD = request.AddAlias(Unit, Alias);
+        string ADD = request.AddAlias(Unit, Alias);
        
     }
 

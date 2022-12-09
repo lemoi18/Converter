@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 
@@ -755,7 +756,37 @@ namespace Docmanager
                 return output;
             }
 
-            public List<List<string>> ReadDimensions()
+
+        public List<string> R2eadAllQuantityClass(string quantityClass)
+        {
+            
+            
+                List<string> output = new List<string>();
+
+                List<string> output2 = new List<string>(ReadAllQuantityClass());
+
+            List<UOM> houseOnes = Units.Where(unit => unit.QuantityType != null && unit.QuantityType.ToString() == quantityClass).ToList();
+
+            List<UOM> houseOnes2 = Units.FindAll(unit => unit.QuantityType != null && unit.QuantityType.ToString() == quantityClass).ToList();
+
+
+            foreach (UOM unit in houseOnes)
+                {
+                    foreach (string uom in ReadUom(unit))
+                    {
+
+                        if (uom != null)
+                        {
+                            output.Add(uom);
+                        }
+                    }
+                }
+
+                return output;
+            
+        }
+
+        public List<List<string>> ReadDimensions()
         {
             List<List<string>> output = new List<List<string>>();
 
