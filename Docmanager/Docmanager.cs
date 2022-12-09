@@ -268,7 +268,6 @@ namespace Docmanager
             }
         }
 
-
         public string ReadIsBase(string unitName)
         {
             UOM match = new UOM();
@@ -292,6 +291,21 @@ namespace Docmanager
                 return "This unit does not have ConversionToBaseUnit.baseUnit";
             }
 
+        }
+
+        public string ReadBaseUnit(string uom)
+        {
+            UOM match = new UOM();
+            try
+            {
+                match = QueryUOM(uom);
+            }
+            catch (InvalidOperationException)
+            {
+                throw;
+            }
+
+            return match.ConversionToBaseUnit.baseUnit;
         }
 
         public string ReadConversion(string uom, ref double A, ref double B, ref double C, ref double D)

@@ -10,7 +10,7 @@ docmanager = DocFactory.CreateDocmanager("Test");
 //}
 
 
-Console.WriteLine(docmanager.RemoveAlias("inverse henry", "ape?"));
+Console.WriteLine(docmanager.ReadBaseUnit("pu"));
 
 //foreach(var x in docmanager.ReadDimension("I"))
 //{
