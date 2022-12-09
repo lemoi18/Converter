@@ -549,7 +549,7 @@ namespace Docmanager
             }
         }
 
-        public string AddQuantityType(string unitName, string quantityTypeName) 
+        public string AddQuantityType(string unitName, string quantityTypeName)
         {
             UOM match = new UOM();
             try
@@ -638,16 +638,20 @@ namespace Docmanager
         {
             List<string> output = new List<string>();
 
-            List<UOM> houseOnes = Units.FindAll(unit => unit.QuantityType != null && unit.QuantityType.ToString() == quantityClass).ToList();
 
-            foreach (UOM unit in houseOnes)
+            foreach (UOM unit in Units)
             {
-                foreach (string uom in ReadUom(unit))
+                List<string> quantitys = ReadQuantityClass(unit);
+                if (quantitys != null) 
                 {
-
-                    if (uom != null)
+                    foreach (string quantity in quantitys)
                     {
-                        output.Add(uom);
+                        if (quantity == quantityClass) {
+                            foreach (string uom in ReadUom(unit))
+                            {
+                                output.Add(uom);
+                            }
+                        }
                     }
                 }
             }

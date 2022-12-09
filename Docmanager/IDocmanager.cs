@@ -30,7 +30,6 @@ namespace Docmanager
         public List<string> ReadAliases(string input);
 
         public List<string> ReadUOMsFromQuantityType(string quantityClass);
-        public List<string> ReadAllQuantityClass();
 
 
 
