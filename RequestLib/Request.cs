@@ -135,7 +135,7 @@ namespace RequestLib
             List<string> result = new List<string>();
 
 
-            foreach (var quantity in docmanager.ReadAllQuantityClass())
+            foreach (var quantity in docmanager.ReadUOMsFromQuantityType(description))
             {
                 result.Add(quantity);
             }
